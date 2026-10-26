@@ -1,0 +1,150 @@
+[
+  {
+    "id": "manus-pricing",
+    "name": "Manus 官方套餐",
+    "url": "https://manus.im/pricing",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "lovable-pricing",
+    "name": "Lovable 官方套餐",
+    "url": "https://lovable.dev/pricing",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "bolt-pricing",
+    "name": "Bolt 官方套餐",
+    "url": "https://bolt.new/pricing",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "github-education",
+    "name": "GitHub Education 学生权益",
+    "url": "https://education.github.com/pack",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "google-skills",
+    "name": "Google Skills",
+    "url": "https://www.skills.google/",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "microsoft-learn",
+    "name": "Microsoft Learn 官方学习",
+    "url": "https://learn.microsoft.com/en-us/training/",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "tencent-free",
+    "name": "腾讯云免费试用",
+    "url": "https://cloud.tencent.com/act/pro/free",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "aliyun-free",
+    "name": "阿里云免费试用",
+    "url": "https://free.aliyun.com/",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "siliconflow-pricing",
+    "name": "硅基流动官方模型定价",
+    "url": "https://www.siliconflow.cn/pricing",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "bigmodel-pricing",
+    "name": "智谱开放平台定价",
+    "url": "https://bigmodel.cn/pricing",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "qoder-cn-coffee-2026-rules",
+    "name": "Qoder CN 官方规则",
+    "url": "https://docs.qoder.cn/events/new-coffee",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "trae-cn-free-credits-rules",
+    "name": "TRAE CN 官方规则",
+    "url": "https://docs.trae.cn/ide_plans-and-billing",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "qoder-cn-daily-100-rules",
+    "name": "Qoder CN 官方规则",
+    "url": "https://docs.qoder.cn/events/100credits",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "manus-free-daily-rules",
+    "name": "Manus 官方规则",
+    "url": "https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "lovable-free-build-rules",
+    "name": "Lovable 官方规则",
+    "url": "https://docs.lovable.dev/introduction/credits-and-usage",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "aliyun-bailian-new-user-rules",
+    "name": "阿里云百炼 官方规则",
+    "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+    "kind": "page",
+    "region": "cn"
+  },
+  {
+    "id": "notion-education-rules",
+    "name": "Notion 官方规则",
+    "url": "https://www.notion.com/help/notion-for-education",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "azure-students-rules",
+    "name": "Microsoft Azure 官方规则",
+    "url": "https://azure.microsoft.com/en-us/free/students/",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "microsoft-learn-rules",
+    "name": "Microsoft Learn 官方规则",
+    "url": "https://www.microsoft.com/en/microsoft-learn",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "libby-library-rules",
+    "name": "Libby / OverDrive 官方规则",
+    "url": "https://help.libbyapp.com/en-us/6144.htm",
+    "kind": "page",
+    "region": "global"
+  },
+  {
+    "id": "qoder-pro-new-trial-rules",
+    "name": "Qoder 官方规则",
+    "url": "https://docs.qoder.com/account/pricing",
+    "kind": "page",
+    "region": "global",
+    "maxBytes": 2097152
+  }
+]

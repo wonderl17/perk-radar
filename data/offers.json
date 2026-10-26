@@ -1,0 +1,689 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-26T14:14:10.137Z",
+  "offers": [
+    {
+      "id": "qoder-cn-coffee-2026",
+      "title": "Qoder CN 新人完成任务，领 18 元奶茶抵扣券",
+      "provider": "Qoder CN",
+      "summary": "新人完成站点任务，可领淘宝闪购抵扣券；每日限量，兑换当天过期。",
+      "benefit": "18 元抵扣券",
+      "category": "life",
+      "regions": [
+        "cn"
+      ],
+      "availability": "Qoder CN 与淘宝闪购活动；海外版不参与，具体商家依地址而定。",
+      "eligibility": [
+        "仅 2026-09-30 00:00 起首次注册的中国版个人新用户",
+        "仅桌面端参与；每天限量，发完即止",
+        "兑换后当日 23:59 失效；订单至少实付 0.01 元，商家起送及配送费以订单为准",
+        "兑换时需登录淘宝绑定闪购，收货及领取手机号须一致"
+      ],
+      "steps": [
+        "注册并登录 Qoder CN 桌面客户端，确认是活动期内个人新用户。",
+        "完成客户端的新人站点任务，以任务状态提示为准。",
+        "从左下角用量面板 → 礼物图标手动领取，使用手机淘宝扫一扫兑换。",
+        "兑换当天使用，至少实付 0.01 元，商家条件以订单页为准。"
+      ],
+      "caveats": [
+        "任务正文提到发布，FAQ 又说明成功生成即可；以客户端任务状态为准。",
+        "每日限量，库存未登录实测，发完可能提前结束。",
+        "不是现金，不可转让或套现；兑换当日 23:59 失效。"
+      ],
+      "tags": [
+        "新人专属",
+        "每日限量"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": "2026-10-29T23:59:00+08:00",
+      "offerType": "limited",
+      "source": {
+        "name": "Qoder CN 官方规则",
+        "url": "https://docs.qoder.cn/events/new-coffee",
+        "evidence": "官方活动页列明 18 元、最低实付 0.01 元、活动及兑换截止日、兑换当日过期。"
+      },
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "trae-cn-free-credits",
+      "title": "TRAE 中国版：新人 2,000 积分，每日签到 100 积分",
+      "provider": "TRAE CN",
+      "summary": "新人注册、每日签到和每月登录都有积分，记得留意各自有效期。",
+      "benefit": "新人 2,000 积分",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "TRAE 中国版规则，不适用于国际版。",
+      "eligibility": [
+        "新注册福利仅一次，有效期 31 个自然日",
+        "每日签到积分有效 31 个自然日；每月登录积分只在当前自然月有效",
+        "适用中国版免费个人账号；可用模型及功能受账号方案限制",
+        "积分不等于现金；付费会员价格及会员签到额度与此不同"
+      ],
+      "steps": [
+        "注册或登录 TRAE 中国版。",
+        "新人奖励与月度登录奖励以账号余额显示为准。",
+        "点击头像 → 签到，手动领取每日奖励。"
+      ],
+      "caveats": [
+        "免费积分仅用于规则允许的内置模型，无法兑换现金。",
+        "每日 / 新人积分有效 31 个自然日，月登录积分当月有效。",
+        "官方未公布活动总截止日；中国版与国际版规则不同。"
+      ],
+      "tags": [
+        "免费个人账号",
+        "需手动签到"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "TRAE CN 官方规则",
+        "url": "https://docs.trae.cn/ide_plans-and-billing",
+        "evidence": "套餐与计费文档的免费用户积分表列明三类赠送数额与有效期。"
+      },
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "qoder-cn-daily-100",
+      "title": "Qoder CN 每天手动领取 100 通用积分",
+      "provider": "Qoder CN",
+      "summary": "免费个人账号也能参加，每天手动领取；漏领不补，每笔积分有效 30 天。",
+      "benefit": "100 积分 / 日",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "中国版活动；国际版有独立同类活动，账号及权益不可混用。",
+      "eligibility": [
+        "仅在 Qoder CN 桌面端手动领，登录不会自动发放",
+        "每日北京时间 10:00 开放新一轮，漏领不能补领",
+        "不适用企业订阅；领取不改变订阅等级与功能权限",
+        "每笔奖励分别计算 30 天，不因后续领取延长有效期"
+      ],
+      "steps": [
+        "登录 Qoder CN 桌面客户端。",
+        "北京时间每天 10:00 后打开左下角用量面板 → 礼物图标。",
+        "点击领取 100 Credits，并在积分明细确认到账。"
+      ],
+      "caveats": [
+        "登录不会自动领取，漏领当天奖励不能补。",
+        "每笔奖励独立计算 30 天有效期，后续领取不会延长旧积分。",
+        "不改变原套餐功能权限，官方总截止日尚未公布。"
+      ],
+      "tags": [
+        "免费用户可领",
+        "需手动领取"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Qoder CN 官方规则",
+        "url": "https://docs.qoder.cn/events/100credits",
+        "evidence": "官方文档明确个人免费用户可参与，结束日期另行公告，桌面端用量面板礼物入口领取。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "manus-free-daily",
+      "title": "Manus 免费版每天刷新 300 积分",
+      "provider": "Manus",
+      "summary": "免费方案每天刷新积分，适合体验 AI Agent；模型与任务并发有上限。",
+      "benefit": "300 积分 / 日",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际服务；不代表全球每个地区均可注册或使用。",
+      "eligibility": [
+        "免费功能与模型有限，额度不可理解为可无限执行任务",
+        "每日额度刷新与实际可用余额以账号订阅页面为准",
+        "不同国家或地区的账号及服务可用性不同"
+      ],
+      "steps": [
+        "前往 Manus 官网，查看当前地区与账号是否支持注册。",
+        "使用免费方案登录，在订阅或积分页面核对每日可用额度。",
+        "按免费方案支持的功能创建任务。"
+      ],
+      "caveats": [
+        "每日积分不等于现金，也不代表任务无限运行。",
+        "免费方案支持的模型、并发及功能以账号页面为准。",
+        "本次核对公开定价规则，未登录实领；服务可用地区受官方政策限制。"
+      ],
+      "tags": [
+        "免费方案",
+        "国际服务"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Manus 官方规则",
+        "url": "https://help.manus.im/en/articles/11711111-what-is-the-current-membership-pricing-for-manus",
+        "evidence": "当前官方定价FAQ免费方案列明 0 美元、每天 300 积分与并行/自动化限制。"
+      },
+      "status": "published",
+      "featured": true
+    },
+    {
+      "id": "lovable-free-build",
+      "title": "Lovable 免费建站：每天 5 积分，每月最多 30",
+      "provider": "Lovable",
+      "summary": "用免费额度体验 AI 建站。注意月上限：每天 5 个，一个月累计最多 30 个。",
+      "benefit": "5 积分 / 日",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际版服务，账号与地区可用性遵循官方条款。",
+      "eligibility": [
+        "每日赠送按自然月累计，上限30，不是每天都能领满一个月",
+        "达到月上限后下月1日00:00 UTC才恢复",
+        "每日构建额度当天过期，不滚存",
+        "托管、AI网关等用量有独立规则，不可表述无限免费部署"
+      ],
+      "steps": [
+        "登录 Lovable，选择免费工作区。",
+        "在使用量页面确认当天及当月剩余额度。",
+        "创建项目并在额度内尝试构建。"
+      ],
+      "caveats": [
+        "自然月最多 30 个每日构建积分，不能按每天 5 个乘整月计算。",
+        "每日赠送当天过期，月上限下月 1 日 00:00 UTC 重置。",
+        "托管及其他 AI 用量有独立计费规则，不是无限免费。"
+      ],
+      "tags": [
+        "月上限 30 积分",
+        "每日额度不滚存"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Lovable 官方规则",
+        "url": "https://docs.lovable.dev/introduction/credits-and-usage",
+        "evidence": "官方credits文档免费方案表与FAQ均明确 5/day、30/calendar month、UTC次月重置。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "aliyun-bailian-new-user",
+      "title": "阿里云百炼新人：各模型通常 100 万 Token 免费试用",
+      "provider": "阿里云百炼",
+      "summary": "首次开通百炼可获模型独立试用额度；实名账号请先开启“用完即停”。",
+      "benefit": "通常 100 万 Token / 模型",
+      "category": "developer",
+      "regions": [
+        "cn"
+      ],
+      "availability": "阿里云中国站北京地域额度；海外地域无此新人免费额度。",
+      "eligibility": [
+        "仅华北2（北京）地域；各模型额度独立，具体数量以控制台为准",
+        "从开通、模型发布或申请通过中的较晚时间起算90天",
+        "只抵扣模型实时推理，不含批处理、调优、部署、存储等费用",
+        "已实名账号默认超额按量计费，使用前开启免费额度用完即停；未实名默认用完即停"
+      ],
+      "steps": [
+        "进入阿里云百炼中国站，选择华北 2（北京）地域并开通服务。",
+        "在控制台免费额度页面核对适用模型、额度与到期日。",
+        "实名账号在调用前开启免费额度用完即停，再按需体验模型。"
+      ],
+      "caveats": [
+        "通常每模型 100 万 Token，具体额度以控制台显示为准。",
+        "已实名账号默认可能超额按量计费，调用前先开启用完即停。",
+        "额度只抵扣指定实时推理，调优、部署、批处理与存储等可能收费。",
+        "每份额度有效 90 天；不适用海外地域。"
+      ],
+      "tags": [
+        "新用户试用",
+        "有超额计费风险"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "阿里云百炼 官方规则",
+        "url": "https://help.aliyun.com/zh/model-studio/new-free-quota",
+        "evidence": "官方新人免费额度页写明通常100万、90天、仅北京、无需实名可领取，以及已实名默认关闭用完即停。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "github-student-pack",
+      "title": "GitHub 学生开发者礼包：免费 Pro 与学生版 Copilot",
+      "provider": "GitHub Education",
+      "summary": "通过学生资格认证，可解锁 GitHub 与合作伙伴权益；各家兑换条件不同。",
+      "benefit": "学生开发者礼包",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "面向符合资格的在校学生；受当地服务可用性和合作伙伴条款约束。",
+      "eligibility": [
+        "须通过GitHub Education学生资格认证，各伙伴权益另有资格及兑换期限",
+        "Copilot学生版含无限代码补全及有限AI积分、聊天和Agent用量",
+        "模型通过自动选择，不能写所有高级模型任意用",
+        "部分伙伴优惠为折扣或试用，不代表礼包所有项目永久免费"
+      ],
+      "steps": [
+        "前往 GitHub Education 学生申请页面，查看资格要求。",
+        "使用个人 GitHub 账号提交学校邮箱或官方要求的学生证明。",
+        "认证通过后，在 Student Developer Pack 中逐项查看并领取适用权益。"
+      ],
+      "caveats": [
+        "申请需要有效学生资格，审核是否通过由官方决定。",
+        "每个合作伙伴有独立规则、有效期或续费条件；不是所有项目永久免费。",
+        "Copilot Student 的 AI 积分、模型与 Agent 用量有限制。"
+      ],
+      "tags": [
+        "需要学生认证",
+        "合作权益各有条件"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "GitHub Education 官方规则",
+        "url": "https://education.github.com/pack",
+        "evidence": "官方Pack页面明确学生Pro免费及Copilot Student能力；当前不是旧称的无条件免费Copilot Pro。"
+      },
+      "status": "published",
+      "featured": false,
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-10-26T14:12:53.190Z",
+      "reviewNote": "该页是学生权益合集，包含域名、云额度、开发工具及课程等多份独立福利，不能合并为一条发布。需先确定单项权益，并补充其资格审核、领取流程及收费限制的官方证据；其中 Azure 学生额度与已有条目可能重复，需单独核对。; Model did not approve publication"
+    },
+    {
+      "id": "notion-education",
+      "title": "Notion 教育计划：高校师生可免费升级",
+      "provider": "Notion",
+      "summary": "符合资格的高校师生可免费使用教育计划，个人工作区限一位成员。",
+      "benefit": "免费教育计划",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "符合Notion资格的认可高校；平台地域可用性另行适用。",
+      "eligibility": [
+        "学校须为WHED收录认可高校，教育邮箱须为账号主邮箱",
+        "个人工作区只能有1名成员；每年须重新验证有效教育邮箱",
+        "在桌面版或网页版升级；不接受仅凭学生证等其他文件验证",
+        "不承诺所有Notion AI功能免费"
+      ],
+      "steps": [
+        "使用符合资格的高校教育邮箱作为 Notion 主邮箱。",
+        "在网页或桌面端打开设置，找到教育计划升级入口。",
+        "完成学校邮箱验证，按官方提示确认免费教育计划生效。"
+      ],
+      "caveats": [
+        "学校需符合官方资格，并使用主邮箱验证，不是任意学生证都可。",
+        "工作区仅 1 位成员；每年需要重新验证邮箱。",
+        "不保证所有 Notion AI 功能免费，服务可用地区受官方政策限制。"
+      ],
+      "tags": [
+        "需要教育邮箱",
+        "单人工作区"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Notion 官方规则",
+        "url": "https://www.notion.com/help/notion-for-education",
+        "evidence": "最新官方教育帮助页描述Education Plan、单成员、WHED、每年教育邮箱验证及上传/历史权益。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "azure-students",
+      "title": "Azure 学生福利：100 美元云额度，无需信用卡",
+      "provider": "Microsoft Azure",
+      "summary": "符合资格的大学生可获得 12 个月可用的云额度，申请无需信用卡。",
+      "benefit": "$100 云额度",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "Azure国际服务支持地区内符合资格学生，申请页决定可用性。",
+      "eligibility": [
+        "须年满18岁、就读认可的授予学位院校，完成学生身份验证",
+        "每位符合资格者限一个订阅，不可转让",
+        "仅适用官方支持地区与适用Azure服务；中国区Azure由世纪互联运营，不能混同",
+        "不是现金；认证考试与所有第三方服务并非自动包含"
+      ],
+      "steps": [
+        "在 Azure for Students 官方页面核对年龄、院校和地区资格。",
+        "使用学生身份完成在线验证。",
+        "开通后检查 100 美元额度与 12 个月到期时间，选择适用服务。"
+      ],
+      "caveats": [
+        "仅符合资格的全日制大学生，每人限一个订阅。",
+        "额度不是现金，适用服务与到期日以账户为准。",
+        "这是 Azure 国际服务，不能与世纪互联运营的中国区混同。"
+      ],
+      "tags": [
+        "需要学生认证",
+        "无需信用卡"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Microsoft Azure 官方规则",
+        "url": "https://azure.microsoft.com/en-us/free/students/",
+        "evidence": "官方页面学生方案明确100美元/12个月、不需信用卡、仅全日制大学生；资格页补充18岁要求。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "microsoft-learn",
+      "title": "Microsoft Learn：免费学习 AI、云与办公技能",
+      "provider": "Microsoft Learn",
+      "summary": "免费自学 AI、云与数据技能，从短模块开始；认证考试不包含在内。",
+      "benefit": "免费自学课程",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "多语言在线学习资源，部分地区网络及账号访问依服务政策。",
+      "eligibility": [
+        "自学内容免费，不代表微软认证考试免费",
+        "讲师指导课程、云资源与部分实践环境可能有单独条件或费用",
+        "保存学习进度通常需登录账号"
+      ],
+      "steps": [
+        "打开 Microsoft Learn 自学训练目录。",
+        "按主题与经验水平选择模块或学习路径。",
+        "如需保存进度，可登录微软账号。"
+      ],
+      "caveats": [
+        "自学内容免费不代表认证考试免费。",
+        "讲师指导课程、云资源和部分实践环境可能另有费用或资格要求。",
+        "本条为长期学习资源，官方未公布整体截止日。"
+      ],
+      "tags": [
+        "免费学习资源",
+        "考试另行计费"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Microsoft Learn 官方规则",
+        "url": "https://www.microsoft.com/en/microsoft-learn",
+        "evidence": "官方介绍页明确免费训练资源，训练主页列出AI等自学模块。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "libby-library",
+      "title": "Libby：用合作图书馆借书证，免费借电子书与有声书",
+      "provider": "Libby / OverDrive",
+      "summary": "已有合作图书馆借书证，就能借阅该馆的数字资源；热门书可能需要排队。",
+      "benefit": "免费数字借阅",
+      "category": "life",
+      "regions": [
+        "global"
+      ],
+      "availability": "仅参与图书馆及符合该馆办证条件的读者；不是面向所有地区的无门槛权益。",
+      "eligibility": [
+        "需持参与OverDrive服务的公共图书馆有效借书证，不能凭空注册获取全网资源",
+        "办证资格、可借书目、借期及数量由各图书馆决定",
+        "热门书可能排队；非本地居民办卡可能收费或不开放"
+      ],
+      "steps": [
+        "在 Libby 中查找你的公共图书馆，确认该馆参加 OverDrive。",
+        "使用该馆有效借书证登录。",
+        "按本馆规则借阅或预约电子书、有声书与杂志。"
+      ],
+      "caveats": [
+        "需要符合图书馆办证资格；非本地办证可能收费或不开放。",
+        "馆藏、借期、数量和预约等待时间由各馆决定。",
+        "不是无限借阅所有书，也不是无门槛获取海外借书证。"
+      ],
+      "tags": [
+        "需要合作馆借书证",
+        "馆藏各有不同"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Libby / OverDrive 官方规则",
+        "url": "https://help.libbyapp.com/en-us/6144.htm",
+        "evidence": "官方帮助页2026-04-13更新，明确有效借书证、数字借阅免费及无订阅/逾期费。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "id": "qoder-pro-new-trial",
+      "title": "Qoder 国际版新人 14 天 Pro 试用，含 300 积分",
+      "provider": "Qoder",
+      "summary": "首次登录最新版国际客户端的新用户，可体验 14 天 Pro，含 300 试用积分。",
+      "benefit": "300 积分 + 14 天试用",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际版文档，不与Qoder CN试用或活动互相替代。",
+      "eligibility": [
+        "每人仅一个试用账号；虚拟机不支持",
+        "需最新版客户端且为首次登录新用户",
+        "试用到期后权益与功能按免费方案规则处理"
+      ],
+      "steps": [
+        "在 Qoder 国际官网查看最新 Pro Trial Rules。",
+        "下载最新版客户端，使用符合资格的新账号首次登录。",
+        "在用量面板确认 14 天试用与 300 积分是否生效。"
+      ],
+      "caveats": [
+        "每人仅一个试用账号，不支持虚拟机。",
+        "仅国际版首次登录用户；不要与中国版活动混用。",
+        "试用到期后的功能按免费方案处理，具体以账号状态为准。"
+      ],
+      "tags": [
+        "新人专属",
+        "国际版客户端"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-26T10:15:14Z",
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "source": {
+        "name": "Qoder 官方规则",
+        "url": "https://docs.qoder.com/account/pricing",
+        "evidence": "官方Pricing页的Pro Trial Rules列明14天、300积分、首次登录及不可虚拟机。"
+      },
+      "status": "published",
+      "featured": false
+    },
+    {
+      "title": "Qoder 国际版：个人用户每天手动领取 100 积分",
+      "provider": "Qoder",
+      "summary": "Qoder 国际版新老个人用户，包括免费用户，可在桌面应用每天手动领取 100 积分；每笔有效期为 30 天。",
+      "benefit": "每个领取窗口可免费领取 100 Credits，领取后计入 Add-on Credits，可在同一账号的 Qoder 国际版产品中使用；未过期积分可跨日累积。",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "已于 2026 年 9 月 18 日 10:00（新加坡时间，UTC+8）开始，结束时间待公布。每日领取窗口为当日 10:00 至次日 10:00 前。",
+      "eligibility": [
+        "Qoder 国际版新老个人用户。",
+        "Free、Pro Trial、Lite、Pro、Pro+ 和 Ultra 个人计划用户均可参加，无需付费订阅。",
+        "Teams 和 Enterprise 订阅用户不适用。"
+      ],
+      "steps": [
+        "打开 Qoder 桌面应用，创建或登录个人账号。",
+        "在领取窗口内，通过应用左下角 Usage 面板的礼物图标打开活动。",
+        "手动领取当前窗口的 100 Credits，奖励将计入账号的 Add-on Credits。",
+        "使用同一账号登录支持的 Qoder 国际版产品，即可使用所领积分。"
+      ],
+      "caveats": [
+        "仅能在 Qoder 桌面应用领取，每个账号每个窗口限领一次；登录不会自动领取。",
+        "错过窗口无法补领，未领取的额度不会结转。",
+        "每笔奖励自领取之日起有效 30 天，未使用部分到期自动失效；领取新奖励不会延长旧奖励的有效期。",
+        "领取积分不会改变订阅等级或功能权限，功能仍受当前计划限制。",
+        "积分仅供个人使用，扣减时优先使用更早到期的积分；到期时间相同则优先扣减计划积分。",
+        "本福利适用于 Qoder 国际版，不是中国版活动；官方本页未列出具体可用国家或地区。"
+      ],
+      "tags": [
+        "Qoder",
+        "国际版",
+        "每日积分",
+        "手动领取",
+        "免费用户可领"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-abf9d839141cb24f0a80",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:21:58.394Z",
+      "verifiedAt": "2026-10-26T10:53:38.831Z",
+      "featured": false,
+      "source": {
+        "name": "Qoder 官方规则",
+        "url": "https://docs.qoder.com/events/100credits",
+        "evidence": "官方活动页规定，国际版新老个人用户可在桌面端每天手动领取 100 积分，免费计划亦适用，团队和企业订阅除外；每笔有效 30 天，活动结束时间待公布。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-26T10:53:38.831Z",
+        "evidenceHash": "3dc8e3e898b99cbaa8fe1aef1503dcfd8cc0b6e129729ef217585e629c75920a",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Each account can claim 100 Credits once per window."
+          },
+          {
+            "field": "eligibility",
+            "quote": "All new and existing individual users of Qoder International"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Both free users and paid individual subscribers are eligible."
+          },
+          {
+            "field": "steps",
+            "quote": "Open Qoder and create or sign in to an individual account."
+          },
+          {
+            "field": "steps",
+            "quote": "Claim the 100 Credits available for the current window."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Qoder CN：DeepSeek-Flash 每日免费额度至10月底",
+      "provider": "Qoder CN",
+      "summary": "Qoder CN 新老个人用户可直接选择 DeepSeek-Flash，享每日免费额度，无需订阅或领取；额度用尽后继续使用会消耗 Credits。",
+      "benefit": "DeepSeek-Flash 每日免费使用额度",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "活动有效期为北京时间2026年10月20日00:00至11月1日00:00（UTC+8），适用于官方列明的 Qoder CN 产品。",
+      "eligibility": [
+        "Qoder CN 新老个人用户，包括免费、试用、付费订阅及会员卡用户。",
+        "Credits 余额为0的个人账号也可在每日免费额度内使用。",
+        "企业订阅用户（团队版、企业标准版、企业专属版）不适用。"
+      ],
+      "steps": [
+        "注册或登录 Qoder CN 个人账号。",
+        "在所用 Qoder CN 产品中，将模型选择为 DeepSeek-Flash。",
+        "直接开始使用，每日免费额度自动生效，无需领取。"
+      ],
+      "caveats": [
+        "每个账号每日免费次数有限，官方未公布具体次数；付费订阅用户次数高于免费用户。",
+        "当日免费额度用尽后，次日可继续免费使用；若当天继续使用该模型，将按原计费系数消耗 Credits。",
+        "仅指定模型 DeepSeek-Flash（DeepSeek-V4.1-Flash-1017）适用，不代表其他模型免费。",
+        "活动结束后按届时公示的模型系数计费。",
+        "高峰时段可能响应较慢；免费权益仅限本人使用，不得转接、转售或提供共享访问。"
+      ],
+      "tags": [
+        "Qoder CN",
+        "DeepSeek-Flash",
+        "每日免费额度",
+        "无需订阅",
+        "限时活动"
+      ],
+      "publishedAt": null,
+      "expiresAt": "2026-11-01T00:00:00+08:00",
+      "offerType": "limited",
+      "id": "auto-fc1836a3a8fdcf49cde7",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:19:36.029Z",
+      "verifiedAt": "2026-10-26T14:13:59.781Z",
+      "featured": false,
+      "source": {
+        "name": "Qoder CN 官方规则",
+        "url": "https://docs.qoder.cn/events/deepseek-flash-free",
+        "evidence": "官方说明新老个人用户选择指定模型即可自动享受每日免费额度，免费账号及零余额账号可参与；每日次数未披露，超额消耗积分，活动延期至北京时间2026年11月1日00:00结束。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-26T14:13:59.781Z",
+        "evidenceHash": "4082431703d08a98f1925fe1476eb9ee0bbaf849ca69f5403a9838ea7efdf3cf",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "活动期间每日赠送免费使用额度。"
+          },
+          {
+            "field": "eligibility",
+            "quote": "免费用户和试用期用户均可参与。"
+          },
+          {
+            "field": "steps",
+            "quote": "注册或登录 Qoder CN 个人账号。"
+          },
+          {
+            "field": "steps",
+            "quote": "将模型选择为 DeepSeek-Flash"
+          },
+          {
+            "field": "expiresAt",
+            "quote": "2026 年 10 月 31 日 24:00（UTC+8）"
+          }
+        ]
+      }
+    }
+  ]
+}

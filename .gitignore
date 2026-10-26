@@ -1,0 +1,11 @@
+node_modules/
+dist/
+work/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tgz
+
+.openai/
+outputs/

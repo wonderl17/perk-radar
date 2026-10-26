@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6955d9">
+  <meta name="description" content="发现中国与全球值得领取的活动福利。AI 积分、开发者工具、学习资源，逐条展示官方来源、地区限制和领取门槛。">
+  <meta property="og:title" content="福利雷达 · 把好福利，收进每一天">
+  <meta property="og:description" content="中国与全球福利时间流，先看条件，再去领取。">
+  <title>福利雷达 · 发现每一份值得领取的福利</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="福利雷达 RSS" href="/feed.xml">
+  <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+  <a href="#feed" class="skip-link">跳到福利信息流</a>
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="福利雷达首页"><img src="/favicon.svg" alt="" width="35" height="35"><span>福利雷达<small>PERK RADAR</small></span></a>
+      <nav class="top-nav" aria-label="主导航"><button class="nav-tab active" data-view="all">发现福利</button><button class="nav-tab" data-view="saved">我的收藏 <span id="saved-count">0</span></button><button class="nav-tab" data-action="method">收录标准</button></nav>
+      <button class="submit-btn" data-action="submit"><span data-icon="plus"></span>分享福利</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" aria-label="福利分类">
+      <p class="sidebar-label">你的福利导航</p>
+      <nav id="category-nav" class="category-nav" aria-label="分类"></nav>
+      <nav class="mobile-shortcuts" aria-label="更多福利视图"><button data-view="ending"><span data-icon="clock"></span>即将截止</button><button data-view="archive"><span data-icon="archive"></span>过期归档</button><a href="/feed.xml" target="_blank" rel="noopener"><span data-icon="rss"></span>RSS</a><button data-action="method">收录标准 ↗</button></nav>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-label">更多发现</p>
+      <button class="side-link" data-view="ending"><span data-icon="clock"></span>即将截止<span class="small-dot"></span></button>
+      <button class="side-link" data-view="archive"><span data-icon="archive"></span>过期归档</button>
+      <a class="side-link" href="/feed.xml" target="_blank" rel="noopener"><span data-icon="rss"></span>RSS 订阅<span data-icon="arrow-up-right" class="tiny-icon"></span></a>
+      <div class="sidebar-note"><div class="note-icon" data-icon="heart"></div><strong>让信息差，变成小确幸。</strong><p>认真挑选，清楚说明。<br>把值得领取的福利留给你。</p><button data-action="method">了解我们的坚持 <span>↗</span></button></div>
+      <div class="sidebar-bottom"><span class="live-dot"></span>独立整理 · 持续发现</div>
+    </aside>
+    <main class="main-content">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy"><div class="eyebrow"><span class="pill-dot"></span> 小小福利，大大开心</div><h1 id="hero-title">好福利，<span>不必到处找。</span></h1><p>从 AI 积分到实用工具，发现中国与全球的好福利。<br class="desktop-break">每一条，都帮你看清领取条件。</p><div class="hero-points"><span><i data-icon="check-circle"></i>官方出处</span><span><i data-icon="globe"></i>中国 + 全球</span><span><i data-icon="shield"></i>门槛透明</span></div></div>
+        <div class="radar-art" aria-hidden="true"><div class="radar-orbit orbit-one"></div><div class="radar-orbit orbit-two"></div><div class="radar-orbit orbit-three"></div><div class="radar-ray"></div><div class="radar-core"><span data-icon="gift"></span></div><div class="radar-tag tag-one"><span>✦</span> AI 积分</div><div class="radar-tag tag-two"><span>↗</span> 免费好工具</div><div class="radar-tag tag-three"><span>✓</span> 值得领取</div><div class="radar-spark spark-one">✦</div><div class="radar-spark spark-two">+</div></div>
+      </section>
+      <div class="trust-strip"><span><b id="offer-count">—</b>份福利已收录</span><span><b id="source-count">—</b>个官方来源</span><span class="updated"><i class="live-dot"></i><span id="last-updated">正在加载最新收录</span></span></div>
+      <div class="content-columns">
+        <section id="feed" class="feed-section" aria-labelledby="feed-title">
+          <div class="feed-heading"><div><h2 id="feed-title">福利时间流 <span class="heading-dot"></span></h2><p id="feed-subtitle">把每一份新发现，按时间好好收下。</p></div><label class="sort-label"><span data-icon="sort"></span><select id="sort" aria-label="排列顺序"><option value="latest">最新收录</option><option value="ending">截止时间优先</option></select></label></div>
+          <div class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="搜一搜 AI 积分、工具、品牌…" aria-label="搜索福利" autocomplete="off"><kbd>/</kbd></div>
+          <div class="filters"><div class="segmented" role="group" aria-label="适用地区"><button data-region="all" class="selected" aria-pressed="true">全部地区</button><button data-region="cn" aria-pressed="false">中国</button><button data-region="global" aria-pressed="false">全球 / 海外</button></div><label class="type-label"><select id="type" aria-label="福利类型"><option value="all">全部类型</option><option value="limited">限时活动</option><option value="ongoing">长期权益</option></select></label></div>
+          <div class="active-filter" id="active-filter" hidden></div>
+          <div id="feed-content" aria-live="polite"><div class="loading">正在整理好福利…</div></div>
+          <div id="feed-end" class="feed-end" hidden><span data-icon="check-circle"></span><p>好福利慢慢找，值得的才收录。</p><small>已看完当前筛选下的全部福利</small></div>
+        </section>
+        <aside class="right-rail" aria-label="福利精选与说明"><section class="picks-panel"><div class="panel-heading"><span class="sparkle-square" data-icon="sparkles"></span><h2>值得先看</h2><span class="editor-label">编辑精选</span></div><p class="panel-caption">从这些小确幸开始。</p><div id="featured-list"></div></section><section class="principle-panel"><span class="mini-eyebrow">BEFORE YOU CLAIM</span><h3>先看门槛，<br>再开心领取。</h3><ul><li><span>01</span>确认你所在地区是否适用</li><li><span>02</span>留意认证、付费与续费条件</li><li><span>03</span>到官网核对最新规则</li></ul><button data-action="method">我们的收录标准 <span>↗</span></button></section><div class="rail-footnote">不收录拉人头、返利套现和来源不明的福利。<br>无推广链接 · 无付费排名</div></aside>
+      </div>
+      <footer class="footer"><span>© <span id="year">2026</span> 福利雷达 <span class="footer-sep">/</span> 把好福利，收进每一天。</span><button data-action="method">关于与收录说明 ↗</button></footer>
+    </main>
+  </div>
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
+  <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><div id="info-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript 浏览和筛选福利。也可以直接订阅 <a href="/feed.xml">RSS 信息流</a> 或查看 <a href="/data/offers.json">公开数据</a>。</p></noscript>
+  <script type="module" src="/src/app.mjs"></script>
+</body>
+</html>

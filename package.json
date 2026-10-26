@@ -1,0 +1,23 @@
+{
+  "name": "perk-radar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs --dist",
+    "test": "node --test tests/*.test.mjs",
+    "collect": "node scripts/collect.mjs",
+    "check:data": "node scripts/validate.mjs",
+    "review": "node scripts/review.mjs",
+    "ingest": "node scripts/ingest.mjs",
+    "start": "node scripts/service.mjs",
+    "scan:due": "node scripts/scan.mjs",
+    "scan:status": "node scripts/scan.mjs --status",
+    "sync:github": "node scripts/sync-github.mjs"
+  }
+}

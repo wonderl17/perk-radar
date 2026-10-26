@@ -1,0 +1,43 @@
+# EXAMPLE ONLY — review public cache/artifact policy before enabling.
+name: Discover official benefit candidates
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 1 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: collect-official-sources
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Restore candidate history and source baselines
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/candidates.json
+            work/health.json
+            work/changes.json
+          key: benefit-observations-${{ github.run_id }}
+          restore-keys: |
+            benefit-observations-
+            benefit-candidates-
+      - run: npm run check:data
+      - run: npm run collect
+      - name: Retain review queues and source health
+        uses: actions/upload-artifact@v4
+        with:
+          name: benefit-candidates-${{ github.run_id }}
+          path: |
+            work/candidates.json
+            work/health.json
+            work/changes.json
+          retention-days: 14
+          if-no-files-found: error

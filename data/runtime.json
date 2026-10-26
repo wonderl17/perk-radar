@@ -1,0 +1,5 @@
+{
+  "scanIntervalMinutes": 360,
+  "maxItemsPerScan": 6,
+  "retryIntervalMinutes": 15
+}

@@ -1,0 +1,9 @@
+# GitHub 上的正式福利数据
+
+公开仓库：https://github.com/wonderl17/perk-radar ，默认分支 `luke/main`。
+
+`data/offers.json` 为已核验的正式数据，含官方出处、首次收录时间、核验时间、期限及限制。它记录在Git中，可查历史、比较变化、提交纠错。待审内容、运行日志和凭据不属于公开数据。
+
+维护者运行 `npm run sync:github` 将本机正式数据同步到目标仓库。脚本使用已有gh登录、内容SHA对比和带旧SHA的写入；无变化不提交，冲突即停止。只更新数据文件，不推送整个本机历史。提交身份使用noreply地址。
+
+默认目标在 `data/github.json`；fork或部署时改成自己的仓库、分支和account账号。GitHub只负责持久保存和分发这些文件，本仓库未配置云端GPT扫描；扫描和网站部署需要各自的运行环境。

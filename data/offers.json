@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-26T20:16:51.728Z",
+  "updatedAt": "2026-10-27T02:20:24.590Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -448,49 +448,6 @@
       "featured": false
     },
     {
-      "id": "qoder-pro-new-trial",
-      "title": "Qoder 国际版新人 14 天 Pro 试用，含 300 积分",
-      "provider": "Qoder",
-      "summary": "首次登录最新版国际客户端的新用户，可体验 14 天 Pro，含 300 试用积分。",
-      "benefit": "300 积分 + 14 天试用",
-      "category": "ai",
-      "regions": [
-        "global"
-      ],
-      "availability": "国际版文档，不与Qoder CN试用或活动互相替代。",
-      "eligibility": [
-        "每人仅一个试用账号；虚拟机不支持",
-        "需最新版客户端且为首次登录新用户",
-        "试用到期后权益与功能按免费方案规则处理"
-      ],
-      "steps": [
-        "在 Qoder 国际官网查看最新 Pro Trial Rules。",
-        "下载最新版客户端，使用符合资格的新账号首次登录。",
-        "在用量面板确认 14 天试用与 300 积分是否生效。"
-      ],
-      "caveats": [
-        "每人仅一个试用账号，不支持虚拟机。",
-        "仅国际版首次登录用户；不要与中国版活动混用。",
-        "试用到期后的功能按免费方案处理，具体以账号状态为准。"
-      ],
-      "tags": [
-        "新人专属",
-        "国际版客户端"
-      ],
-      "publishedAt": null,
-      "discoveredAt": "2026-10-26T10:15:14Z",
-      "verifiedAt": "2026-10-26T10:15:14Z",
-      "expiresAt": null,
-      "offerType": "ongoing",
-      "source": {
-        "name": "Qoder 官方规则",
-        "url": "https://docs.qoder.com/account/pricing",
-        "evidence": "官方Pricing页的Pro Trial Rules列明14天、300积分、首次登录及不可虚拟机。"
-      },
-      "status": "published",
-      "featured": false
-    },
-    {
       "title": "Qoder 国际版：个人用户每天手动领取 100 积分",
       "provider": "Qoder",
       "summary": "Qoder 国际版新老个人用户，包括免费用户，可在桌面应用每天手动领取 100 积分；每笔有效期为 30 天。",
@@ -717,6 +674,156 @@
           {
             "field": "availability",
             "quote": "结束时间 ：另行公告。"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Bolt 免费版：每月100万 Tokens，无需信用卡",
+      "provider": "Bolt",
+      "summary": "Bolt 免费版每月含100万 Tokens，每日上限30万；无需信用卡，支持公开及私有项目、数据库和网站托管。",
+      "benefit": "每月100万 Tokens，每日上限30万",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际站长期免费计划；官方本页未列明具体可用国家或地区。",
+      "eligibility": [
+        "选择 Bolt Free 免费计划的用户；本页未列出新人或学生身份要求。",
+        "无需信用卡。"
+      ],
+      "steps": [
+        "访问 https://bolt.new/pricing。",
+        "在 Free 免费计划下点击“Start Free”，开始使用免费计划。"
+      ],
+      "caveats": [
+        "每月额度为100万 Tokens，每日使用上限为30万 Tokens。",
+        "未使用的 Tokens 不结转至下月。",
+        "免费版网站保留 Bolt 品牌标识，不含自定义域名。",
+        "项目越大，每条消息可能消耗越多 Tokens。",
+        "全球站不代表所有国家或地区均可使用，页面未明确地区范围。"
+      ],
+      "tags": [
+        "AI应用开发",
+        "免费计划",
+        "无需信用卡",
+        "网站托管"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-d482f2f0f12ade2c1a48",
+      "status": "published",
+      "discoveredAt": "2026-10-27T02:19:33.444Z",
+      "verifiedAt": "2026-10-27T02:19:33.444Z",
+      "featured": false,
+      "source": {
+        "name": "Bolt 官方套餐",
+        "url": "https://bolt.new/pricing",
+        "evidence": "官方定价页的 Free 计划为每月0美元、永久免费且无需信用卡；包含每月100万 Tokens，对照表列明每日上限30万，提供 Start Free 入口。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T02:19:33.444Z",
+        "evidenceHash": "38336f3c1bb932884f9f29a0158bccb9932ed3d60f68b733c28f33a0a7bcc546",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "1M tokens/month to try Bolt"
+          },
+          {
+            "field": "benefit",
+            "quote": "Daily Token Limit 300K"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Free forever, no card required"
+          },
+          {
+            "field": "steps",
+            "quote": "Start Free"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Qoder 国际版：新用户免费试用 Pro 14天，含300积分",
+      "provider": "Qoder",
+      "summary": "新用户首次登录最新版 Qoder 客户端，可获14天免费 Pro 试用及300积分；不支持虚拟机，每人限一个试用账号。",
+      "benefit": "14天免费 Pro 试用＋300积分",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际版新用户首次登录客户端可领取；官方未列明具体支持地区或活动截止时间。",
+      "eligibility": [
+        "Qoder 国际版新用户，首次登录 Qoder 客户端。",
+        "须使用最新版客户端，虚拟机不可参与。",
+        "每位用户仅限一个试用账号。"
+      ],
+      "steps": [
+        "准备最新版 Qoder 客户端，并在非虚拟机环境使用。",
+        "首次登录客户端，获得14天免费 Pro 试用及300积分。"
+      ],
+      "caveats": [
+        "试用设有合理使用限制，并非无限量使用所有功能。",
+        "同一用户创建额外试用账号会被冻结。",
+        "试用期间升级付费套餐，未使用的赠送积分会转为附加积分包，原到期时间不变。",
+        "页面未说明是否需要绑定信用卡或试用结束后的扣费安排。"
+      ],
+      "tags": [
+        "Qoder国际版",
+        "新用户",
+        "Pro试用",
+        "AI编程"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "qoder-pro-new-trial",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-27T02:20:14.711Z",
+      "featured": false,
+      "source": {
+        "name": "Qoder 官方规则",
+        "url": "https://docs.qoder.com/account/pricing",
+        "evidence": "定价页的 Pro Trial Rules 明确：新用户首次登录最新版客户端可免费试用 Pro 14天并获300积分，不支持虚拟机，每人限一个试用账号。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T02:20:14.711Z",
+        "evidenceHash": "7ac679b962632750057b4a1e516b484e7319b179df341eb0c2ccb36c4321e8a5",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "free 14-day Pro trial"
+          },
+          {
+            "field": "benefit",
+            "quote": "along with 300 credits"
+          },
+          {
+            "field": "eligibility",
+            "quote": "new users"
+          },
+          {
+            "field": "eligibility",
+            "quote": "not available on virtual machines"
+          },
+          {
+            "field": "eligibility",
+            "quote": "This offer is limited to one account per user"
+          },
+          {
+            "field": "steps",
+            "quote": "upon their first sign-in to Qoder Client"
+          },
+          {
+            "field": "steps",
+            "quote": "requires latest version"
           }
         ]
       }

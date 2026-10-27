@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T20:11:55.194Z",
+  "updatedAt": "2026-10-27T21:32:35.297Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -272,50 +272,6 @@
       "reviewRequired": true,
       "reviewRequestedAt": "2026-10-26T14:12:53.190Z",
       "reviewNote": "该页是学生权益合集，包含域名、云额度、开发工具及课程等多份独立福利，不能合并为一条发布。需先确定单项权益，并补充其资格审核、领取流程及收费限制的官方证据；其中 Azure 学生额度与已有条目可能重复，需单独核对。; Model did not approve publication"
-    },
-    {
-      "id": "notion-education",
-      "title": "Notion 教育计划：高校师生可免费升级",
-      "provider": "Notion",
-      "summary": "符合资格的高校师生可免费使用教育计划，个人工作区限一位成员。",
-      "benefit": "免费教育计划",
-      "category": "learning",
-      "regions": [
-        "global"
-      ],
-      "availability": "符合Notion资格的认可高校；平台地域可用性另行适用。",
-      "eligibility": [
-        "学校须为WHED收录认可高校，教育邮箱须为账号主邮箱",
-        "个人工作区只能有1名成员；每年须重新验证有效教育邮箱",
-        "在桌面版或网页版升级；不接受仅凭学生证等其他文件验证",
-        "不承诺所有Notion AI功能免费"
-      ],
-      "steps": [
-        "使用符合资格的高校教育邮箱作为 Notion 主邮箱。",
-        "在网页或桌面端打开设置，找到教育计划升级入口。",
-        "完成学校邮箱验证，按官方提示确认免费教育计划生效。"
-      ],
-      "caveats": [
-        "学校需符合官方资格，并使用主邮箱验证，不是任意学生证都可。",
-        "工作区仅 1 位成员；每年需要重新验证邮箱。",
-        "不保证所有 Notion AI 功能免费，服务可用地区受官方政策限制。"
-      ],
-      "tags": [
-        "需要教育邮箱",
-        "单人工作区"
-      ],
-      "publishedAt": null,
-      "discoveredAt": "2026-10-26T10:15:14Z",
-      "verifiedAt": "2026-10-26T10:15:14Z",
-      "expiresAt": null,
-      "offerType": "ongoing",
-      "source": {
-        "name": "Notion 官方规则",
-        "url": "https://www.notion.com/help/notion-for-education",
-        "evidence": "最新官方教育帮助页描述Education Plan、单成员、WHED、每年教育邮箱验证及上传/历史权益。"
-      },
-      "status": "published",
-      "featured": false
     },
     {
       "id": "azure-students",
@@ -1255,6 +1211,167 @@
           {
             "field": "steps",
             "quote": "use the dedicated link in your JetBrains Account"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Notion 教育计划：合资格高校师生免费使用",
+      "provider": "Notion",
+      "summary": "合资格高校师生可免费使用单成员教育工作区，支持最多100位访客和30天页面历史；须使用学校邮箱，并每年验证资格。",
+      "benefit": "免费教育计划，含100位访客及30天历史",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "长期提供，无固定结束日期；仅限符合学校、邮箱及工作区条件的高校师生，不代表所有地区或学校均可领取。",
+      "eligibility": [
+        "须为获认证且列入世界高等教育数据库（WHED）的高校学生或教师；不适用于K-12学生或教师。",
+        "须以有效学校邮箱作为Notion账号主邮箱登录，仅添加为额外邮箱不符合要求；不接受学生证或其他材料替代验证。",
+        "学校邮箱此前未领取过该权益；每个学校邮箱仅能为一个工作区领取一次。",
+        "领取时工作区须为Free计划，且仅有一位成员；须通过桌面端或网页版操作。"
+      ],
+      "steps": [
+        "确认学校邮箱为账号主邮箱，工作区处于Free计划且仅有一位成员；如正在付费使用Plus，先通过侧栏Settings → Billing → Change plan降至Free计划。",
+        "在Notion桌面端或网页版，进入侧栏Settings。",
+        "选择Upgrade plan，再选择Get free education plan；若系统识别学校，将自动升级。"
+      ],
+      "caveats": [
+        "个人教育计划仅支持一位工作区成员，可邀请最多100位访客，不等同于免费多成员团队计划。",
+        "须每年使用学校邮箱验证资格，且学校邮箱须保持有效并继续作为账号主邮箱；无法验证时，工作区及内容会转至Free计划，功能相应调整。",
+        "每个学校邮箱仅能领取一次，即使删除原工作区，也不能用于另一个工作区重新领取。",
+        "升级至Plus、Business或Enterprise会永久终止该工作区的教育资格，之后降回Free也不能重新领取。",
+        "能否自动升级取决于系统是否识别学校，不能保证个人资格。"
+      ],
+      "tags": [
+        "Notion",
+        "教育优惠",
+        "高校师生",
+        "学校邮箱",
+        "年度验证"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "notion-education",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-27T21:31:33.609Z",
+      "featured": false,
+      "source": {
+        "name": "Notion 官方规则",
+        "url": "https://www.notion.com/help/notion-for-education",
+        "evidence": "官方教育帮助页说明：符合WHED学校及学校邮箱条件的个人师生可免费升级单成员教育计划，含最多100位访客和30天页面历史；提供桌面端及网页版领取路径，要求每年验证，无固定结束日期。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T21:31:33.609Z",
+        "evidenceHash": "0ae3869827c518bc1fda41151116d26f728d5c72dfff5bc7be500da358445e2e",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "a free plan for a one-member workspace."
+          },
+          {
+            "field": "benefit",
+            "quote": "Up to 100 guests per workspace"
+          },
+          {
+            "field": "eligibility",
+            "quote": "You’re a student or educator at an accredited college or university."
+          },
+          {
+            "field": "eligibility",
+            "quote": "Your school email must be the main email on your Notion account."
+          },
+          {
+            "field": "steps",
+            "quote": "Go to Settings in your sidebar."
+          },
+          {
+            "field": "steps",
+            "quote": "Select Upgrade plan ."
+          },
+          {
+            "field": "steps",
+            "quote": "Select Get free education plan ."
+          }
+        ]
+      }
+    },
+    {
+      "title": "国家图书馆：馆内免费数字阅览，每次2小时",
+      "provider": "中国国家图书馆",
+      "summary": "读者在服务台刷卡登记后，可免费上机进行数字阅览，每次2小时；继续使用须等候管理员分配，15周岁及以下读者在少年儿童馆使用。",
+      "benefit": "免费数字阅览，每次上机2小时",
+      "category": "learning",
+      "regions": [
+        "cn"
+      ],
+      "availability": "国家图书馆馆内提供，须现场刷卡登记；机位已满时需等候分配。",
+      "eligibility": [
+        "到馆使用数字阅览服务、可在服务台刷卡登记的读者。",
+        "15周岁及以下读者须在少年儿童馆获取数字资源用机上网服务。"
+      ],
+      "steps": [
+        "到馆后在服务台刷卡登记，使用数字阅览机位。",
+        "每次可上机2小时；如机位已满或需继续使用，到管理员处等候分配，再刷卡上机。"
+      ],
+      "caveats": [
+        "每次使用2小时后自动下线，请按系统提示及时保存个人文件。",
+        "机位需由管理员分配，不保证随到随用。",
+        "不得以超过正常阅读速度连续、系统、集中、批量下载、浏览或检索数字资源。",
+        "不得利用下载文献进行商业化使用；不得运行游戏或访问娱乐视频网站。"
+      ],
+      "tags": [
+        "国家图书馆",
+        "数字阅览",
+        "馆内服务",
+        "免费学习"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-2125d149ed219065e5df",
+      "status": "published",
+      "discoveredAt": "2026-10-27T21:30:46.584Z",
+      "verifiedAt": "2026-10-27T21:32:26.523Z",
+      "featured": false,
+      "source": {
+        "name": "中国国家图书馆",
+        "url": "https://www.nlc.cn/web/dzzn/ds_bjyxz/index.shtml",
+        "evidence": "借阅须知明确数字阅览免费，读者在服务台刷卡登记后每次可上机2小时；满位或继续使用需等候分配，15周岁及以下读者在少年儿童馆使用。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T21:32:26.523Z",
+        "evidenceHash": "af225c89f430973b6a3e2e58ba8986650d931e20c72a6d028ecf6e64326ac758",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "数字阅览服务为免费服务"
+          },
+          {
+            "field": "benefit",
+            "quote": "可上机2小时"
+          },
+          {
+            "field": "eligibility",
+            "quote": "每位读者"
+          },
+          {
+            "field": "eligibility",
+            "quote": "15周岁及以下读者在少年儿童馆"
+          },
+          {
+            "field": "steps",
+            "quote": "每次在服务台刷卡登记后"
+          },
+          {
+            "field": "steps",
+            "quote": "请到管理员处等候分配，刷卡上机"
           }
         ]
       }

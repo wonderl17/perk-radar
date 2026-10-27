@@ -146,5 +146,51 @@
     "kind": "page",
     "region": "global",
     "maxBytes": 2097152
+  },
+  {
+    "id": "auto-source-fbf5f90bcd6a68f906ef",
+    "name": "Google开发者计划",
+    "url": "https://developers.google.com/program/plans-and-pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "developers.google.com",
+      "www.developers.google.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-27T18:05:49.216Z",
+      "query": "Firebase Studio AI coding free plan limits official",
+      "homepageUrl": "https://developers.google.com/",
+      "searchUrl": "https://developers.google.com/program/plans-and-pricing",
+      "evidenceHash": "91aa61cca4dfe7f4920c2901adda5d6fe4c23cdcf0d177e823c33c326787e09b",
+      "homepageHash": "42cdd97096c74debbe7b16ddc2fb4e3b301820250e4e23f63d6a4d24b2b34636",
+      "identityQuote": "Google AI Studio is the fastest path prompt to app with Gemini.",
+      "benefitQuote": "Google Skills Access to the entire catalog of 700+ courses, hands-on labs, and skill badges. 35 credits/month (with GEAR signup)"
+    }
+  },
+  {
+    "id": "auto-source-6bf1b94432022d2ce011",
+    "name": "谷歌 Firebase 官方站",
+    "url": "https://firebase.google.com/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "firebase.google.com",
+      "www.firebase.google.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-27T18:06:07.146Z",
+      "query": "Firebase Studio AI coding free plan limits official",
+      "homepageUrl": "https://firebase.google.com/",
+      "searchUrl": "https://firebase.google.com/pricing",
+      "evidenceHash": "55b3d51e315008c93d5ef3cd899898c22d91356d4ac3658c9a99b4ee6dbe9fa6",
+      "homepageHash": "328beca251256f54021911b0cb7b50faac6ad8bec51472482c0ed8d61d5a598d",
+      "identityQuote": "Firebase is a platform of services to help you and AI agents build and run intelligent apps with more speed, security, and scalability.",
+      "benefitQuote": "Firebase Studio No-cost for three workspaces"
+    }
   }
 ]

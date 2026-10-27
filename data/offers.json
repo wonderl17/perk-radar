@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T14:03:46.509Z",
+  "updatedAt": "2026-10-27T15:00:01.962Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -976,6 +976,78 @@
           {
             "field": "steps",
             "quote": "You can sign up with either a Microsoft account or a GitHub account."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Notion 创业计划：合资格企业可免费用 Business 1至6个月",
+      "provider": "Notion",
+      "summary": "新的非付费企业客户可申请免费 Business Plan，含每月 AI 积分；合作伙伴初创企业可获6个月，非合作伙伴可获3个月，中小企业等可获1个月，均须审核。",
+      "benefit": "免费 Business 1至6个月，含每月AI积分",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "接受申请，须经 Notion 审核；免费时长按企业类型、合作伙伴关系及资格核验结果确定。页面未列出具体可用国家或地区。",
+      "eligibility": [
+        "必须是新的、当前未使用付费计划的 Notion 客户；权益仅适用于新开通的 Business Plan。",
+        "申请6个月权益须隶属合作伙伴，持有有效 Notion 域名，提供公开公司网站及公司邮箱，员工少于100人，并提交合作伙伴代码。",
+        "3个月及6个月权益面向开发可规模化技术产品或服务的初创企业；非合作伙伴初创企业通过资格核验后可获3个月。",
+        "中小企业、服务型企业、员工少于10人的团队，或无法充分核验初创企业身份的申请者，可能仅获1个月。"
+      ],
+      "steps": [
+        "在官方规则页按企业类型进入对应申请表，提交公司信息供审核。",
+        "如申请合作伙伴6个月权益，先直接向合作伙伴索取专属代码，再填入申请表。",
+        "等待审核通知，官方提示通常需3至5个工作日；获批后会收到邮件，免费 Business Plan 将立即应用至工作区。"
+      ],
+      "caveats": [
+        "申请不保证获批或获得最高时长；网站失效、公司信息不足等会影响核验结果。",
+        "每家公司只能兑换一次，不可与其他优惠或代码叠加；不能用于 Enterprise Plan。",
+        "已付费客户不适用，既往账单不予退款。",
+        "页面未说明每月 AI 积分数量、是否需信用卡、试用结束后的续费及计费方式，申请前需核对相关条款。"
+      ],
+      "tags": [
+        "Notion",
+        "创业福利",
+        "企业试用",
+        "Business Plan",
+        "AI积分"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-7576c866bb3244cf8376",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:19:36.029Z",
+      "verifiedAt": "2026-10-27T14:59:51.277Z",
+      "featured": false,
+      "source": {
+        "name": "Notion 官方规则",
+        "url": "https://www.notion.com/help/notion-for-startups",
+        "evidence": "官方创业计划规则提供1至6个月免费 Business Plan，含每月 AI 积分；须为新的非付费客户，按合作伙伴关系及企业资格审核，获批后通过邮件确认并立即生效。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T14:59:51.277Z",
+        "evidenceHash": "c20c29a39cc1e82d113c054bfa325566bb0d83f337445342d0a9fd2e2ba31861",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "1-6 months free of Notion's Business Plan"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Be a new, non-paying Notion customer"
+          },
+          {
+            "field": "steps",
+            "quote": "Submit our form to check your eligibility."
+          },
+          {
+            "field": "steps",
+            "quote": "Request a code from your partner"
           }
         ]
       }

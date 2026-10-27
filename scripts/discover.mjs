@@ -80,13 +80,19 @@ export async function discoverSources({ root = ROOT, config, callImpl = callJson
     const document = await readJson(resolve(root, 'data/offers.json'), { offers: [] });
     const known = new Set([...sources.map(s => canonicalUrl(s.url)), ...document.offers.map(o => canonicalUrl(o.source.url))]);
     const knownHosts = [...new Set(sources.map(s => new URL(s.url).hostname))];
-    const context = { now, timezone: 'Asia/Shanghai', topic: TOPICS[(state.round || 0) % TOPICS.length], maxQueries: settings.maxQueriesPerScan, knownHosts, previousQueries: state.queries || [], existingBenefits: document.offers.slice(-40).map(o => ({ title: o.title, url: o.source.url })) };
+    const context = { now, timezone: 'Asia/Shanghai', topic: TOPICS[(state.round || 0) % TOPICS.length], maxQueries: 2, knownHosts, previousQueries: state.queries || [], existingBenefits: document.offers.slice(-40).map(o => ({ title: o.title, url: o.source.url })) };
     const plan = (await callImpl({ config, name: 'discovery_query_plan', schema: QUERY_SCHEMA, system: PLAN, prompt: JSON.stringify(context) })).value;
-    if (!Array.isArray(plan?.queries) || plan.queries.length < 2 || plan.queries.length > settings.maxQueriesPerScan || !['cn', 'global'].every(r => plan.queries.some(q => q.region === r))) throw new Error('GPT search plan must cover China and global');
+    if (!Array.isArray(plan?.queries) || plan.queries.length !== 2 || !['cn', 'global'].every(r => plan.queries.some(q => q.region === r))) throw new Error('GPT initial search plan must cover China and global in two queries');
     const queries = new Set();
-    const results = [];
-    for (const item of plan.queries) {
-      if (typeof item.query !== 'string' || item.query.trim().length < 4 || item.query.length > 240 || !['cn', 'global'].includes(item.region) || queries.has(normalized(item.query))) throw new Error('Invalid or repeated GPT query');
+    const results = [], searchLeads = [];
+    async function executeQueries(batch) {
+      if (!Array.isArray(batch) || report.queries.length + batch.length > settings.maxQueriesPerScan) throw new Error('Search budget exceeded');
+      const pending = new Set(queries);
+      for (const item of batch) {
+        if (typeof item?.query !== 'string' || item.query.trim().length < 4 || item.query.length > 240 || !['cn', 'global'].includes(item.region) || pending.has(normalized(item.query))) throw new Error('Invalid or repeated GPT query');
+        pending.add(normalized(item.query));
+      }
+      for (const item of batch) {
       queries.add(normalized(item.query)); report.queries.push({ query: item.query.trim(), region: item.region });
       try {
         const response = await searchImpl({ query: item.query.trim(), limit: settings.resultsPerQuery });
@@ -94,12 +100,22 @@ export async function discoverSources({ root = ROOT, config, callImpl = callJson
         for (const raw of (response.results || []).slice(0, settings.resultsPerQuery)) {
           try {
             const url = publicUrl(raw.url); const key = canonicalUrl(url.href);
+            if (!searchLeads.some(x => x.url === key)) searchLeads.push({ url: key, title: String(raw.title || '').slice(0, 240), description: String(raw.description || '').slice(0, 700) });
             if (known.has(key) || results.some(x => x.url === key) || isSharedHost(url.hostname)) continue;
             const past = seen.get(key);
             if (past && Date.parse(now) - Date.parse(past.at) < settings.candidateCooldownHours * 3600000) continue;
             results.push({ resultId: results.length, url: key, title: String(raw.title || '').slice(0, 240), description: String(raw.description || '').slice(0, 700), query: item.query.trim(), region: item.region });
           } catch { /* Search metadata cannot authorize a network request. */ }
         }
+      } catch { report.failed++; }
+      }
+    }
+    await executeQueries(plan.queries);
+    const remaining = settings.maxQueriesPerScan - report.queries.length;
+    if (remaining >= 2) {
+      try {
+        const followup = (await callImpl({ config, name: 'discovery_followup_plan', schema: QUERY_SCHEMA, system: `${PLAN}\n这是根据真实搜索结果继续调查的一轮。根据材料中出现的新品牌、福利线索和未找到的官方规则，生成更具体的官方查询。媒体/社区只作线索，不能因此认定官方身份；用后续搜索找到真正的第一方规则。不要重复已执行查询，最多使用给定剩余预算；没有值得追踪的内容可以queries为空。`, prompt: JSON.stringify({ ...context, maxQueries: remaining, executedQueries: report.queries, searchLeads }) })).value;
+        await executeQueries(followup?.queries);
       } catch { report.failed++; }
     }
     report.searchResults = results.length;
@@ -113,7 +129,7 @@ export async function discoverSources({ root = ROOT, config, callImpl = callJson
       const item = results.find(r => r.resultId === candidate.resultId);
       if (!item || selected.has(candidate.resultId) || !['cn', 'global'].includes(candidate.region)) { report.held++; continue; }
       selected.add(candidate.resultId); report.considered++;
-      const record = { url: item.url, outcome: 'review', reason: '' };
+      const record = { url: item.url, query: item.query, outcome: 'review', reason: '', stage: 'rules-fetch' };
       try {
         const parsed = publicUrl(item.url);
         const allowedHosts = hostForms(parsed.hostname);
@@ -122,16 +138,21 @@ export async function discoverSources({ root = ROOT, config, callImpl = callJson
         if (!allowedHosts.includes(actual.hostname) || isSharedHost(actual.hostname)) throw new Error('Final source host is not eligible');
         const homepageUrl = `${actual.origin}/`;
         if (canonicalUrl(homepageUrl) === canonicalUrl(actual.href)) throw new Error('Needs a separate official rules page');
+        record.stage = 'identity-fetch';
         const homepage = await fetchPageImpl(homepageUrl, { allowedHosts });
+        record.stage = 'page-relationship';
         if (!allowedHosts.includes(publicUrl(homepage.url).hostname)) throw new Error('Homepage host mismatch');
         if (!linksTo(homepage.text, homepage.url, actual.href) && !linksTo(page.text, actual.href, homepage.url) && !linksTo(page.text, actual.href, homepageUrl)) throw new Error('No verifiable link between homepage and rules');
         const benefitText = pageText(page.text), homepageText = pageText(homepage.text);
+        record.stage = 'evidence-validation';
         if (benefitText.length < 180 || homepageText.length < 80 || benefitText.length > 42000 || homepageText.length > 42000) throw new Error('Official identity or rules evidence is incomplete or too long');
+        record.stage = 'official-audit';
         const audit = (await callImpl({ config, name: 'discovery_official_source_audit', schema: SOURCE_SCHEMA, system: VERIFY, prompt: JSON.stringify({ now, searchResult: item, sourceUrl: actual.href, homepageUrl: homepage.url, homepageText, benefitText }) })).value;
         const errors = validateSourceAudit(audit, { homepageText, benefitText });
         if (errors.length) { record.reason = errors.join('; '); record.outcome = audit?.decision === 'reject' ? 'rejected' : 'review'; }
         else {
           const url = canonicalUrl(actual.href);
+          record.stage = 'registry-validation';
           const source = { id: `auto-source-${candidateId(url)}`, name: audit.sourceName.trim(), url, kind: 'page', region: audit.region, allowedHosts,
             discovery: { method: 'gpt-web-search', model: config.model, discoveredAt: nowFn(), query: item.query, homepageUrl: homepage.url, searchUrl: item.url, evidenceHash: hash(benefitText), homepageHash: hash(homepageText), identityQuote: audit.identityQuote, benefitQuote: audit.benefitQuote } };
           if (!validateSources([source])) throw new Error('Source proof is not eligible for the public registry');

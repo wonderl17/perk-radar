@@ -6,6 +6,7 @@ const PUBLIC_ERROR = 'Public source request failed.';
 const TIMEOUT_ERROR = 'Public source request timed out.';
 const MAX_BYTES = 4 * 1_048_576;
 const CONTENT_TYPE = /^(?:text\/(?:html|plain|xml)|application\/(?:xhtml\+xml|(?:[a-z0-9.+-]+\+)?xml|(?:[a-z0-9.+-]+\+)?json))(?:\s*;|$)/i;
+function sourcePolicyError(message) { return Object.assign(new Error(message), { code: 'SOURCE_POLICY' }); }
 
 function ipv4Number(address) {
   const parts = address.split('.').map(Number);
@@ -43,14 +44,14 @@ function publicAddress(address) {
 }
 function checkedUrl(value, allowedHosts) {
   let url;
-  try { url = new URL(value); } catch { throw new Error('Public source URL is not allowed.'); }
+  try { url = new URL(value); } catch { throw sourcePolicyError('Public source URL is not allowed.'); }
   const host = url.hostname.toLowerCase();
   const bareHost = host.replace(/^\[|\]$/g, '');
   if (url.protocol !== 'https:' || url.username || url.password || (url.port && url.port !== '443') || isIP(bareHost)
     || !host.includes('.') || host.length > 253 || host.endsWith('.')
     || /(?:^|\.)(?:localhost|local|internal|localdomain|home|lan)$/.test(host)
     || !host.split('.').every(part => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(part))
-    || !allowedHosts.includes(host)) throw new Error('Public source URL is not allowed.');
+    || !allowedHosts.includes(host)) throw sourcePolicyError('Public source URL is not allowed.');
   url.hash = '';
   return url;
 }
@@ -74,7 +75,7 @@ async function resolvedAddresses(host, lookupImpl, signal) {
   catch { throw new Error(signal.aborted ? TIMEOUT_ERROR : 'Public source DNS could not be verified.'); }
   if (!Array.isArray(answers) || !answers.length || answers.length > 64
     || answers.some(answer => !answer || !publicAddress(answer.address) || isIP(answer.address) !== answer.family)) {
-    throw new Error('Public source DNS is not globally routable.');
+    throw sourcePolicyError('Public source DNS is not globally routable.');
   }
   return answers.map(({ address, family }) => ({ address, family }));
 }
@@ -168,7 +169,7 @@ export async function fetchPublicText(value, {
       const result = await requestText(target, addresses, { requestImpl, maxBytes, signal: controller.signal });
       if (!result.redirect) return result;
       try { target = checkedUrl(new URL(result.redirect, target).href, allowedHosts); }
-      catch { throw new Error('Public source redirect is not allowed.'); }
+      catch { throw sourcePolicyError('Public source redirect is not allowed.'); }
     }
     throw new Error('Public source redirect limit exceeded.');
   } finally { clearTimeout(timer); }

@@ -12,7 +12,7 @@ const RULES = 'https://novacloud.example.com/free-plan';
 const HOME = 'https://novacloud.example.com/';
 const CONFIG = { model: 'gpt-test', apiKey: 'test-only', baseUrl: 'https://model.example.com', apiMode: 'chat_completions', reasoningEffort: 'medium' };
 const ORIGINAL = { id: 'manual-source', name: 'Original official rules', url: 'https://original.example.com/free', kind: 'page', region: 'cn' };
-const SETTINGS = { enabled: true, maxQueriesPerScan: 4, resultsPerQuery: 5, maxCandidatesPerScan: 3, maxNewSourcesPerScan: 2, maxSources: 200, intervalMinutes: 60, candidateCooldownHours: 24 };
+const SETTINGS = { enabled: true, maxQueriesPerScan: 2, resultsPerQuery: 5, maxCandidatesPerScan: 3, maxNewSourcesPerScan: 2, maxSources: 200, intervalMinutes: 60, candidateCooldownHours: 24 };
 const HOME_TEXT = 'NovaCloud by Nova Labs. Nova Labs develops and operates the NovaCloud product, customer account dashboard, billing and support. This official product website provides the current plans and terms for NovaCloud customers.';
 const RULES_TEXT = 'Receive 500 free credits each month. Registered individual users in supported regions can open the dashboard and choose the free plan. No credit card is required. Unused credits expire at the end of the monthly billing period and cannot be exchanged for cash. Usage above the free quota requires a separate paid plan, and account abuse is prohibited.';
 const html = text => `<html><body><main>${text}</main></body></html>`;
@@ -35,12 +35,13 @@ async function fixture(t, { sources = [ORIGINAL], settings = {}, candidates = []
   if (state) await put('work/discovery-state.json', state);
   return { root, put, read: async path => JSON.parse(await readFile(join(root, path), 'utf8')), text: async path => readFile(join(root, path), 'utf8') };
 }
-function fakeCalls({ queryPlan = plan(), selection = { candidates: [{ resultId: 0, region: 'global', reason: '新官方计划' }] }, sourceAudit = audit(), onAudit } = {}) {
+function fakeCalls({ queryPlan = plan(), followupPlan = { queries: [] }, selection = { candidates: [{ resultId: 0, region: 'global', reason: '新官方计划' }] }, sourceAudit = audit(), onAudit, onFollowup } = {}) {
   const calls = [];
   const callImpl = async request => {
     calls.push(request);
     let value;
     if (request.name === 'discovery_query_plan') value = queryPlan;
+    else if (request.name === 'discovery_followup_plan') { await onFollowup?.(request); value = followupPlan; }
     else if (request.name === 'discovery_result_selection') value = selection;
     else if (request.name === 'discovery_official_source_audit') {
       await onAudit?.(request);
@@ -327,6 +328,86 @@ test('query, search-result, selected-candidate and new-source budgets bound paid
   assert.equal(overSelectionReport.added, 0);
   assert.equal(overSelectionRun.fetched.length, 0);
   assert.equal(excessiveSelection.calls.length, 2);
+});
+
+test('adaptive followup searches use actual media leads to find a new official source within the same four-query budget', async t => {
+  const fs = await fixture(t, { settings: { maxQueriesPerScan: 4 } });
+  const media = hit('https://medium.com/product-news/novacloud-free', { title: 'NovaCloud announces a new free plan', description: 'Nova Labs says the NovaCloud free plan includes monthly credits; consult the official rules.' });
+  const community = hit('https://reddit.com/r/newproducts/novacloud', { title: 'New NovaCloud free credits discussion' });
+  const followupPlan = { queries: [{ query: 'NovaCloud Nova Labs official free plan pricing', region: 'global' }, { query: 'NovaCloud 官方 免费方案 领取条件', region: 'cn' }] };
+  let followupContext;
+  const model = fakeCalls({ followupPlan, onFollowup: request => { followupContext = JSON.parse(request.prompt); } });
+  const run = options(fs.root, { ...model, hits: ({ query }) => plan().queries.some(item => item.query === query) ? [media, community] : [hit()] });
+  const report = await discoverSources(run);
+  assert.equal(report.added, 1);
+  assert.equal(report.failed, 0);
+  assert.equal(report.searchResults, 1, 'media/community metadata are leads, never eligible official evidence');
+  assert.equal(report.queries.length, 4);
+  assert.deepEqual(run.searches.map(item => item.query), [...plan().queries, ...followupPlan.queries].map(item => item.query));
+  assert.equal(JSON.parse(model.calls[0].prompt).maxQueries, 2);
+  assert.equal(followupContext.maxQueries, 2);
+  assert.deepEqual(followupContext.executedQueries, plan().queries);
+  assert.deepEqual(followupContext.searchLeads.map(item => item.url), [media.url, community.url]);
+  assert.equal(followupContext.searchLeads[0].description, media.description);
+  const selectionContext = JSON.parse(model.calls.find(item => item.name === 'discovery_result_selection').prompt);
+  assert.deepEqual(selectionContext.results.map(item => item.url), [RULES]);
+  assert.deepEqual(run.fetched.map(item => item.url), [RULES, HOME]);
+  assert.deepEqual(model.calls.map(item => item.name), ['discovery_query_plan', 'discovery_followup_plan', 'discovery_result_selection', 'discovery_official_source_audit']);
+  const added = (await fs.read('data/sources.json'))[1];
+  assert.equal(added.discovery.query, followupPlan.queries[0].query);
+  assert.equal(report.results[0].query, followupPlan.queries[0].query);
+  assert.equal(report.results[0].stage, 'registry-validation');
+});
+
+test('malformed, duplicate and overbudget adaptive plans cannot execute partial extra searches or fetch invented URLs', async t => {
+  const cases = [
+    { label: 'invented URL instead of queries', value: { candidates: [{ resultId: 0, url: RULES }] } },
+    { label: 'missing query text', value: { queries: [{ url: RULES, region: 'global' }] } },
+    { label: 'duplicate initial query', value: { queries: [{ query: 'new refined official query', region: 'global' }, { ...plan().queries[0] }] } },
+    { label: 'duplicate within followup batch', value: { queries: [{ query: 'refined official query', region: 'global' }, { query: '  REFINED   OFFICIAL QUERY  ', region: 'cn' }] } },
+    { label: 'overbudget', value: { queries: [0, 1, 2].map(index => ({ query: `refined official query ${index}`, region: 'global' })) } },
+    { label: 'invalid region', value: { queries: [{ query: 'refined official query', region: 'all' }] } },
+  ];
+  for (const { label, value } of cases) await t.test(label, async st => {
+    const fs = await fixture(st, { settings: { maxQueriesPerScan: 4 } });
+    const model = fakeCalls({ followupPlan: value });
+    const run = options(fs.root, { ...model, hits: [hit('https://medium.com/product-news/unverified-offer')] });
+    const report = await discoverSources(run);
+    assert.equal(report.failed, 1);
+    assert.equal(report.added, 0);
+    assert.equal(report.queries.length, 2);
+    assert.equal(run.searches.length, 2, 'validate the complete followup batch before searching any of it');
+    assert.equal(run.fetched.length, 0);
+    assert.deepEqual(model.calls.map(item => item.name), ['discovery_query_plan', 'discovery_followup_plan']);
+    assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
+  });
+});
+
+test('a followup model failure preserves vetted initial candidates and records a safe failure count', async t => {
+  const fs = await fixture(t, { settings: { maxQueriesPerScan: 4 } });
+  const model = fakeCalls({ onFollowup: () => { throw new Error('private-provider-error-text'); } });
+  const run = options(fs.root, model);
+  const report = await discoverSources(run);
+  assert.equal(report.failed, 1);
+  assert.equal(report.status, 'completed');
+  assert.equal(report.added, 1);
+  assert.equal(run.searches.length, 2);
+  assert.equal(report.queries.length, 2);
+  assert.deepEqual(run.fetched.map(item => item.url), [RULES, HOME]);
+  assert(!JSON.stringify(report).includes('private-provider-error-text'));
+  assert.equal((await fs.read('data/sources.json'))[1].url, RULES);
+});
+
+test('GPT may stop adaptive investigation with an empty plan and cannot directly nominate a page to fetch', async t => {
+  const fs = await fixture(t, { settings: { maxQueriesPerScan: 4 } });
+  const model = fakeCalls({ followupPlan: { queries: [], url: 'https://invented.example.com/credits' } });
+  const run = options(fs.root, { ...model, hits: [] });
+  const report = await discoverSources(run);
+  assert.equal(report.failed, 0);
+  assert.equal(report.added, 0);
+  assert.equal(report.queries.length, 2);
+  assert.equal(run.fetched.length, 0);
+  assert.deepEqual(model.calls.map(item => item.name), ['discovery_query_plan', 'discovery_followup_plan']);
 });
 
 test('disabled and invalid discovery configuration cannot silently perform network/model work', async t => {

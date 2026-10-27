@@ -188,7 +188,7 @@ export async function ingest({ root = ROOT, config, callImpl = callJson, fetchIm
             }
           }
         }
-      } catch (error) { record.outcome = error.code === 'EVIDENCE_TRUNCATED' ? 'review' : 'failed'; record.reason = String(error.message || 'Ingestion failed').replaceAll(config.apiKey || '\u0000', '[redacted]').slice(0, 800); }
+      } catch (error) { record.outcome = ['EVIDENCE_TRUNCATED', 'SOURCE_POLICY'].includes(error.code) ? 'review' : 'failed'; record.reason = String(error.message || 'Ingestion failed').replaceAll(config.apiKey || '\u0000', '[redacted]').slice(0, 800); }
       await withDataLock(root, async () => {
         if (existing && record.outcome === 'review') {
           const latest = await readJson(resolve(root, 'data/offers.json'));

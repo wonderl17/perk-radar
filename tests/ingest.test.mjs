@@ -311,3 +311,13 @@ test('a fresh autonomous discovery gets a slot despite a backlog of old changed 
   assert(batch.includes(fresh));
   assert.equal(new Set(batch).size, 6);
 });
+
+test('an unapproved cross-host redirect is held for evidence review instead of repeatedly retried as a network failure', async t => {
+  const fs = await fixture(t);
+  const model = fakeCalls();
+  const report = await ingest(options(fs.root, { ...model, fetchImpl: async () => { throw Object.assign(new Error('Public source redirect is not allowed.'), { code: 'SOURCE_POLICY' }); } }));
+  assert.equal(report.held, 1);
+  assert.equal(report.failed, 0);
+  assert.equal(model.calls.length, 0);
+  assert.equal((await fs.read('work/candidates.json')).candidates[0].status, 'review');
+});

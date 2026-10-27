@@ -35,7 +35,7 @@ npm run check:data
 npm run build
 ```
 
-扫描默认每6小时一次，失败15分钟重试，每轮最多6份证据；配置在 `data/runtime.json`。执行状态保存在持久磁盘的 `work/scan-state.json`，重启不会提前重复扫描；服务停止或电脑关机期间不扫描。
+扫描默认每1小时一次，失败15分钟重试，每轮最多6份证据；配置在 `data/runtime.json`。执行状态保存在持久磁盘的 `work/scan-state.json`，重启不会提前重复扫描；服务停止或电脑关机期间不扫描。
 
 ## GPT 自动收录
 

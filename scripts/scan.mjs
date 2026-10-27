@@ -6,7 +6,7 @@ import { ingest } from './ingest.mjs';
 
 const MINUTE = 60000;
 const BUSY_RECHECK_MS = 30000;
-const DEFAULTS = { scanIntervalMinutes: 360, maxItemsPerScan: 6, retryIntervalMinutes: 15 };
+const DEFAULTS = { scanIntervalMinutes: 60, maxItemsPerScan: 6, retryIntervalMinutes: 15 };
 const RESULT_COUNTS = ['examined', 'published', 'updated', 'flagged', 'held', 'rejected', 'failed'];
 const SCAN_ERROR = 'Automatic scan failed; inspect the local ingestion report before retrying.';
 

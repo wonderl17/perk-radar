@@ -1,6 +1,6 @@
 # 定期扫描与公开数据
 
-运行 `npm start` 同时启动 HTTP 服务和项目内定期扫描。默认每6小时检查一次，每轮最多处理6份官方证据，失败15分钟后重试。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
+运行 `npm start` 同时启动 HTTP 服务和项目内定期扫描。默认每1小时检查一次，每轮最多处理6份官方证据，失败15分钟后重试。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
 
 `work/scan-state.json` 保存执行状态、上次成功和下一次时间；`npm run scan:status` 只查询，`npm run scan:due` 仅在到期时扫描。共享锁避免与常驻服务重复执行。工作目录必须位于持久磁盘；复制仓库不包含该本机运行状态。
 

@@ -71,9 +71,9 @@ RSS `/feed.xml` 按首次收录时间排序，指向官方活动页面；构建�
 
 ## 定时运行边界
 
-项目内调度随 `npm start` 运行，启动即检查是否到期，默认每 6 小时扫描，每轮最多处理 6 份证据，执行失败 15 分钟后重试。`data/runtime.json` 配置间隔与数量，`work/scan-state.json` 保存上次成功与下一次扫描时间；重启不会提前重复调用模型。`npm run scan:due` 使用同一到期检查与跨进程锁，`npm run scan:status` 只查看状态。
+项目内调度随 `npm start` 运行，启动即检查是否到期，默认每 1 小时扫描，每轮最多处理 6 份证据，执行失败 15 分钟后重试。`data/runtime.json` 配置间隔与数量，`work/scan-state.json` 保存上次成功与下一次扫描时间；重启不会提前重复调用模型。`npm run scan:due` 使用同一到期检查与跨进程锁，`npm run scan:status` 只查看状态。
 
-现有 Codex 任务每 6 小时调用 `scan:due` 作为兜底，并检查是否有尚未部署的变化。项目自身扫描只需电脑、Node 服务、Hermes 配置和网络，不依赖 Codex；兜底任务同步正式数据至 `wonderl17/perk-radar` 的 `luke/main` 生产分支后，由 Vercel Git 集成构建静态网站。即使本轮扫描跳过，也会检查之前未同步的数据和未完成的 Vercel 发布。Vercel 不运行本机模型或扫描调度。具体步骤见 `docs/automation.md`。下文 GitHub Actions 是独立、尚未启用的原始发现配置。
+现有 Codex 任务每 1 小时调用 `scan:due` 作为兜底，并检查是否有尚未部署的变化。项目自身扫描只需电脑、Node 服务、Hermes 配置和网络，不依赖 Codex；兜底任务同步正式数据至 `wonderl17/perk-radar` 的 `luke/main` 生产分支后，由 Vercel Git 集成构建静态网站。即使本轮扫描跳过，也会检查之前未同步的数据和未完成的 Vercel 发布。Vercel 不运行本机模型或扫描调度。具体步骤见 `docs/automation.md`。下文 GitHub Actions 是独立、尚未启用的原始发现配置。
 
 `docs/examples/collect.workflow.yml` 提供每天北京时间 09:15 的原始采集工作流和手动触发入口。只有把项目上传到启用 Actions 的 GitHub 仓库后才会运行；当前尚未启用远端定时执行。这个工作流仅运行 `collect`，上传候选、变化和健康 artifact，并缓存候选历史与正文 baseline，不调用本机 Hermes、不执行 GPT 自动收录，也不自动发布。
 

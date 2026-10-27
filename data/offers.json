@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T08:44:00.056Z",
+  "updatedAt": "2026-10-27T14:03:46.509Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -899,6 +899,83 @@
           {
             "field": "expiresAt",
             "quote": "October 31, 2026, 00:00 UTC"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Azure 国际版新客：200美元云额度，30天内使用",
+      "provider": "Microsoft Azure",
+      "summary": "Azure 新客户注册免费账户可获200美元云额度，创建账户后30天内使用。需银行卡验证；不主动转为按量付费不会收费。",
+      "benefit": "200美元云额度，30天内使用",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "仅限注册页面支持的国家和地区，账单地址须与所选地区一致；不适用于 Azure 中国、美国政府及德国主权云产品。",
+      "eligibility": [
+        "仅限 Azure 新客户，每位新客户限一个含免费服务及200美元额度的账户。",
+        "需要电话号码、Microsoft 或 GitHub 账户，以及信用卡或非预付借记卡。",
+        "香港和巴西仅接受信用卡；所在国家或地区须出现在注册页面列表中。"
+      ],
+      "steps": [
+        "打开官方账户页面，选择“Try Azure for free”。",
+        "使用 Microsoft 或 GitHub 账户注册，提供电话号码和银行卡完成身份验证；国家或地区选择与账单地址一致的地点。",
+        "创建免费账户后，在30天内使用200美元额度体验 Azure 服务；可在 Azure 门户的 Microsoft Cost Management 查看剩余额度。"
+      ],
+      "caveats": [
+        "注册验证可能产生1美元或等值金额的临时预授权，验证后撤销。",
+        "免费账户不会自动收费；额度用尽或30天到期时，若不转为按量付费，账户和服务将被停用。",
+        "如需继续使用免费服务，须在30天内或额度用尽时（以较早者为准）转为按量付费；转付费后超出每月免费量的用量会收费，限时免费服务到期后继续运行也会收费。",
+        "提前转为按量付费不会延长额度有效期，剩余额度仍仅可在创建免费账户后的30天内使用。",
+        "额度不可用于 Azure Marketplace 产品或 Azure Spot 虚拟机，也不能与 Azure Hybrid Benefit 叠加。",
+        "这是 Azure 国际版免费账户权益，并非无需信用卡的学生计划，也不适用于 Azure 中国主权云。"
+      ],
+      "tags": [
+        "Azure",
+        "云服务",
+        "新用户",
+        "需银行卡",
+        "国际版"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-98832809eacd09824771",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:19:36.029Z",
+      "verifiedAt": "2026-10-27T14:03:34.989Z",
+      "featured": false,
+      "source": {
+        "name": "Microsoft Azure 官方规则",
+        "url": "https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=students",
+        "evidence": "官方免费账户方案明确提供新客户200美元额度，有效期为创建账户后30天；注册需电话和银行卡验证，不主动转按量付费不会收费，且列明地区及主权云限制。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T14:03:34.989Z",
+        "evidenceHash": "5495aa6b7f4c152e5b6bd800c66734be30939b4d60a777b9a85629e036c07c6d",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "$200 credit"
+          },
+          {
+            "field": "benefit",
+            "quote": "You have up to 30 days to use your credit."
+          },
+          {
+            "field": "eligibility",
+            "quote": "Available only to new Azure customers"
+          },
+          {
+            "field": "steps",
+            "quote": "Try Azure for free"
+          },
+          {
+            "field": "steps",
+            "quote": "You can sign up with either a Microsoft account or a GitHub account."
           }
         ]
       }

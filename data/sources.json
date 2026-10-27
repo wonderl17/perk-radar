@@ -192,5 +192,51 @@
       "identityQuote": "Firebase is a platform of services to help you and AI agents build and run intelligent apps with more speed, security, and scalability.",
       "benefitQuote": "Firebase Studio No-cost for three workspaces"
     }
+  },
+  {
+    "id": "auto-source-b0a07054f91218f3f75b",
+    "name": "JetBrains官方许可与购买帮助中心",
+    "url": "https://sales.jetbrains.com/hc/en-gb/articles/207241195-Do-you-offer-free-educational-licenses-for-students-and-teachers",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "sales.jetbrains.com",
+      "www.sales.jetbrains.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-27T20:10:22.885Z",
+      "query": "site.jetbrains.com students free educational license renewal eligibility",
+      "homepageUrl": "https://sales.jetbrains.com/hc/en-gb",
+      "searchUrl": "https://sales.jetbrains.com/hc/en-gb/articles/207241195-Do-you-offer-free-educational-licenses-for-students-and-teachers",
+      "evidenceHash": "b7fe876cb8a141396c9d76b8285af603dace63be6f3b98acd6f43a444f527ab4",
+      "homepageHash": "5d73b5a136c9a652bc62793d955e76b8e0a0e3050a0f34cdc5c963d9351aa84c",
+      "identityQuote": "JetBrains Account user guide",
+      "benefitQuote": "Students and teachers can get the JetBrains Student or Teacher Pack for free."
+    }
+  },
+  {
+    "id": "auto-source-be80f0a7e4363a4f8e97",
+    "name": "JetBrains官方许可与购买帮助中心",
+    "url": "https://sales.jetbrains.com/hc/en-gb/articles/11564534574994-How-can-I-renew-my-free-educational-license-for-another-year",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "sales.jetbrains.com",
+      "www.sales.jetbrains.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-27T20:10:35.934Z",
+      "query": "site.jetbrains.com students free educational license renewal eligibility",
+      "homepageUrl": "https://sales.jetbrains.com/hc/en-gb",
+      "searchUrl": "https://sales.jetbrains.com/hc/en-gb/articles/11564534574994-How-can-I-renew-my-free-educational-license-for-another-year",
+      "evidenceHash": "98897e18aab2117c6d0b777b307d1ae813f15577e53c58ef70e7d6d18762dd10",
+      "homepageHash": "5d73b5a136c9a652bc62793d955e76b8e0a0e3050a0f34cdc5c963d9351aa84c",
+      "identityQuote": "JetBrains Account user guide",
+      "benefitQuote": "If you're still studying or teaching at a full-time educational program, you can renew your free license for another year."
+    }
   }
 ]

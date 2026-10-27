@@ -238,5 +238,28 @@
       "identityQuote": "JetBrains Account user guide",
       "benefitQuote": "If you're still studying or teaching at a full-time educational program, you can renew your free license for another year."
     }
+  },
+  {
+    "id": "auto-source-2125d149ed219065e5df",
+    "name": "中国国家图书馆",
+    "url": "https://www.nlc.cn/web/dzzn/ds_bjyxz/index.shtml",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "www.nlc.cn",
+      "nlc.cn"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-27T21:30:46.576Z",
+      "query": "国家图书馆 数字资源 免费 读者注册 官方",
+      "homepageUrl": "https://www.nlc.cn/web/index.shtml",
+      "searchUrl": "https://www.nlc.cn/web/dzzn/ds_bjyxz/index.shtml",
+      "evidenceHash": "af225c89f430973b6a3e2e58ba8986650d931e20c72a6d028ecf6e64326ac758",
+      "homepageHash": "dbfe83a7eb31cfae97c3f8a41909ab322db1b419a237694e58ce2149c0aadbf6",
+      "identityQuote": "© 中国国家图书馆版权所有",
+      "benefitQuote": "1、数字阅览服务为免费服务，每位读者每次在服务台刷卡登记后可上机2小时，2小时后自动下线（系统提示时请及时保存个人文件），如机位已满或需继续使用，请到管理员处等候分配，刷卡上机。"
+    }
   }
 ]

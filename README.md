@@ -45,7 +45,7 @@ npm run build
 
 ## 网站部署
 
-`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。Vercel 绑定本仓库 `luke/main` 生产分支，提交正式数据后自动部署。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不调用模型，也不需要模型密钥。
+`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。在 Vercel 导入本仓库并绑定 `luke/main` 生产分支后，提交正式数据将自动部署。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不调用模型，也不需要模型密钥。
 
 工作流仅保存在 [`docs/examples/collect.workflow.yml`](docs/examples/collect.workflow.yml) 作为未启用示例。它不是云端GPT服务；启用前自行审阅权限和输出，不要把待审队列或密钥放进公共artifact/cache。
 

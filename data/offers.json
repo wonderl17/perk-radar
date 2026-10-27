@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T02:20:24.590Z",
+  "updatedAt": "2026-10-27T08:44:00.056Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -748,35 +748,35 @@
       }
     },
     {
-      "title": "Qoder 国际版：新用户免费试用 Pro 14天，含300积分",
+      "title": "Qoder 国际版：新用户免费试用 Pro 14 天，含300积分",
       "provider": "Qoder",
-      "summary": "新用户首次登录最新版 Qoder 客户端，可获14天免费 Pro 试用及300积分；不支持虚拟机，每人限一个试用账号。",
-      "benefit": "14天免费 Pro 试用＋300积分",
+      "summary": "新用户首次登录最新版 Qoder 客户端，可获14天免费 Pro 试用及300积分；不支持虚拟机，每人仅限一个试用账号。",
+      "benefit": "14天 Pro 免费试用＋300积分",
       "category": "developer",
       "regions": [
         "global"
       ],
-      "availability": "国际版新用户首次登录客户端可领取；官方未列明具体支持地区或活动截止时间。",
+      "availability": "国际版面向新用户提供，页面未列出具体支持国家或地区，也未公布活动结束日期。",
       "eligibility": [
         "Qoder 国际版新用户，首次登录 Qoder 客户端。",
-        "须使用最新版客户端，虚拟机不可参与。",
+        "须使用最新版客户端，不支持虚拟机。",
         "每位用户仅限一个试用账号。"
       ],
       "steps": [
-        "准备最新版 Qoder 客户端，并在非虚拟机环境使用。",
-        "首次登录客户端，获得14天免费 Pro 试用及300积分。"
+        "使用最新版 Qoder 客户端，在非虚拟机环境中首次登录，即可获得14天 Pro 试用及300积分。"
       ],
       "caveats": [
-        "试用设有合理使用限制，并非无限量使用所有功能。",
-        "同一用户创建额外试用账号会被冻结。",
-        "试用期间升级付费套餐，未使用的赠送积分会转为附加积分包，原到期时间不变。",
-        "页面未说明是否需要绑定信用卡或试用结束后的扣费安排。"
+        "试用设有使用限制，不代表所有功能均可无限使用。",
+        "同一用户创建额外试用账号将被冻结。",
+        "试用期间升级付费计划，未使用的赠送积分会转为附加积分，原到期日不变。",
+        "页面未说明领取试用是否需要绑定信用卡。"
       ],
       "tags": [
         "Qoder国际版",
         "新用户",
         "Pro试用",
-        "AI编程"
+        "AI编程",
+        "免费积分"
       ],
       "publishedAt": null,
       "expiresAt": null,
@@ -784,22 +784,22 @@
       "id": "qoder-pro-new-trial",
       "status": "published",
       "discoveredAt": "2026-10-26T10:15:14Z",
-      "verifiedAt": "2026-10-27T02:20:14.711Z",
+      "verifiedAt": "2026-10-27T08:23:02.731Z",
       "featured": false,
       "source": {
         "name": "Qoder 官方规则",
         "url": "https://docs.qoder.com/account/pricing",
-        "evidence": "定价页的 Pro Trial Rules 明确：新用户首次登录最新版客户端可免费试用 Pro 14天并获300积分，不支持虚拟机，每人限一个试用账号。"
+        "evidence": "官方定价页的 Pro Trial Rules 明确：新用户首次登录最新版客户端可获14天免费 Pro 试用和300积分，不支持虚拟机，每人限一个试用账号。"
       },
       "verification": {
         "method": "gpt",
         "model": "gpt-6.1-sol",
-        "verifiedAt": "2026-10-27T02:20:14.711Z",
-        "evidenceHash": "7ac679b962632750057b4a1e516b484e7319b179df341eb0c2ccb36c4321e8a5",
+        "verifiedAt": "2026-10-27T08:23:02.731Z",
+        "evidenceHash": "2ba0ce39fe54809fda2ceba91d88b73ee995a5ea7cfc74924aa322adc56e7bb1",
         "evidenceQuotes": [
           {
             "field": "benefit",
-            "quote": "free 14-day Pro trial"
+            "quote": "a free 14-day Pro trial"
           },
           {
             "field": "benefit",
@@ -811,7 +811,7 @@
           },
           {
             "field": "eligibility",
-            "quote": "not available on virtual machines"
+            "quote": "requires latest version; not available on virtual machines"
           },
           {
             "field": "eligibility",
@@ -820,10 +820,85 @@
           {
             "field": "steps",
             "quote": "upon their first sign-in to Qoder Client"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Qoder 国际版：Ultimate 错峰积分消耗享2折",
+      "provider": "Qoder",
+      "summary": "具备 Ultimate 使用权限的试用或付费用户，在每日指定时段使用该档，积分倍率由2x降至0.4x；北京时间10月31日08:00结束。",
+      "benefit": "Ultimate 错峰积分消耗2折",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "Qoder 国际版；普通产品每日 UTC 14:00–次日00:00（北京时间22:00–次日08:00）自动享折扣。Service Account 为每日 UTC 17:00–23:00（北京时间次日01:00–07:00）。活动于北京时间2026年10月31日08:00结束。",
+      "eligibility": [
+        "适用于具备 Ultimate 档使用权限且仍有可用积分的 Pro Trial 或付费用户。",
+        "覆盖计划列有 Pro Trial、Lite、Pro、Pro+、Ultra、Teams、Enterprise 和 Service Account，但 Lite 不包含 Ultimate，订阅 Lite 不会解锁该档。",
+        "不在 Pro Trial 期间的 Community 免费用户，以及积分已耗尽的用户，不适用。"
+      ],
+      "steps": [
+        "将 Qoder 更新至最新版本。",
+        "在模型选择器中选择 Ultimate 档。",
+        "在账号适用的错峰时段发起请求，折扣自动生效，无需报名或兑换码。"
+      ],
+      "caveats": [
+        "这是积分消耗折扣，不赠送积分；使用量仍计入套餐额度。",
+        "非错峰时段 Ultimate 按标准2x倍率计费，错峰时段为0.4x。",
+        "积分耗尽后不能继续享受折扣，需升级套餐、购买加量包或等待下一计费周期。",
+        "最后一个普通产品折扣窗口为北京时间2026年10月30日22:00至10月31日08:00。",
+        "权益不可转让或兑换现金；官方保留修改或终止活动的权利。"
+      ],
+      "tags": [
+        "Qoder国际版",
+        "Ultimate",
+        "错峰折扣",
+        "积分消耗优惠"
+      ],
+      "publishedAt": null,
+      "expiresAt": "2026-10-31T00:00:00Z",
+      "offerType": "limited",
+      "id": "auto-1f6e2bfdb301588f8689",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:21:58.394Z",
+      "verifiedAt": "2026-10-27T08:43:46.979Z",
+      "featured": false,
+      "source": {
+        "name": "Qoder 官方规则",
+        "url": "https://docs.qoder.com/events/offpeakrate",
+        "evidence": "官方规则明确 Ultimate 错峰倍率由2x降至0.4x，试用及付费用户按套餐权限自动适用；提供更新、选择档位和时段内使用步骤，截止时间为2026年10月31日00:00 UTC。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T08:43:46.979Z",
+        "evidenceHash": "f29b2c72cc3342308bdbfebdfbd2ddf7b31fe4c638272724fcea9be6d4d05e08",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "0.4x (80% off)"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Pro Trial and paid users are automatically eligible."
+          },
+          {
+            "field": "eligibility",
+            "quote": "Lite does not include Ultimate"
           },
           {
             "field": "steps",
-            "quote": "requires latest version"
+            "quote": "Update Qoder to the latest version."
+          },
+          {
+            "field": "steps",
+            "quote": "Select the Ultimate tier in the model selector."
+          },
+          {
+            "field": "expiresAt",
+            "quote": "October 31, 2026, 00:00 UTC"
           }
         ]
       }

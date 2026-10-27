@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T15:00:01.962Z",
+  "updatedAt": "2026-10-27T18:07:52.497Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1048,6 +1048,150 @@
           {
             "field": "steps",
             "quote": "Request a code from your partner"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Google 开发者计划：注册 GEAR 每月获35学习积分",
+      "provider": "Google Developer Program",
+      "summary": "免费 Standard 计划提供 Google Skills 每月35积分，需额外注册 GEAR，可用于平台学习资源；不代表全部课程与实验无限免费。",
+      "benefit": "Google Skills 每月35积分",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际版计划；页面未列明具体支持或排除地区，不保证所有地区均可领取。",
+      "eligibility": [
+        "加入 Google Developer Program 的 Standard 计划。",
+        "注册 GEAR，方可获得页面所列的每月 Google Skills 积分。"
+      ],
+      "steps": [
+        "在官方计划页面的 Standard 栏点击“Sign In”登录，并通过“Join now”加入。",
+        "完成页面注明的 GEAR 注册条件，以获取每月 Google Skills 积分。"
+      ],
+      "caveats": [
+        "每月35积分以注册 GEAR 为前提，不能视为加入 Standard 后无条件到账。",
+        "页面未说明积分结转、失效规则或具体兑换成本。",
+        "该权益不包含付费 Premium、Google AI Pro 或 Google AI Ultra 的云额度。",
+        "页面未列明具体地区限制，个人可用性需以实际注册结果为准。"
+      ],
+      "tags": [
+        "Google",
+        "Google Skills",
+        "GEAR",
+        "学习积分",
+        "免费计划"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-fbf5f90bcd6a68f906ef",
+      "status": "published",
+      "discoveredAt": "2026-10-27T18:05:49.226Z",
+      "verifiedAt": "2026-10-27T18:07:04.206Z",
+      "featured": false,
+      "source": {
+        "name": "Google开发者计划",
+        "url": "https://developers.google.com/program/plans-and-pricing",
+        "evidence": "官方定价页将 Standard 标为免费，并在 Google Skills 对比项列出每月35积分，注明需注册 GEAR；Standard 栏提供登录及加入入口。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T18:07:04.206Z",
+        "evidenceHash": "91aa61cca4dfe7f4920c2901adda5d6fe4c23cdcf0d177e823c33c326787e09b",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "35 credits/month (with GEAR signup)"
+          },
+          {
+            "field": "eligibility",
+            "quote": "with GEAR signup"
+          },
+          {
+            "field": "steps",
+            "quote": "Sign In Join now"
+          },
+          {
+            "field": "steps",
+            "quote": "with GEAR signup"
+          },
+          {
+            "field": "availability",
+            "quote": "Enjoy your program benefits at no cost"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Firebase Spark：Hosting 免费享10GB存储",
+      "provider": "Google Firebase",
+      "summary": "选择 Spark 免费计划，Hosting 可享10GB存储、每日360MB数据传输，并支持自定义域名与SSL，无需提供付款方式。",
+      "benefit": "Hosting 10GB存储＋每日360MB传输",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "Spark 免费计划内持续提供，受项目级配额限制；官方未注明结束日期。",
+      "eligibility": [
+        "选择 Firebase Spark 免费计划、使用 Hosting 的用户。",
+        "无需提供付款方式。"
+      ],
+      "steps": [
+        "打开 Firebase 官方定价页 https://firebase.google.com/pricing。",
+        "在“No-cost (Spark plan)”下点击“Get started”，开始使用该免费计划。",
+        "使用该计划提供的 Hosting，并控制在免费存储与每日数据传输配额内。"
+      ],
+      "caveats": [
+        "10GB为Hosting存储配额，360MB为每日数据传输配额，不是每日新增存储。",
+        "免费配额按项目计算，不按应用或单个资源分别计算。",
+        "本条不包含 Blaze 计划的300美元资格制赠金，也不包含 Cloud Storage 或 App Hosting。",
+        "若改用 Blaze，Hosting 超出免费配额后，存储按0.026美元/GB、数据传输按0.15美元/GB计费。",
+        "来源为国际版官方页面；未列明全部可用国家或地区，不代表所有地区均可使用。"
+      ],
+      "tags": [
+        "Firebase",
+        "Spark",
+        "Hosting",
+        "免费托管",
+        "无需付款方式"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-6bf1b94432022d2ce011",
+      "status": "published",
+      "discoveredAt": "2026-10-27T18:06:07.153Z",
+      "verifiedAt": "2026-10-27T18:07:43.804Z",
+      "featured": false,
+      "source": {
+        "name": "谷歌 Firebase 官方站",
+        "url": "https://firebase.google.com/pricing",
+        "evidence": "官方定价页列明Spark无需付款方式，Hosting含10GB存储、每日360MB数据传输、自定义域名及SSL，并提供Get started入口。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-27T18:07:43.804Z",
+        "evidenceHash": "55b3d51e315008c93d5ef3cd899898c22d91356d4ac3658c9a99b4ee6dbe9fa6",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Storage 10 GB Data transfer 360 MB/day"
+          },
+          {
+            "field": "eligibility",
+            "quote": "No-cost (Spark plan)"
+          },
+          {
+            "field": "eligibility",
+            "quote": "No payment method needed"
+          },
+          {
+            "field": "steps",
+            "quote": "No-cost (Spark plan) Get started"
           }
         ]
       }

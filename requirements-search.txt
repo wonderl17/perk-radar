@@ -1,0 +1,2 @@
+# Search runs in an isolated Python environment, never the Hermes model runtime.
+ddgs==9.16.1

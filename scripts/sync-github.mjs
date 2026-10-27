@@ -3,6 +3,9 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { ROOT, isMain, validateOffers } from './lib.mjs';
+import { validateSources } from './sources.mjs';
+
+export { validateSources } from './sources.mjs';
 
 const MAX_OUTPUT = 256 * 1024;
 const MAX_DATA = 8 * 1024 * 1024;
@@ -69,8 +72,18 @@ function blobSha(bytes) {
   return createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
 }
 
-/** Sync only reviewed offers, preserving the public repository's other files
- * and history. A SHA mismatch at PUT fails rather than overwriting a newer edit. */
+function partialFailure(message, files, code) {
+  const error = new Error(message);
+  // Callers can report already-completed safe file updates after a later file
+  // conflicts. Nothing is rolled back, retried or force-written.
+  error.completedFiles = files.map(file => ({ ...file }));
+  if (code) error.statusCode = code;
+  return error;
+}
+
+/** Sync only reviewed offers and the validated official-source registry, keeping
+ * every other public file and its history intact. All local input is validated
+ * before any remote mutation. Each PUT carries that file's exact previous SHA. */
 export async function syncGithub({ root = ROOT, runGh = runGhCli } = {}) {
   let bytes, document;
   try {
@@ -79,6 +92,17 @@ export async function syncGithub({ root = ROOT, runGh = runGhCli } = {}) {
     document = JSON.parse(bytes.toString('utf8'));
   } catch { throw new Error('Reviewed benefits data is unreadable or exceeds the safe file size.'); }
   if (validateOffers(document).length) throw new Error('Reviewed benefits data failed validation; GitHub was not changed.');
+  const inputs = [{ path: 'data/offers.json', bytes, message: `Update reviewed benefits at ${document.updatedAt}` }];
+  let sourceBytes;
+  try { sourceBytes = await readFile(resolve(root, 'data/sources.json')); }
+  catch (error) { if (error.code !== 'ENOENT') throw new Error('Official source data is unreadable; GitHub was not changed.'); }
+  if (sourceBytes !== undefined) {
+    let sources;
+    try { if (sourceBytes.length > 2 * 1048576) throw new Error('oversize'); sources = JSON.parse(sourceBytes.toString('utf8')); }
+    catch { throw new Error('Official source data is unreadable or exceeds the safe file size; GitHub was not changed.'); }
+    if (!validateSources(sources)) throw new Error('Official source data failed validation; GitHub was not changed.');
+    inputs.push({ path: 'data/sources.json', bytes: sourceBytes, message: 'Update validated official benefit sources' });
+  }
   let config;
   try { config = JSON.parse(await readFile(resolve(root, 'data/github.json'), 'utf8')); }
   catch { throw new Error('GitHub repository configuration is unavailable.'); }
@@ -92,31 +116,37 @@ export async function syncGithub({ root = ROOT, runGh = runGhCli } = {}) {
       throw new Error('The active GitHub account does not match data/github.json; switch gh to the configured account before syncing.');
     }
   }
-  const endpoint = `repos/${repo}/contents/data/offers.json`;
-  let remoteSha;
-  try { remoteSha = String(await runGh(['api', '--hostname', 'github.com', `${endpoint}?ref=${encodeURIComponent(config.branch)}`, '--jq', '.sha'])).trim(); }
-  catch { throw new Error('Unable to read the existing public benefits file; check repository access and branch.'); }
-  if (!SHA.test(remoteSha)) throw new Error('GitHub returned an invalid file revision; no update was sent.');
-  if (blobSha(bytes) === remoteSha.toLowerCase()) return { repo, updated: false, commitUrl: null };
+  // Preflight all existing remote files as well. A failed registry read cannot
+  // leave an unnecessary offers-only update in this run.
+  for (const input of inputs) {
+    input.endpoint = `repos/${repo}/contents/${input.path}`;
+    try { input.remoteSha = String(await runGh(['api', '--hostname', 'github.com', `${input.endpoint}?ref=${encodeURIComponent(config.branch)}`, '--jq', '.sha'])).trim(); }
+    catch { throw new Error('Unable to read an existing public data file; check repository access and branch.'); }
+    if (!SHA.test(input.remoteSha)) throw new Error('GitHub returned an invalid file revision; no update was sent.');
+  }
   const identity = { name: 'Perk Radar', email: `${config.account || repo.split('/')[0]}@users.noreply.github.com` };
-  const payload = {
-    message: `Update reviewed benefits at ${document.updatedAt}`,
-    content: bytes.toString('base64'), sha: remoteSha, branch: config.branch,
-    author: identity, committer: identity,
-  };
-  let response;
-  try {
-    response = await runGh(['api', '--hostname', 'github.com', '--method', 'PUT', endpoint, '--input', '-'], JSON.stringify(payload));
-  } catch (error) {
-    if (Number(error?.statusCode ?? error?.status) === 409) throw new Error('The public benefits file changed concurrently; the newer revision was not overwritten.');
-    throw new Error(CLI_ERROR);
+  const files = [];
+  let commitUrl = null;
+  for (const input of inputs) {
+    if (blobSha(input.bytes) === input.remoteSha.toLowerCase()) { files.push({ path: input.path, updated: false, commitUrl: null }); continue; }
+    const payload = { message: input.message, content: input.bytes.toString('base64'), sha: input.remoteSha, branch: config.branch, author: identity, committer: identity };
+    let response;
+    try { response = await runGh(['api', '--hostname', 'github.com', '--method', 'PUT', input.endpoint, '--input', '-'], JSON.stringify(payload)); }
+    catch (error) {
+      if (Number(error?.statusCode ?? error?.status) === 409) throw partialFailure('A public data file changed concurrently; the newer revision was not overwritten. Earlier completed updates remain published.', files, 409);
+      throw partialFailure(CLI_ERROR, files);
+    }
+    let commit;
+    try { commit = JSON.parse(response).commit; } catch { /* Sanitized below. */ }
+    if (!SHA.test(commit?.sha) || commit.html_url !== `https://github.com/${repo}/commit/${commit.sha}`) throw partialFailure('GitHub update could not be verified; inspect the repository before retrying.', files);
+    commitUrl = commit.html_url;
+    files.push({ path: input.path, updated: true, commitUrl });
   }
-  let commit;
-  try { commit = JSON.parse(response).commit; } catch { /* Handled below without reflecting response data. */ }
-  if (!SHA.test(commit?.sha) || commit.html_url !== `https://github.com/${repo}/commit/${commit.sha}`) {
-    throw new Error('GitHub update could not be verified; inspect the repository before retrying.');
-  }
-  return { repo, updated: true, commitUrl: commit.html_url };
+  const result = { repo, updated: files.some(file => file.updated), commitUrl };
+  // Preserve the exact old return shape for legacy fixtures/installations with
+  // no source registry; normal projects receive a per-file audit summary.
+  if (sourceBytes !== undefined) result.files = files;
+  return result;
 }
 
 if (isMain(import.meta.url)) {

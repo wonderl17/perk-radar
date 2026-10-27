@@ -294,3 +294,20 @@ test('candidates discovered by another collector during GPT calls survive ingest
   assert.equal(queue.find(item => item.url === URL).status, 'published');
   assert.deepEqual(queue.find(item => item.id === discoveredWhileCalling.id), discoveredWhileCalling, 'merge only the processed candidate into the latest persisted queue');
 });
+
+test('unchanged held evidence cools down, while genuinely changed evidence is immediately eligible', () => {
+  const changes = [{ id: 'change-a', sourceId: SOURCE.id, url: URL, status: 'pending', currentHash: 'same-hash', lastProcessedHash: 'same-hash', lastProcessedAt: NOW, lastOutcome: 'review' }];
+  assert.equal(chooseTasks([SOURCE], [], changes, [], Date.parse(NOW) + 3600000).length, 0);
+  assert.equal(chooseTasks([SOURCE], [], [{ ...changes[0], currentHash: 'new-hash' }], [], Date.parse(NOW) + 3600000).length, 1);
+  assert.equal(chooseTasks([SOURCE], [], changes, [], Date.parse(NOW) + 86400000).length, 1);
+});
+
+test('a fresh autonomous discovery gets a slot despite a backlog of old changed sources', async () => {
+  const { selectTaskBatch } = await import('../scripts/ingest.mjs');
+  const backlog = Array.from({ length: 8 }, (_, i) => ({ kind: 'change', url: `https://official.example/change-${i}` }));
+  const fresh = { kind: 'candidate', status: 'pending', discoveryMethod: 'gpt-web-search', url: 'https://new-official.example/free' };
+  const batch = selectTaskBatch([...backlog, fresh], 6);
+  assert.equal(batch.length, 6);
+  assert(batch.includes(fresh));
+  assert.equal(new Set(batch).size, 6);
+});

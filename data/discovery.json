@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "maxQueriesPerScan": 4,
+  "resultsPerQuery": 5,
+  "maxCandidatesPerScan": 3,
+  "maxNewSourcesPerScan": 2,
+  "maxSources": 200,
+  "intervalMinutes": 60,
+  "candidateCooldownHours": 24
+}

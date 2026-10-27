@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { isIP } from 'node:net';
 import { createHash } from 'node:crypto';
+import { fetchPublicText } from './public-web.mjs';
 import { ROOT, BENEFIT_PATTERN, canonicalUrl, candidateId, decodeEntities, plainText, readJson, writeJson, withDataLock, isMain } from './lib.mjs';
 
 export const DEFAULT_MAX_BYTES = 1_048_576;
@@ -21,6 +22,10 @@ export function assertSourceUrl(value, allowedHosts) {
 }
 export async function fetchText(url, { allowedHosts = [new URL(url).hostname], fetchImpl = fetch, timeoutMs = 12000, maxBytes = DEFAULT_MAX_BYTES } = {}) {
   maxBytes = sourceMaxBytes({ maxBytes });
+  if (fetchImpl === fetch) {
+    assertSourceUrl(url, allowedHosts);
+    return fetchPublicText(url, { allowedHosts, timeoutMs, maxBytes });
+  }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(new Error('Source request timed out')), timeoutMs);
   try {
@@ -150,7 +155,7 @@ export function observeSource(source, result, previous, offers, changes, now) {
 }
 export async function collect({ root = ROOT, fetchImpl = fetch, now = new Date().toISOString() } = {}) {
   const sources = await readJson(resolve(root, 'data/sources.json'));
-  if (!Array.isArray(sources) || sources.length > 100) throw new Error('Expected at most 100 configured sources');
+  if (!Array.isArray(sources) || sources.length > 500) throw new Error('Expected at most 500 configured sources');
   if (new Set(sources.map(source => source.id)).size !== sources.length) throw new Error('Source IDs must be unique');
   const existing = await readJson(resolve(root, 'work/candidates.json'), { candidates: [] });
   const previousHealth = await readJson(resolve(root, 'work/health.json'), { sources: [] });

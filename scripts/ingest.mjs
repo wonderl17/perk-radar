@@ -6,6 +6,7 @@ import { collect, fetchText, sourceMaxBytes } from './collect.mjs';
 import { loadLlmConfig, callJson } from './llm.mjs';
 import { mergeReviewedOffer } from './review.mjs';
 import { build } from './build.mjs';
+import { discoverSources } from './discover.mjs';
 
 const strings = { type: 'array', items: { type: 'string' } };
 const nullableString = { type: ['string', 'null'] };
@@ -92,16 +93,23 @@ export function chooseTasks(sources, candidates, changes, offers, now = Date.now
       if (!tasks.has(url) || priority < tasks.get(url).priority) tasks.set(url, { ...item, url, priority });
     } catch { /* Invalid persisted links never become requests. */ }
   };
-  for (const change of changes.filter(x => x.status === 'pending')) add({ url: change.url, sourceId: change.sourceId, changeId: change.id, kind: 'change' }, 0);
+  for (const change of changes.filter(x => x.status === 'pending' && (onlyUrl || x.lastProcessedHash !== x.currentHash || !x.lastProcessedAt || now - Date.parse(x.lastProcessedAt) >= (x.lastOutcome === 'failed' ? 3600000 : 86400000)))) add({ url: change.url, sourceId: change.sourceId, changeId: change.id, kind: 'change', lastProcessedAt: change.lastProcessedAt }, 0);
   for (const offer of offers.filter(x => x.status === 'published' && now - Date.parse(x.verifiedAt) > 7 * 86400000 && (!x.expiresAt || Date.parse(x.expiresAt) > now))) add({ url: offer.source.url, kind: 'reverify', offerId: offer.id }, 1);
-  for (const candidate of candidates.filter(x => ['pending', 'failed'].includes(x.status))) add({ ...candidate, kind: 'candidate' }, /\/events?\//.test(candidate.url) ? 2 : 3);
+  for (const candidate of candidates.filter(x => x.status === 'pending' || x.status === 'failed' && (onlyUrl || !x.lastProcessedAt || now - Date.parse(x.lastProcessedAt) >= 3600000))) add({ ...candidate, kind: 'candidate' }, /\/events?\//.test(candidate.url) ? 2 : 3);
   if (onlyUrl && !tasks.size) add({ url: onlyUrl, kind: 'explicit' }, 0);
   return [...tasks.values()].map(task => {
     const host = new URL(task.url).hostname;
     const source = sources.find(s => canonicalUrl(s.url) === task.url) || sources.find(s => s.id === task.sourceId) || sources.find(s => (s.allowedHosts || [new URL(s.url).hostname]).includes(host));
     if (!source || !(source.allowedHosts || [new URL(source.url).hostname]).includes(host)) return null;
     return { ...task, source, region: task.region || source.region };
-  }).filter(Boolean).sort((a, b) => a.priority - b.priority || String(a.region).localeCompare(String(b.region)) || a.url.localeCompare(b.url));
+  }).filter(Boolean).sort((a, b) => a.priority - b.priority || String(a.lastProcessedAt || '').localeCompare(String(b.lastProcessedAt || '')) || String(a.firstDiscoveredAt || '').localeCompare(String(b.firstDiscoveredAt || '')) || String(a.region).localeCompare(String(b.region)) || a.url.localeCompare(b.url));
+}
+export function selectTaskBatch(tasks, limit) {
+  const batch = tasks.slice(0, limit);
+  const fresh = tasks.find(task => task.kind === 'candidate' && task.status === 'pending' && (task.discoveryMethod === 'gpt-web-search' || task.source?.discovery?.method === 'gpt-web-search'));
+  // An unresolved legacy change must not permanently starve new web discoveries.
+  if (fresh && !batch.includes(fresh)) batch[batch.length - 1] = fresh;
+  return batch;
 }
 async function acquireLock(root) {
   const path = resolve(root, 'work/ingest.lock');
@@ -116,19 +124,24 @@ async function acquireLock(root) {
     throw new Error('Another ingestion run is active; no dataset was changed.');
   }
 }
-export async function ingest({ root = ROOT, config, callImpl = callJson, fetchImpl = fetch, collectFirst = true, buildAfter = true, limit = 6, onlyUrl, nowFn = () => new Date().toISOString() } = {}) {
+export async function ingest({ root = ROOT, config, callImpl = callJson, fetchImpl = fetch, discoverImpl = discoverSources, collectFirst = true, buildAfter = true, limit = 6, onlyUrl, nowFn = () => new Date().toISOString() } = {}) {
   if (!Number.isInteger(limit) || limit < 1 || limit > 30) throw new Error('limit must be 1–30');
   config ??= await loadLlmConfig();
   const release = await acquireLock(root);
   try {
-    const discovery = collectFirst ? await collect({ root, fetchImpl, now: nowFn() }) : null;
+    let autonomous;
+    if (collectFirst && !onlyUrl) {
+      try { autonomous = await discoverImpl({ root, config, callImpl, nowFn }); }
+      catch { autonomous = { status: 'failed', added: 0, failed: 1 }; }
+    }
+    const discovery = collectFirst ? { ...await collect({ root, fetchImpl, now: nowFn() }), ...(autonomous && autonomous.status !== 'disabled' ? { autonomous } : {}) } : null;
     const sources = await readJson(resolve(root, 'data/sources.json'));
     const queue = await readJson(resolve(root, 'work/candidates.json'), { candidates: [] });
     const changeQueue = await readJson(resolve(root, 'work/changes.json'), { changes: [] });
     const document = await readJson(resolve(root, 'data/offers.json'));
     const validation = validateOffers(document, { now: Date.parse(nowFn()) });
     if (validation.length) throw new Error('Published dataset failed validation; no automatic changes were made.');
-    const tasks = chooseTasks(sources, queue.candidates, changeQueue.changes, document.offers, Date.parse(nowFn()), onlyUrl).slice(0, limit);
+    const tasks = selectTaskBatch(chooseTasks(sources, queue.candidates, changeQueue.changes, document.offers, Date.parse(nowFn()), onlyUrl), limit);
     if (onlyUrl && !tasks.length) throw new Error('The URL must belong to a configured official source host.');
     const report = { startedAt: nowFn(), model: config.model, discovery, examined: 0, published: 0, updated: 0, flagged: 0, held: 0, rejected: 0, failed: 0, results: [] };
     for (const task of tasks) {
@@ -189,9 +202,12 @@ export async function ingest({ root = ROOT, config, callImpl = callJson, fetchIm
         const candidate = latestQueue.candidates.find(x => canonicalUrl(x.url) === task.url);
         if (candidate) { candidate.status = ['published', 'updated'].includes(record.outcome) ? 'published' : record.outcome === 'rejected' ? 'rejected' : record.outcome === 'failed' ? 'failed' : 'review'; candidate.lastProcessedAt = nowFn(); candidate.reviewReason = record.reason; }
         const latestChanges = await readJson(resolve(root, 'work/changes.json'), { changes: [] });
-        if (['published', 'updated', 'rejected'].includes(record.outcome)) for (const change of latestChanges.changes.filter(x => x.id === task.changeId)) {
+        for (const change of latestChanges.changes.filter(x => x.id === task.changeId)) {
           const original = changeQueue.changes.find(x => x.id === task.changeId);
-          if (original?.lastDetectedAt === change.lastDetectedAt) { change.status = 'reviewed'; change.reviewedAt = nowFn(); change.reviewMethod = 'gpt'; change.notes = record.reason; }
+          if (original?.lastDetectedAt === change.lastDetectedAt && original?.currentHash === change.currentHash) {
+            change.lastProcessedAt = nowFn(); change.lastProcessedHash = change.currentHash; change.lastOutcome = record.outcome;
+            if (['published', 'updated', 'rejected'].includes(record.outcome)) { change.status = 'reviewed'; change.reviewedAt = nowFn(); change.reviewMethod = 'gpt'; change.notes = record.reason; }
+          }
         }
         await writeJson(resolve(root, 'work/candidates.json'), { ...latestQueue, updatedAt: nowFn() });
         await writeJson(resolve(root, 'work/changes.json'), { ...latestChanges, updatedAt: nowFn() });

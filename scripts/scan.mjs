@@ -51,6 +51,8 @@ function resultSummary(result) {
   if (dateOrNull(result.finishedAt)) summary.finishedAt = result.finishedAt;
   const sourceFailures = result.discovery?.failures ?? result.sourceFailures;
   if (Number.isInteger(sourceFailures) && sourceFailures >= 0) summary.sourceFailures = sourceFailures;
+  const discovery = result.discovery?.autonomous ?? result.autonomousDiscovery;
+  if (discovery && typeof discovery === 'object') summary.autonomousDiscovery = Object.fromEntries(['added', 'held', 'failed', 'considered', 'searchResults'].filter(key => Number.isInteger(discovery[key]) && discovery[key] >= 0).map(key => [key, discovery[key]]));
   return summary;
 }
 function cleanState(raw = {}) {
@@ -129,7 +131,7 @@ export async function runDueScan({ root = ROOT, config, ingestImpl = ingest, now
       const report = await ingestImpl({ root, limit: config.maxItemsPerScan });
       if (!report || typeof report !== 'object') throw new Error('Missing scan report');
       const finished = timeOf(nowFn);
-      const failed = (Number(report.failed) || 0) > 0 || (Number(report.discovery?.failures) || 0) > 0;
+      const failed = (Number(report.failed) || 0) > 0 || (Number(report.discovery?.failures) || 0) > 0 || (Number(report.discovery?.autonomous?.failed) || 0) > 0;
       state = {
         ...state, status: failed ? 'error' : 'idle',
         lastSuccessAt: failed ? state.lastSuccessAt : iso(finished),

@@ -12,12 +12,13 @@
 - 信源配置：[`data/sources.json`](data/sources.json)
 - 数据约定：[`docs/data-contract.md`](docs/data-contract.md)
 - 定期扫描：[`docs/automation.md`](docs/automation.md)
+- 自主搜索与信源扩充：[`docs/discovery.md`](docs/discovery.md)
 
 “GPT 自动核验”表示根据官方公开证据提取并校验规则，不代表人工实领、库存或个人资格保证。未知期限不编造截止日，过期活动从发现页归档；出现冲突会标待复核。
 
 ## 本地运行
 
-Node.js 22+，零第三方运行依赖，无需安装依赖包。
+页面预览与静态构建需要 Node.js 22+，无第三方 Node 依赖；自主联网搜索另需独立 Python 环境与 `requirements-search.txt`。安装步骤见 [`docs/discovery.md`](docs/discovery.md)，不会修改 Hermes 环境。
 
 ```sh
 git clone https://github.com/wonderl17/perk-radar.git
@@ -39,15 +40,15 @@ npm run build
 
 ## GPT 自动收录
 
-官方页面/RSS发现 → URL去重 → GPT结构化提取 → 原文证据校验 → 第二轮独立核对 → 自动收录。证据不全或规则含糊的保留待审，抓取成功不等于重新核验。
+GPT 规划中英文查询 → DDGS 真实联网搜索 → 规则页与同站首页的官方身份准入 → 扩充信源 → 官方页面/RSS采集与URL去重 → GPT结构化提取 → 原文证据校验 → 第二轮独立核对 → 自动收录。不局限于初始的 21 个来源；默认每轮 2–4 个查询、最多新增 2 个信源，注册表默认上限 200 条，参数见 `data/discovery.json`。信源通过不等于福利通过；证据不全或规则含糊的保留待审，抓取成功不等于重新核验。
 
 默认读取本机Hermes配置；也支持运行时传入完整的 `PERK_LLM_API_KEY`、`PERK_LLM_BASE_URL`、`PERK_LLM_MODEL`，可指定API模式和推理强度。密钥不写入仓库、日志、前端或命令参数。没有模型配置时仍可用 `npm run dev` 浏览已收录数据。
 
-`npm run sync:github` 只同步正式JSON，使用既有gh登录及旧文件SHA防并发覆盖；fork后先修改 `data/github.json` 的仓库和account账号。
+`npm run sync:github` 只同步正式福利与经过校验的信源注册表，使用既有gh登录及逐文件旧SHA防并发覆盖；fork后先修改 `data/github.json` 的仓库和account账号。
 
 ## 网站部署
 
-`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。在 Vercel 导入本仓库并绑定 `luke/main` 生产分支后，提交正式数据将自动部署。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不调用模型，也不需要模型密钥。
+`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。在 Vercel 导入本仓库并绑定 `luke/main` 生产分支后，提交正式数据将自动部署。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不安装 Python 搜索依赖、不调用模型，也不需要模型密钥。
 
 工作流仅保存在 [`docs/examples/collect.workflow.yml`](docs/examples/collect.workflow.yml) 作为未启用示例。它不是云端GPT服务；启用前自行审阅权限和输出，不要把待审队列或密钥放进公共artifact/cache。
 

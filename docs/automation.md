@@ -8,6 +8,6 @@
 
 采集、结构化提取、原文证据校验和第二轮审核全部通过才写正式福利，保留模型、时间与证据。长正文、冲突、过期和缺依据条目不直接发布；不以模型自信代替原文依据。核验不表示库存或个人资格保证。
 
-`npm run sync:github` 通过已登录 gh CLI 只同步正式 `data/offers.json`，无差异不提交，更新带旧文件 SHA 防止覆盖并发更改。仓库与分支在 `data/github.json`，fork后先修改为自己的目标仓库。它不推送本机Git历史、不保存Token。网站部署是独立步骤。
+`npm run sync:github` 通过已登录 gh CLI 只同步正式 `data/offers.json`，无差异不提交，更新带旧文件 SHA 防止覆盖并发更改。仓库与分支在 `data/github.json`，fork后先修改为自己的目标仓库。它不推送本机Git历史、不保存Token。Vercel 绑定此仓库的 `luke/main` 生产分支；正式数据提交会自动触发网站部署，发布结果应独立核对。
 
 仓库本身不等于常驻服务。原始工作流仅作为 `docs/examples/collect.workflow.yml` 示例保存，未启用云端GPT或定时工作流。启用前应自行审阅权限、运行配置及公共缓存/artifact内容，不能公开待审队列。

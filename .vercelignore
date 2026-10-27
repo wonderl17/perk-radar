@@ -1,0 +1,19 @@
+# Upload only build inputs; runtime and private project state stay local.
+.git/
+.github/
+.openai/
+.vercel/
+work/
+outputs/
+node_modules/
+dist/
+.env
+.env.*
+*.log
+*.tgz
+*.tar
+AGENTS.md
+README.md
+docs/
+tests/
+.DS_Store

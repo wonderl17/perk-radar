@@ -6,6 +6,7 @@ work/
 !.env.example
 .DS_Store
 *.tgz
+.vercel/
 
 .openai/
 outputs/

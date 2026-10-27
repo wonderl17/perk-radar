@@ -14,7 +14,7 @@ export async function build({ root = ROOT, now = Date.now() } = {}) {
   const errors = validateOffers(document, { now });
   if (errors.length) throw new Error(errors.join('\n'));
   const site = await readJson(resolve(root, 'data/site.json'), {});
-  const siteUrl = process.env.SITE_URL || site.siteUrl;
+  const siteUrl = process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : site.siteUrl);
   if (!siteUrl) throw new Error('Set SITE_URL or data/site.json siteUrl before building.');
   if (!/^https?:$/.test(new URL(siteUrl).protocol)) throw new Error('SITE_URL must use HTTP(S)');
   const output = resolve(root, 'dist');

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T08:13:23.095Z",
+  "updatedAt": "2026-10-28T12:13:19.592Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1756,6 +1756,72 @@
           {
             "field": "steps",
             "quote": "Explore Cisco Networking Academy"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cursor 个人免费版：有限 Agent 与 Chat 使用权限",
+      "provider": "Cursor",
+      "summary": "Cursor 个人免费计划为每月0美元，提供有限的 Agent 请求与 Chat 请求；页面未公布具体免费用量。",
+      "benefit": "免费使用有限 Agent 与 Chat 请求",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "官方国际站提供个人免费计划；页面未列出具体支持地区，不代表所有地区均可使用。",
+      "eligibility": [
+        "选择 Individual 下的 Free 个人免费计划的用户；页面未列出其他资格要求。"
+      ],
+      "steps": [
+        "访问 https://cursor.com/pricing。",
+        "在 Individual 的 Free（$0/month）计划下点击 Get started，按页面提示开始使用。"
+      ],
+      "caveats": [
+        "Agent 与 Chat 请求均有限额，页面未公布具体次数。",
+        "页面说明各档 AI 用量池由 Cursor 与 Grok 共享，每周刷新；额度用尽可等待刷新或付费补充。",
+        "免费权益不包含付费档功能，勿将付费方案中的 API 或第三方模型权益视为免费额度。",
+        "页面未明确免费计划是否需要绑定信用卡。"
+      ],
+      "tags": [
+        "Cursor",
+        "AI编程",
+        "免费计划"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-30a2f70dbd33191a0c95",
+      "status": "published",
+      "discoveredAt": "2026-10-28T12:11:59.522Z",
+      "verifiedAt": "2026-10-28T12:13:08.535Z",
+      "featured": false,
+      "source": {
+        "name": "Cursor 官方",
+        "url": "https://cursor.com/pricing",
+        "evidence": "定价页的个人 Free 档标价每月0美元，列出有限 Agent 请求、有限 Chat 请求及 Get started 入口，未标明结束日期或具体免费次数。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T12:13:08.535Z",
+        "evidenceHash": "658f001de9c2ee66ceedf5b659431ddff9f94331b65b1f8682af8511f35c2122",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Free $0 /month"
+          },
+          {
+            "field": "benefit",
+            "quote": "Limited agent requests Limited Chat requests"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Individual"
+          },
+          {
+            "field": "steps",
+            "quote": "Get started"
           }
         ]
       }

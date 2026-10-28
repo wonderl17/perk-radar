@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T04:13:18.777Z",
+  "updatedAt": "2026-10-28T08:13:23.095Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1685,6 +1685,77 @@
           {
             "field": "steps",
             "quote": "Start for Free"
+          }
+        ]
+      }
+    },
+    {
+      "title": "思科网络学院：免费自学网络、网络安全与编程课程",
+      "provider": "思科网络学院",
+      "summary": "免费学习网络、网络安全、AI、数据科学和 Python 等课程，按自己的节奏学习；页面列有多门初学者课程及参考学时。",
+      "benefit": "免费在线自学课程",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "官网提供在线自学课程入口，未注明结束日期；具体地区可用性未在本页列明。",
+      "eligibility": [
+        "面向希望学习 IT 技能、准备认证或开启职业生涯的学习者。",
+        "页面列有 Beginner 级别课程，初学者可按课程级别选择。"
+      ],
+      "steps": [
+        "进入思科网络学院官方页面，查看课程主题与级别。",
+        "点击目标课程下的“Explore course”，或通过“Explore Cisco Networking Academy”进入学院探索课程。"
+      ],
+      "caveats": [
+        "本页未说明具体课程的注册要求、授课语言及地区限制，需以课程页面为准。",
+        "免费课程不等于免费认证考试；本页未承诺提供免费考试或认证证书。"
+      ],
+      "tags": [
+        "免费课程",
+        "在线自学",
+        "网络安全",
+        "Python",
+        "AI入门"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-ae91463bf04fb9c54fd7",
+      "status": "published",
+      "discoveredAt": "2026-10-28T08:11:57.504Z",
+      "verifiedAt": "2026-10-28T08:12:59.951Z",
+      "featured": false,
+      "source": {
+        "name": "思科网络学院",
+        "url": "https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html",
+        "evidence": "思科官网明确提供免费、按自己节奏学习的在线课程，并列出网络、网络安全、AI、Python 等课程及探索入口。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T08:12:59.951Z",
+        "evidenceHash": "b22d8f21970c76a94cd7dcb6edd2012f2cbf21c15ad8aa5522a03f2b52b39821",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Explore our free, self-paced online courses."
+          },
+          {
+            "field": "eligibility",
+            "quote": "Beginner"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Prep for your first cert or your first career."
+          },
+          {
+            "field": "steps",
+            "quote": "Explore course"
+          },
+          {
+            "field": "steps",
+            "quote": "Explore Cisco Networking Academy"
           }
         ]
       }

@@ -77,6 +77,26 @@ test('two GPT approvals and literal official evidence publish an auditable autom
   await assert.rejects(access(join(fs.root, 'work/ingest.lock')), { code: 'ENOENT' });
 });
 
+test('manual ingestion forwards the discovery override only after acquiring the shared ingestion lock', async t => {
+  const fs = await fixture(t, { candidates: [], sources: [] });
+  let discoveryCalls = 0;
+  const run = options(fs.root, { collectFirst: true, forceDiscovery: true, discoverImpl: async request => {
+    discoveryCalls++;
+    assert.equal(request.force, true);
+    assert.equal(request.nowFn(), NOW);
+    assert.equal((await fs.read('work/ingest.lock')).pid, process.pid);
+    return { status: 'empty', added: 0, failed: 0 };
+  } });
+  await writeFile(join(fs.root, 'work/ingest.lock'), JSON.stringify({ pid: process.pid }));
+  await assert.rejects(ingest(run), /Another ingestion run is active/);
+  assert.equal(discoveryCalls, 0);
+  await rm(join(fs.root, 'work/ingest.lock'));
+  const report = await ingest(run);
+  assert.equal(report.discovery.autonomous.status, 'empty');
+  assert.equal(discoveryCalls, 1);
+  await assert.rejects(access(join(fs.root, 'work/ingest.lock')), { code: 'ENOENT' });
+});
+
 test('unsupported extraction is held before an independent audit or dataset write', async t => {
   const cases = [
     ['fabricated quote', extraction({ evidenceQuotes: [{ field: 'benefit', quote: 'Everyone receives 1000000 credits' }, ...extraction().evidenceQuotes.slice(1)] }), /quote does not match/],

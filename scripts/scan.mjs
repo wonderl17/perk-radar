@@ -120,24 +120,25 @@ async function acquireScanLock(root, now) {
   return null;
 }
 
-/** Run at most once when due. It is safe for the application and a scheduled
- * task to call this command: a successful scan persists the next due time. */
-export async function runDueScan({ root = ROOT, config, ingestImpl = ingest, nowFn = () => Date.now(), onState } = {}) {
+/** Run at most once when due. An explicit manual force bypasses only deadlines;
+ * it still shares all run locks and the configured per-round limits. */
+export async function runDueScan({ root = ROOT, config, ingestImpl = ingest, nowFn = () => Date.now(), onState, force = false } = {}) {
+  if (typeof force !== 'boolean') throw new Error('force must be a boolean.');
   config = validateConfig(config ?? await loadScanConfig({ root }));
   let state = await readState(root);
   const now = timeOf(nowFn);
-  if (!isDue(state, now)) return { ran: false, state };
+  if (!force && !isDue(state, now)) return { ran: false, state };
   const release = await acquireScanLock(root, now);
   if (!release) return { ran: false, busy: true, retryAfterMs: BUSY_RECHECK_MS, state: await readState(root) };
   try {
     state = await readState(root);
-    if (!isDue(state, timeOf(nowFn))) return { ran: false, state };
+    if (!force && !isDue(state, timeOf(nowFn))) return { ran: false, state };
     const startedAt = iso(timeOf(nowFn));
     state = { ...state, status: 'running', startedAt, lastAttemptAt: startedAt, nextScanAt: null, lastError: null };
     await writeJson(resolve(root, 'work/scan-state.json'), state);
     try { onState?.(structuredClone(state)); } catch {}
     try {
-      const report = await ingestImpl({ root, limit: config.maxItemsPerScan });
+      const report = await ingestImpl({ root, limit: config.maxItemsPerScan, ...(force ? { forceDiscovery: true } : {}) });
       if (!report || typeof report !== 'object') throw new Error('Missing scan report');
       const finished = timeOf(nowFn);
       const coreFailed = (Number(report.failed) || 0) > 0 || (Number(report.discovery?.failures) || 0) > 0;
@@ -207,11 +208,11 @@ export function startScanScheduler({ root = ROOT, config, ingestImpl = ingest, n
 if (isMain(import.meta.url)) {
   try {
     const args = process.argv.slice(2);
-    if (args.some(arg => arg !== '--status')) throw new Error('Usage: node scripts/scan.mjs [--status]');
+    if (args.some(arg => !['--status', '--now'].includes(arg)) || args.length > 1) throw new Error('Usage: node scripts/scan.mjs [--status | --now]');
     const config = await loadScanConfig();
     if (args.includes('--status')) console.log(JSON.stringify({ config, state: await readState(ROOT) }));
     else {
-      const result = await runDueScan({ config });
+      const result = await runDueScan({ config, force: args.includes('--now') });
       console.log(JSON.stringify(result));
       if (['error', 'degraded'].includes(result.state.status)) process.exitCode = 1;
     }

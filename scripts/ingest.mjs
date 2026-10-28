@@ -124,14 +124,15 @@ async function acquireLock(root) {
     throw new Error('Another ingestion run is active; no dataset was changed.');
   }
 }
-export async function ingest({ root = ROOT, config, callImpl = callJson, fetchImpl = fetch, discoverImpl = discoverSources, collectFirst = true, buildAfter = true, limit = 6, onlyUrl, nowFn = () => new Date().toISOString() } = {}) {
+export async function ingest({ root = ROOT, config, callImpl = callJson, fetchImpl = fetch, discoverImpl = discoverSources, collectFirst = true, buildAfter = true, limit = 6, onlyUrl, nowFn = () => new Date().toISOString(), forceDiscovery = false } = {}) {
   if (!Number.isInteger(limit) || limit < 1 || limit > 30) throw new Error('limit must be 1–30');
+  if (typeof forceDiscovery !== 'boolean') throw new Error('forceDiscovery must be a boolean.');
   config ??= await loadLlmConfig();
   const release = await acquireLock(root);
   try {
     let autonomous;
     if (collectFirst && !onlyUrl) {
-      try { autonomous = await discoverImpl({ root, config, callImpl, nowFn }); }
+      try { autonomous = await discoverImpl({ root, config, callImpl, nowFn, ...(forceDiscovery ? { force: true } : {}) }); }
       catch { autonomous = { status: 'failed', added: 0, failed: 1 }; }
     }
     const discovery = collectFirst ? { ...await collect({ root, fetchImpl, now: nowFn() }), ...(autonomous && autonomous.status !== 'disabled' ? { autonomous } : {}) } : null;

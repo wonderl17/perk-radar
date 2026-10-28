@@ -17,6 +17,7 @@
     "ingest": "node scripts/ingest.mjs",
     "start": "node scripts/service.mjs",
     "scan:due": "node scripts/scan.mjs",
+    "scan:now": "node scripts/scan.mjs --now",
     "scan:status": "node scripts/scan.mjs --status",
     "sync:github": "node scripts/sync-github.mjs"
   }

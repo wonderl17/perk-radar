@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 import { ROOT, canonicalUrl, candidateId, decodeEntities, plainText, readJson, writeJson, withDataLock } from './lib.mjs';
 import { mergeCandidates } from './collect.mjs';
@@ -118,21 +118,31 @@ export function validateSourceAudit(result, { homepageText, benefitText }) {
   return errors;
 }
 
-/** A short atomic due claim prevents duplicate search spending, including
- * standalone calls. All source writes are append-only under the data lock. */
-export async function discoverSources({ root = ROOT, config, callImpl = callJson, searchImpl = searchWeb, fetchPageImpl = fetchPublicText, nowFn = () => new Date().toISOString() } = {}) {
+function ownerActive(owner) {
+  // Unrecognized ownership is not permission to replace a possibly live round.
+  if (!Number.isInteger(owner?.pid) || owner.pid < 1) return true;
+  try { process.kill(owner.pid, 0); return true; }
+  catch (error) { return error.code !== 'ESRCH'; }
+}
+
+/** A short atomic claim prevents duplicate search spending, including manual
+ * calls. The owner covers network/model work after the data lock is released. */
+export async function discoverSources({ root = ROOT, config, callImpl = callJson, searchImpl = searchWeb, fetchPageImpl = fetchPublicText, nowFn = () => new Date().toISOString(), force = false } = {}) {
+  if (typeof force !== 'boolean') throw new Error('force must be a boolean.');
   const settings = await loadDiscoveryConfig(root);
   if (!settings.enabled) return { status: 'disabled', added: 0, failed: 0 };
   const now = nowFn();
-  let state, nextState;
+  let state, nextState, busy = false;
+  const owner = { pid: process.pid, token: randomUUID() };
   const claimed = await withDataLock(root, async () => {
     state = await readJson(resolve(root, 'work/discovery-state.json'), { round: 0, seen: [] });
-    if (state.nextRunAt && Date.parse(state.nextRunAt) > Date.parse(now)) return false;
-    nextState = { schemaVersion: 1, round: (state.round || 0) + 1, lastRunAt: now, nextRunAt: new Date(Date.parse(now) + settings.intervalMinutes * 60000).toISOString(), seen: state.seen || [], queries: state.queries || [], ...(state.feedback ? { feedback: state.feedback } : {}), history: (Array.isArray(state.history) ? state.history : []).slice(-48) };
+    if (state.running && ownerActive(state.running)) { busy = true; return false; }
+    if (!force && state.nextRunAt && Date.parse(state.nextRunAt) > Date.parse(now)) return false;
+    nextState = { schemaVersion: 1, round: (state.round || 0) + 1, lastRunAt: now, nextRunAt: new Date(Date.parse(now) + settings.intervalMinutes * 60000).toISOString(), running: owner, seen: state.seen || [], queries: state.queries || [], ...(state.feedback ? { feedback: state.feedback } : {}), history: (Array.isArray(state.history) ? state.history : []).slice(-48) };
     await writeJson(resolve(root, 'work/discovery-state.json'), nextState);
     return true;
   });
-  if (!claimed) return { status: 'skipped', nextRunAt: state.nextRunAt, added: 0, failed: 0 };
+  if (!claimed) return { status: 'skipped', ...(busy ? { busy: true } : {}), nextRunAt: state.nextRunAt, added: 0, failed: 0 };
   const report = { status: 'completed', startedAt: now, nextRunAt: nextState.nextRunAt, model: config.model, queries: [], queryResults: [], failures: [], rawSearchResults: 0, searchResults: 0, excluded: { known: 0, duplicate: 0, sharedHost: 0, cooldown: 0, invalid: 0 }, considered: 0, added: 0, held: 0, failed: 0, results: [] };
   const seen = new Map((state.seen || []).slice(-2000).map(item => [item.url, item]));
   let stage = 'input-validation', fatalFailure = false;
@@ -300,8 +310,13 @@ export async function discoverSources({ root = ROOT, config, callImpl = callJson
     }];
     await withDataLock(root, async () => {
       const latest = await readJson(resolve(root, 'work/discovery-state.json'), {});
-      if (latest.round === nextState.round && latest.lastRunAt === nextState.lastRunAt) await writeJson(resolve(root, 'work/discovery-state.json'), nextState);
+      if (latest.running?.token === owner.token) {
+        delete nextState.running;
+        await writeJson(resolve(root, 'work/discovery-state.json'), nextState);
+        // Keep report publication inside the same claim transition so an
+        // immediate manual round cannot have its report replaced by this one.
+        await writeJson(resolve(root, 'work/discovery-report.json'), report);
+      }
     });
-    await writeJson(resolve(root, 'work/discovery-report.json'), report);
   }
 }

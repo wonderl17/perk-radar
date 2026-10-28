@@ -119,6 +119,62 @@ test('a discovery interval and a failed attempt both prevent immediate repeated 
   });
 });
 
+test('manual discovery bypasses only the deadline and retains real timestamps and configured round budgets', async t => {
+  const before = Date.now(), now = new Date(before).toISOString();
+  const fs = await fixture(t, { settings: { resultsPerQuery: 1, maxCandidatesPerScan: 1, maxNewSourcesPerScan: 1 }, state: { round: 7, nextRunAt: new Date(before + 3600000).toISOString(), seen: [] } });
+  const model = fakeCalls();
+  const run = options(fs.root, { ...model, nowFn: () => new Date().toISOString(), hits: [hit(), hit('https://another.example.com/free')] });
+  assert.equal((await discoverSources(run)).status, 'skipped');
+  assert.equal(model.calls.length, 0); assert.equal(run.searches.length, 0);
+  const report = await discoverSources({ ...run, force: true });
+  assert.equal(report.added, 1); assert.equal(report.considered, 1);
+  assert.equal(run.searches.length, SETTINGS.maxQueriesPerScan);
+  assert(run.searches.every(request => request.limit === 1));
+  assert.equal(report.rawSearchResults, 2);
+  assert.equal(report.queries.length, SETTINGS.maxQueriesPerScan);
+  assert(Date.parse(report.startedAt) >= Date.parse(now));
+  assert(Date.parse(report.finishedAt) <= Date.now());
+  assert.equal(Date.parse(report.nextRunAt) - Date.parse(report.startedAt), SETTINGS.intervalMinutes * 60000);
+  const state = await fs.read('work/discovery-state.json');
+  assert.equal(state.round, 8); assert.equal(state.running, undefined);
+  assert.equal((await discoverSources(run)).status, 'skipped');
+  assert.equal(run.searches.length, 2);
+});
+
+test('manual discovery cannot replace a live claim even after its deadline has passed', async t => {
+  const fs = await fixture(t);
+  let entered, release;
+  const started = new Promise(resolve => { entered = resolve; });
+  const paused = new Promise(resolve => { release = resolve; });
+  const model = fakeCalls();
+  const run = options(fs.root, { callImpl: async request => {
+    if (request.name === 'discovery_query_plan') { entered(); await paused; }
+    return model.callImpl(request);
+  } });
+  const active = discoverSources(run);
+  await started;
+  try {
+    const before = await fs.text('work/discovery-state.json');
+    assert.equal(JSON.parse(before).running.pid, process.pid);
+    const duplicate = await discoverSources({ ...run, force: true, nowFn: () => '2026-10-27T16:00:00.000Z' });
+    assert.equal(duplicate.status, 'skipped'); assert.equal(duplicate.busy, true);
+    assert.equal(await fs.text('work/discovery-state.json'), before);
+    assert.equal(run.searches.length, 0);
+  } finally { release(); }
+  assert.equal((await active).added, 1);
+  assert.equal((await fs.read('work/discovery-state.json')).running, undefined);
+});
+
+test('manual discovery recovers a dead claim and clears its own claim after model failure', async t => {
+  const fs = await fixture(t, { state: { round: 3, nextRunAt: '2026-10-27T15:00:00.000Z', running: { pid: 2147483647, token: 'dead-owner' }, seen: [] } });
+  const run = options(fs.root, { force: true, callImpl: async () => { throw new Error('private model failure'); } });
+  const report = await discoverSources(run);
+  assert.equal(report.status, 'failed'); assert.equal(report.failed, 1);
+  const state = await fs.read('work/discovery-state.json');
+  assert.equal(state.round, 4); assert.equal(state.running, undefined);
+  assert.equal((await discoverSources({ ...run, force: false })).status, 'skipped');
+});
+
 test('simultaneous discovery triggers share the attempt cooldown before any model or search work', async t => {
   const fs = await fixture(t);
   let entered, release;

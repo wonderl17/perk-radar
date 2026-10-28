@@ -87,6 +87,35 @@ test('the service and a simultaneous scheduled task share a cross-process lock a
   await assert.rejects(access(join(fs.root, 'work/scan-run.lock')), { code: 'ENOENT' });
 });
 
+test('an explicit manual scan runs before the deadline with the real clock and the same budget and lock', async t => {
+  const fs = await fixture(t), started = deferred(), finish = deferred();
+  const before = Date.now(), deadline = new Date(before + 3600000).toISOString();
+  await fs.put('work/scan-state.json', { status: 'idle', nextScanAt: deadline });
+  let calls = 0;
+  const ingestImpl = async options => {
+    assert.deepEqual(options, { root: fs.root, limit: CONFIG.maxItemsPerScan, forceDiscovery: true });
+    calls++; started.resolve(); return finish.promise;
+  };
+  assert.equal((await runDueScan({ root: fs.root, config: CONFIG, ingestImpl })).ran, false);
+  assert.equal(calls, 0);
+  const active = runDueScan({ root: fs.root, config: CONFIG, ingestImpl, force: true });
+  await started.promise;
+  try {
+    const stateBeforeDuplicate = await fs.text('work/scan-state.json');
+    const duplicate = await runDueScan({ root: fs.root, config: CONFIG, ingestImpl, force: true });
+    assert.equal(duplicate.ran, false); assert.equal(duplicate.busy, true);
+    assert.equal(await fs.text('work/scan-state.json'), stateBeforeDuplicate);
+    assert.equal(calls, 1);
+  } finally { finish.resolve(REPORT); }
+  const result = await active;
+  assert.equal(result.ran, true); assert.equal(result.state.status, 'idle');
+  assert(Date.parse(result.state.lastAttemptAt) >= before);
+  assert(Date.parse(result.state.lastSuccessAt) <= Date.now());
+  assert.equal(Date.parse(result.state.nextScanAt) - Date.parse(result.state.lastSuccessAt), CONFIG.scanIntervalMinutes * 60000);
+  assert.equal((await runDueScan({ root: fs.root, config: CONFIG, ingestImpl })).ran, false);
+  assert.equal(calls, 1);
+});
+
 test('partial discovery preserves useful results and waits for its real deadline instead of rerunning core evidence', async t => {
   const fs = await fixture(t, { scanIntervalMinutes: 60, maxItemsPerScan: 6, retryIntervalMinutes: 15 });
   const config = await loadScanConfig({ root: fs.root, env: {} });

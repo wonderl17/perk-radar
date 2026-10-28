@@ -330,5 +330,28 @@
       "identityQuote": "Get Replit Choose where you want to use Replit, then sign in or create an account.",
       "benefitQuote": "Starter plan users receive daily credits for Agent usage, up to a monthly cap."
     }
+  },
+  {
+    "id": "auto-source-0ea0339d6a13d2fbef99",
+    "name": "Dify 官方网站",
+    "url": "https://dify.ai/pricing/dify-cloud",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "dify.ai",
+      "www.dify.ai"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T04:11:36.983Z",
+      "query": "site.dify.ai pricing Sandbox free credits",
+      "homepageUrl": "https://dify.ai/",
+      "searchUrl": "https://dify.ai/pricing/dify-cloud",
+      "evidenceHash": "e4548a53d69daaed2b4b6def5a52bde268e613ac89c285d2ee0a2d77b34e8ca2",
+      "homepageHash": "796eab8092f145c0cc97b5230e082723d39398a11d3a335d7d90bff735a93a40",
+      "identityQuote": "Managed Dify Cloud Hosted by Dify. Build, test, and launch AI apps without managing infrastructure.",
+      "benefitQuote": "Sandbox For trying out Dify's core features. Free Start for Free 200 message credits"
+    }
   }
 ]

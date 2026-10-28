@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-27T21:32:35.297Z",
+  "updatedAt": "2026-10-28T01:41:28.882Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1372,6 +1372,246 @@
           {
             "field": "steps",
             "quote": "请到管理员处等候分配，刷卡上机"
+          }
+        ]
+      }
+    },
+    {
+      "title": "华为云码道：在校大学生认证可领4000积分",
+      "provider": "华为云码道CodeArts代码智能体",
+      "summary": "中国站在校大学生升级至积分计费模式后，完成学生认证并通过审核，可一次性领取4000积分，发放后90天内有效。",
+      "benefit": "学生认证一次性领取4000积分",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "活动进行中，至2026年12月31日00:00:00（UTC+8）结束；各参与端均已开放。",
+      "eligibility": [
+        "在校大学生，已完成或尚未完成学生认证均属于活动参与人群。",
+        "已升级至积分计费模式。",
+        "学生认证须审核通过。"
+      ],
+      "steps": [
+        "登录码道代码智能体控制台。",
+        "点击左下角个人头像，再点击“活动福利”。",
+        "点击“立即认证”，进入学生认证界面。",
+        "填写认证信息，审核通过后领取4000积分。"
+      ],
+      "caveats": [
+        "积分为一次性奖励，不是每日或每月发放。",
+        "积分自发放之日起90天内有效，逾期自动失效。",
+        "参与前须升级至积分计费模式；本页未说明该模式的超额计费规则。",
+        "活动于2026年12月31日00:00:00（UTC+8）结束，并非12月31日全天有效。",
+        "本福利依据中国站文档，不适用于推定国际站权益；个人资格以认证审核结果为准。"
+      ],
+      "tags": [
+        "华为云",
+        "码道",
+        "学生认证",
+        "AI编程",
+        "积分"
+      ],
+      "publishedAt": null,
+      "expiresAt": "2026-12-31T00:00:00+08:00",
+      "offerType": "limited",
+      "id": "auto-c854e221183a725baf74",
+      "status": "published",
+      "discoveredAt": "2026-10-28T01:22:11.544Z",
+      "verifiedAt": "2026-10-28T01:23:31.094Z",
+      "featured": false,
+      "source": {
+        "name": "华为云码道官方文档",
+        "url": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0003.html",
+        "evidence": "官方活动文档说明：升级至积分计费模式的在校大学生完成认证并审核通过，可一次性领取4000积分；积分90天有效，活动于UTC+8时区2026年12月31日零时结束。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T01:23:31.094Z",
+        "evidenceHash": "048ffec7b1a2edb6318bbeaa5d4811c2c8875725ab72991062619aa931c04e89",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "即可一次性领取 4000积分"
+          },
+          {
+            "field": "eligibility",
+            "quote": "已完成学生认证或未完成学生认证的在校大学生"
+          },
+          {
+            "field": "eligibility",
+            "quote": "已经升级到了 积分计费模式"
+          },
+          {
+            "field": "steps",
+            "quote": "点击左下角个人头像，点击“活动福利”。"
+          },
+          {
+            "field": "steps",
+            "quote": "点击“立即认证”，进入学生认证界面。"
+          },
+          {
+            "field": "caveats",
+            "quote": "发放之日起90天内有效"
+          },
+          {
+            "field": "expiresAt",
+            "quote": "结束时间：2026年12月31日 00:00:00（UTC+8）"
+          }
+        ]
+      }
+    },
+    {
+      "title": "华为云码道：个人体验版每日签到领100积分",
+      "provider": "华为云码道CodeArts代码智能体",
+      "summary": "已升级到积分计费模式的个人体验版用户，每日签到可领100积分，当日领取当日有效；活动至2026年12月31日结束。",
+      "benefit": "每日签到领100积分，当日有效",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "中国站；活动时间为2026年10月27日20:00:00至2026年12月31日23:59:59（UTC+8）。",
+      "eligibility": [
+        "已升级到积分计费模式的用户。",
+        "本条100积分奖励适用于个人体验版。"
+      ],
+      "steps": [
+        "登录码道IDE或码道CodeArts插件。",
+        "点击右上角“限时福利”，再点击“每日领取”。"
+      ],
+      "caveats": [
+        "积分须每日手动领取，当日领取当日有效，逾期自动失效。",
+        "本条仅收录个人体验版奖励，不包含其他套餐的签到积分。",
+        "须已升级到积分计费模式；本页未说明升级条件及其他使用费用。"
+      ],
+      "tags": [
+        "华为云码道",
+        "中国站",
+        "每日签到",
+        "AI编程",
+        "积分"
+      ],
+      "publishedAt": null,
+      "expiresAt": "2026-12-31T23:59:59+08:00",
+      "offerType": "limited",
+      "id": "auto-40a5f60a603cfd2c3895",
+      "status": "published",
+      "discoveredAt": "2026-10-28T01:22:30.620Z",
+      "verifiedAt": "2026-10-28T01:24:44.955Z",
+      "featured": false,
+      "source": {
+        "name": "华为云码道官方文档",
+        "url": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0004.html",
+        "evidence": "官方“每日签到得积分”文档列明个人体验版每日可领100积分，参与者须已升级到积分计费模式；通过IDE或插件的“限时福利”领取，当日有效，活动于2026年12月31日23:59:59（UTC+8）结束。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T01:24:44.955Z",
+        "evidenceHash": "168490397a47778a39c16ff9523883d0180977c45bab7362d076ab7dc3712360",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "个人体验版 100积分"
+          },
+          {
+            "field": "eligibility",
+            "quote": "已经升级到 积分计费模式的用户"
+          },
+          {
+            "field": "steps",
+            "quote": "登录码道IDE/码道CodeArts插件。"
+          },
+          {
+            "field": "steps",
+            "quote": "右上角点击“限时福利”，点击“每日领取”"
+          },
+          {
+            "field": "caveats",
+            "quote": "当日领取当日有效"
+          },
+          {
+            "field": "expiresAt",
+            "quote": "2026年12月31日 23:59:59（UTC+8）"
+          }
+        ]
+      }
+    },
+    {
+      "title": "AWS：学生验证并完善资料，免费领一年 Skill Builder",
+      "provider": "AWS",
+      "summary": "合资格高校学生通过 SheerID 验证，并完善 Builder Center 个人资料，可免费领取一年 Skill Builder，含900多门课程、动手实验及认证备考资源，无需信用卡。",
+      "benefit": "免费一年 Skill Builder 订阅",
+      "category": "learning",
+      "regions": [
+        "global"
+      ],
+      "availability": "面向通过学生身份验证的合资格高校学生；页面未明确结束日期。",
+      "eligibility": [
+        "就读于经认可的高等教育机构。",
+        "使用 Builder ID 登录，并通过第三方 SheerID 学生身份验证。",
+        "完成 Builder Center 个人资料，包括上传照片和填写自我介绍。"
+      ],
+      "steps": [
+        "在学生奖励页面开始验证，使用 Builder ID 登录。",
+        "通过 SheerID 提交姓名、学校名称和学校邮箱，按要求完成学生验证。",
+        "进入 Builder Center 个人资料页，上传照片并填写自我介绍，解锁一年 Skill Builder 订阅奖励。"
+      ],
+      "caveats": [
+        "无需信用卡。",
+        "多数验证可在几分钟内完成；如需补充材料，通常需要24至48小时。",
+        "页面未列出具体支持国家或地区，不代表所有地区的学生都能通过验证。",
+        "本条仅收录完善资料获得的订阅奖励，不包含另需积累徽章的云额度或认证代金券。"
+      ],
+      "tags": [
+        "AWS",
+        "学生福利",
+        "Skill Builder",
+        "云计算学习",
+        "无需信用卡"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-71337a77adc354b967f6",
+      "status": "published",
+      "discoveredAt": "2026-10-28T01:22:30.620Z",
+      "verifiedAt": "2026-10-28T01:41:20.488Z",
+      "featured": false,
+      "source": {
+        "name": "AWS开发者中心",
+        "url": "https://builder.aws.com/student-rewards",
+        "evidence": "官方学生奖励页说明：经认可高校的学生通过 SheerID 验证后，上传头像并填写个人介绍，可解锁一年 Skill Builder 订阅，包含900多门课程等学习资源，无需信用卡。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T01:41:20.488Z",
+        "evidenceHash": "9e7043132c8f48be1ab0bf8d3c4bd3dab56660bcfe1916dd5e45211087a525c2",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Get 1 year of Skill Builder"
+          },
+          {
+            "field": "eligibility",
+            "quote": "a student at an accredited higher education institution"
+          },
+          {
+            "field": "steps",
+            "quote": "Sign in with your Builder ID."
+          },
+          {
+            "field": "steps",
+            "quote": "Complete student verification through a third-party, SheerID"
+          },
+          {
+            "field": "steps",
+            "quote": "upload a photo, add information in the about section."
+          },
+          {
+            "field": "caveats",
+            "quote": "No credit card needed."
           }
         ]
       }

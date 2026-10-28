@@ -376,5 +376,28 @@
       "identityQuote": "Cisco IQ is the unified AI-powered experience",
       "benefitQuote": "Explore our free, self-paced online courses. Learn to build networks, develop apps, and secure devices."
     }
+  },
+  {
+    "id": "auto-source-1eef19c71505d2246363",
+    "name": "上海图书馆",
+    "url": "https://www.library.sh.cn/guide/banzheng",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "www.library.sh.cn",
+      "library.sh.cn"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T10:11:52.817Z",
+      "query": "上海图书馆 在线办证 免费 数字资源 使用规则",
+      "homepageUrl": "https://www.library.sh.cn/",
+      "searchUrl": "https://www.library.sh.cn/guide/banzheng",
+      "evidenceHash": "be782d4845f2fdd23edd5389ce8a8d2b06d24a52a1c69e849704876fdbe8a839",
+      "homepageHash": "b4f326d839031546b8a7c7bde5e05888fc4393fe491a91258244b269ae034065",
+      "identityQuote": "版权所有©上海图书馆(上海科学技术情报研究所)",
+      "benefitQuote": "四、诚信免押金 年满18周岁的上海市常住居民，上海市公共信用良好者可申请办理。申请者本人需填写\"授权委托书\"，授权图书馆查询本人公共信用信息。"
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T01:41:28.882Z",
+  "updatedAt": "2026-10-28T04:13:18.777Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1612,6 +1612,79 @@
           {
             "field": "caveats",
             "quote": "No credit card needed."
+          }
+        ]
+      }
+    },
+    {
+      "title": "Dify Cloud：Sandbox 免费计划含200消息积分",
+      "provider": "Dify",
+      "summary": "适合体验 Dify 核心功能的用户，Sandbox 免费计划含200消息积分、5个应用及50MB知识库存储；积分按模型消耗，未注明定期补充。",
+      "benefit": "免费 Sandbox＋200消息积分",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "Dify Cloud 官网提供免费开始入口；具体地区可用性未说明，不代表所有地区均可使用。",
+      "eligibility": [
+        "希望试用 Dify 核心功能的用户，选择 Sandbox 免费计划。",
+        "计划限1个团队工作区、1名团队成员。"
+      ],
+      "steps": [
+        "打开 Dify Cloud 官方定价页 https://dify.ai/pricing/dify-cloud。",
+        "在 Sandbox 免费计划下点击“Start for Free”，开始使用该计划。"
+      ],
+      "caveats": [
+        "200消息积分未标注按月或按日补充，不应视为周期性赠送。",
+        "不同模型每次响应消耗的积分不同，200积分不等于200次响应；部分模型不能使用消息积分。",
+        "消息积分用尽后，官方提供的继续使用方式是接入自己的模型 API 密钥，不代表后续模型调用免费。",
+        "免费计划限5个应用、50份知识文档和50MB知识库存储；存储达到上限后不能上传新文档。",
+        "知识库操作限每分钟10次，API调用限每月5000次；需要更多资源时，官方提示升级付费计划。"
+      ],
+      "tags": [
+        "Dify Cloud",
+        "Sandbox",
+        "免费计划",
+        "AI应用开发"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-0ea0339d6a13d2fbef99",
+      "status": "published",
+      "discoveredAt": "2026-10-28T04:11:36.994Z",
+      "verifiedAt": "2026-10-28T04:13:08.737Z",
+      "featured": false,
+      "source": {
+        "name": "Dify 官方网站",
+        "url": "https://dify.ai/pricing/dify-cloud",
+        "evidence": "官方定价页列明 Sandbox 为免费计划，提供200消息积分、1名成员、5个应用和50MB知识库存储，并提供“Start for Free”入口；未注明积分补充周期或计划结束日期。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T04:13:08.737Z",
+        "evidenceHash": "e4548a53d69daaed2b4b6def5a52bde268e613ac89c285d2ee0a2d77b34e8ca2",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "200 message credits"
+          },
+          {
+            "field": "benefit",
+            "quote": "Free"
+          },
+          {
+            "field": "eligibility",
+            "quote": "For trying out Dify's core features."
+          },
+          {
+            "field": "eligibility",
+            "quote": "1 Team Member"
+          },
+          {
+            "field": "steps",
+            "quote": "Start for Free"
           }
         ]
       }

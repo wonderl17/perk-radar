@@ -353,5 +353,28 @@
       "identityQuote": "Managed Dify Cloud Hosted by Dify. Build, test, and launch AI apps without managing infrastructure.",
       "benefitQuote": "Sandbox For trying out Dify's core features. Free Start for Free 200 message credits"
     }
+  },
+  {
+    "id": "auto-source-ae91463bf04fb9c54fd7",
+    "name": "思科网络学院",
+    "url": "https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "www.cisco.com",
+      "cisco.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T08:11:57.486Z",
+      "query": "site:cisco.com Networking Academy free courses netacad",
+      "homepageUrl": "https://www.cisco.com/",
+      "searchUrl": "https://www.cisco.com/site/us/en/learn/training-certifications/training/netacad/index.html",
+      "evidenceHash": "b22d8f21970c76a94cd7dcb6edd2012f2cbf21c15ad8aa5522a03f2b52b39821",
+      "homepageHash": "6b9131a96649f37489e8f69354b456311db12f94a6a6d5c0849383d9b391cf6b",
+      "identityQuote": "Cisco IQ is the unified AI-powered experience",
+      "benefitQuote": "Explore our free, self-paced online courses. Learn to build networks, develop apps, and secure devices."
+    }
   }
 ]

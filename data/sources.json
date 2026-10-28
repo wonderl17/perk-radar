@@ -399,5 +399,28 @@
       "identityQuote": "版权所有©上海图书馆(上海科学技术情报研究所)",
       "benefitQuote": "四、诚信免押金 年满18周岁的上海市常住居民，上海市公共信用良好者可申请办理。申请者本人需填写\"授权委托书\"，授权图书馆查询本人公共信用信息。"
     }
+  },
+  {
+    "id": "auto-source-30a2f70dbd33191a0c95",
+    "name": "Cursor 官方",
+    "url": "https://cursor.com/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "cursor.com",
+      "www.cursor.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T12:11:59.511Z",
+      "query": "Cursor free plan pricing official limits",
+      "homepageUrl": "https://cursor.com/",
+      "searchUrl": "https://cursor.com/pricing",
+      "evidenceHash": "658f001de9c2ee66ceedf5b659431ddff9f94331b65b1f8682af8511f35c2122",
+      "homepageHash": "ac5f2efb94503b788388ef31d6dce2c80a5a0b51166f3b3104e431f5f454ba3b",
+      "identityQuote": "Cursor is your coding agent for building ambitious software.",
+      "benefitQuote": "Free $0 /month Get started Get started with: Limited AI usage AI Features Limited agent requests Limited Chat requests"
+    }
   }
 ]

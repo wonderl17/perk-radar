@@ -307,5 +307,28 @@
       "identityQuote": "Join a community of builders, access AWS tools and services and connect with the teams behind the products.",
       "benefitQuote": "Verified students get 1 year of full Skill Builder access for free"
     }
+  },
+  {
+    "id": "auto-source-6865e9263d5d2816b1c8",
+    "name": "Replit 官方文档",
+    "url": "https://docs.replit.com/billing/plans/starter-plan",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "docs.replit.com",
+      "www.docs.replit.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T03:11:53.956Z",
+      "query": "Replit Starter free plan AI credits pricing official",
+      "homepageUrl": "https://docs.replit.com/welcome",
+      "searchUrl": "https://docs.replit.com/billing/plans/starter-plan",
+      "evidenceHash": "a2e8279b3ce2ba7b0755e9d3f273abb5b4e458a7f2c2a705de234d3d87932bfa",
+      "homepageHash": "093475171d28e36e600b7b88c4e72d35320d1ec516421952681a535cdff70592",
+      "identityQuote": "Get Replit Choose where you want to use Replit, then sign in or create an account.",
+      "benefitQuote": "Starter plan users receive daily credits for Agent usage, up to a monthly cap."
+    }
   }
 ]

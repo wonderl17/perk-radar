@@ -13,6 +13,7 @@
 - 数据约定：[`docs/data-contract.md`](docs/data-contract.md)
 - 定期扫描：[`docs/automation.md`](docs/automation.md)
 - 自主搜索与信源扩充：[`docs/discovery.md`](docs/discovery.md)
+- 消息发布时间查证：[`docs/publication.md`](docs/publication.md)
 
 “GPT 自动核验”表示根据官方公开证据提取并校验规则，不代表人工实领、库存或个人资格保证。未知期限不编造截止日，过期活动从发现页归档；出现冲突会标待复核。
 

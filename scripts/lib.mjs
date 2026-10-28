@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile, rename, mkdir, open, unlink } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validatePublication } from './publication-data.mjs';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export const BENEFIT_PATTERN = /\b(?:free|credits?|grant|giveaway|trial|discount|student|scholarship)\b|免费|赠送|积分|额度|福利|优惠|限免|学生|奖学金|试用/iu;
@@ -69,6 +70,7 @@ export function validateOffers(document, { now = Date.now() } = {}) {
     if (!['ongoing', 'limited'].includes(offer.offerType)) fail('invalid offerType');
     if (!['published', 'withdrawn'].includes(offer.status)) fail('invalid status');
     if (offer.featured !== undefined && typeof offer.featured !== 'boolean') fail('featured must be boolean');
+    if (offer.publication !== undefined) for (const error of validatePublication(offer.publication, { now, discoveredAt: offer.discoveredAt })) fail(error);
     if (offer.verification !== undefined) {
       const proof = offer.verification;
       if (!proof || proof.method !== 'gpt' || typeof proof.model !== 'string' || !proof.model.trim()) fail('verification must identify the GPT method and model');
@@ -97,7 +99,11 @@ export async function withDataLock(root, action) {
     try { handle = await open(path, 'wx'); await handle.writeFile(JSON.stringify({ pid: process.pid })); }
     catch (error) {
       if (error.code !== 'EEXIST') throw error;
-      const previous = await readJson(path, {});
+      // A competing writer can observe the lock after open('wx') but before
+      // its PID JSON is written. Wait for that owner; never remove an empty lock.
+      let previous = {};
+      try { previous = await readJson(path, {}); }
+      catch (readError) { if (!(readError instanceof SyntaxError)) throw readError; }
       if (Number.isInteger(previous.pid)) {
         try { process.kill(previous.pid, 0); }
         catch (e) { if (e.code === 'ESRCH') { await unlink(path).catch(() => {}); continue; } }

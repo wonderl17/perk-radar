@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "intervalMinutes": 60,
+  "maxOffersPerScan": 2,
+  "resultsPerQuery": 5,
+  "maxPagesPerOffer": 3,
+  "unknownRetryDays": 30,
+  "failureRetryMinutes": 60
+}

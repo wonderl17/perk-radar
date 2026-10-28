@@ -62,6 +62,14 @@ function resultSummary(result, previous) {
     for (const key of ['startedAt', 'finishedAt', 'nextRunAt']) if (dateOrNull(value[key])) detail[key] = value[key];
     summary.autonomousDiscovery = detail;
   }
+  const publication = result.publication;
+  if (publication && typeof publication === 'object') {
+    const retained = ['skipped', 'busy'].includes(publication.status) ? previous?.publication : null;
+    const value = retained ? { ...retained, deferredFailures: publication.deferredFailures ?? retained.deferredFailures, nextRunAt: publication.nextRunAt ?? retained.nextRunAt } : publication;
+    summary.publication = Object.fromEntries(['examined', 'updated', 'known', 'unknown', 'failed', 'deferredFailures'].filter(key => Number.isInteger(value[key]) && value[key] >= 0).map(key => [key, value[key]]));
+    if (['completed', 'empty', 'partial', 'failed', 'skipped', 'busy', 'disabled'].includes(value.status)) summary.publication.status = value.status;
+    for (const key of ['startedAt', 'finishedAt', 'nextRunAt']) if (dateOrNull(value[key])) summary.publication[key] = value[key];
+  }
   return summary;
 }
 function cleanState(raw = {}) {
@@ -73,7 +81,7 @@ function cleanState(raw = {}) {
     lastSuccessAt: dateOrNull(raw.lastSuccessAt),
     nextScanAt: dateOrNull(raw.nextScanAt),
     lastResult: resultSummary(raw.lastResult),
-    lastError: raw.status === 'error' ? SCAN_ERROR : raw.status === 'degraded' ? 'Autonomous discovery is degraded; inspect the local discovery report.' : null,
+    lastError: raw.status === 'error' ? SCAN_ERROR : raw.status === 'degraded' ? 'Autonomous discovery or publication dating is degraded; inspect the local reports.' : null,
   };
 }
 async function readState(root) {
@@ -145,16 +153,17 @@ export async function runDueScan({ root = ROOT, config, ingestImpl = ingest, now
       const lastResult = resultSummary(report, state.lastResult);
       const discovery = lastResult.autonomousDiscovery;
       const discoveryFailed = (Number(discovery?.failed) || 0) > 0 || ['partial', 'failed'].includes(discovery?.status);
+      const dateFailed = (Number(lastResult.publication?.failed) || 0) > 0 || (Number(lastResult.publication?.deferredFailures) || 0) > 0 || ['partial', 'failed'].includes(lastResult.publication?.status);
       let next = finished + (coreFailed ? config.retryIntervalMinutes : config.scanIntervalMinutes) * MINUTE;
       // Search has its own budget claim. Retrying ingestion before that claim
       // expires only repeats old evidence and can falsely report recovery.
       const discoveryDue = Date.parse(discovery?.nextRunAt);
       if (!coreFailed && Number.isFinite(discoveryDue) && discoveryDue > finished) next = Math.min(next, discoveryDue);
       state = {
-        ...state, status: coreFailed ? 'error' : discoveryFailed ? 'degraded' : 'idle',
-        lastSuccessAt: coreFailed || discoveryFailed ? state.lastSuccessAt : iso(finished),
+        ...state, status: coreFailed ? 'error' : discoveryFailed || dateFailed ? 'degraded' : 'idle',
+        lastSuccessAt: coreFailed || discoveryFailed || dateFailed ? state.lastSuccessAt : iso(finished),
         nextScanAt: iso(next), lastResult,
-        lastError: coreFailed ? SCAN_ERROR : discoveryFailed ? 'Autonomous discovery is degraded; inspect the local discovery report.' : null,
+        lastError: coreFailed ? SCAN_ERROR : discoveryFailed || dateFailed ? 'Autonomous discovery or publication dating is degraded; inspect the local reports.' : null,
       };
     } catch {
       const finished = timeOf(nowFn);

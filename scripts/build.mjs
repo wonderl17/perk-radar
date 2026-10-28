@@ -1,15 +1,21 @@
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { ROOT, escapeXml, isMain, readJson, validateOffers } from './lib.mjs';
+import { ROOT, escapeXml, isMain, readJson, validateOffers, withDataLock } from './lib.mjs';
+import { publicationLabel } from '../src/domain.mjs';
 
 export function createFeed(document, siteUrl, now = Date.now()) {
   const available = document.offers.filter(offer => offer.status === 'published' && (!offer.expiresAt || Date.parse(offer.expiresAt) > now)).sort((a, b) => Date.parse(b.discoveredAt) - Date.parse(a.discoveredAt));
   if (!siteUrl) throw new Error('Set SITE_URL or data/site.json siteUrl to the actual website origin before building RSS.');
   const channelUrl = siteUrl;
-  const items = available.map(offer => `    <item>\n      <title>${escapeXml(offer.title)}</title>\n      <link>${escapeXml(offer.source.url)}</link>\n      <guid isPermaLink="false">perk-radar:${escapeXml(offer.id)}</guid>\n      <pubDate>${new Date(offer.discoveredAt).toUTCString()}</pubDate>\n      <category>${escapeXml(offer.category)}</category>\n      <description>${escapeXml(`${offer.benefit}。${offer.summary}\n适用范围：${offer.availability}\n领取条件：${offer.eligibility.join('；')}\n注意：${offer.caveats.join('；')}\n核验时间：${offer.verifiedAt}。截止：${offer.expiresAt ?? '官方未公布'}。`)}</description>\n    </item>`).join('\n');
+  const items = available.map(offer => `    <item>\n      <title>${escapeXml(offer.title)}</title>\n      <link>${escapeXml(offer.source.url)}</link>\n      <guid isPermaLink="false">perk-radar:${escapeXml(offer.id)}</guid>\n      <pubDate>${new Date(offer.discoveredAt).toUTCString()}</pubDate>\n      <category>${escapeXml(offer.category)}</category>\n      <description>${escapeXml(`${offer.benefit}。${offer.summary}\n适用范围：${offer.availability}\n领取条件：${offer.eligibility.join('；')}\n注意：${offer.caveats.join('；')}\n${publicationLabel(offer)}\n核验时间：${offer.verifiedAt}。截止：${offer.expiresAt ?? '官方未公布'}。`)}</description>\n    </item>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n  <channel>\n    <title>福利雷达 · 官方福利信息流</title>\n    <link>${escapeXml(channelUrl)}</link>\n    <description>全球与中国的官方福利、免费权益和活动线索。按首次收录时间排列，领取前请复核官方条款。</description>\n    <language>zh-CN</language>\n    <lastBuildDate>${new Date(document.updatedAt).toUTCString()}</lastBuildDate>\n${items}\n  </channel>\n</rss>\n`;
 }
 export async function build({ root = ROOT, now = Date.now() } = {}) {
+  // The bounded local file copy shares the writer lock: a backfill and an
+  // ingestion cannot remove the same dist directory or package mixed data.
+  return withDataLock(root, () => buildFiles({ root, now }));
+}
+async function buildFiles({ root, now }) {
   const document = await readJson(resolve(root, 'data/offers.json'));
   const errors = validateOffers(document, { now });
   if (errors.length) throw new Error(errors.join('\n'));

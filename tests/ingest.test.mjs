@@ -97,6 +97,18 @@ test('manual ingestion forwards the discovery override only after acquiring the 
   await assert.rejects(access(join(fs.root, 'work/ingest.lock')), { code: 'ENOENT' });
 });
 
+test('normal scheduled ingestion runs bounded date enrichment inside its run lock and reports it separately', async t => {
+  const fs = await fixture(t, { candidates: [], sources: [] });
+  let calls = 0;
+  const report = await ingest(options(fs.root, { collectFirst: true, discoverImpl: async () => ({ status: 'disabled' }), publicationImpl: async args => {
+    assert.equal(args.root, fs.root); assert.equal(args.config.model, CONFIG.model);
+    assert.equal((await fs.read('work/ingest.lock')).pid, process.pid);
+    assert.equal(args.manual, undefined, 'background ingestion cannot force backfill');
+    calls++; return { status: 'completed', examined: 1, updated: 1, known: 1, unknown: 0, failed: 0 };
+  } }));
+  assert.equal(calls, 1); assert.equal(report.publication.known, 1); assert.equal(report.published, 0);
+});
+
 test('unsupported extraction is held before an independent audit or dataset write', async t => {
   const cases = [
     ['fabricated quote', extraction({ evidenceQuotes: [{ field: 'benefit', quote: 'Everyone receives 1000000 credits' }, ...extraction().evidenceQuotes.slice(1)] }), /quote does not match/],
@@ -173,6 +185,26 @@ test('same-URL re-verification updates in place, preserves discovery, and resolv
   assert.equal(change.status, 'reviewed');
   assert.equal(change.reviewedAt, NOW);
   assert.equal(change.reviewMethod, 'gpt');
+});
+
+test('rule re-verification preserves manual date corrections without refreshing their assessment', async t => {
+  const publication = { value: '2025-03', precision: 'month', certainty: 'approximate', basis: 'published', evidence: [{ url: 'https://example.com/news', quote: 'March 2025 announcement' }], reasoning: '人工核对公告日期。', assessedAt: '2026-10-20T08:00:00.000Z', method: 'manual' };
+  const existing = offer({ publication, publishedAt: '2025-03-12T08:00:00.000Z' });
+  const fs = await fixture(t, { offers: [existing] });
+  const result = await ingest(options(fs.root, fakeCalls()));
+  assert.equal(result.updated, 1);
+  const current = (await fs.read('data/offers.json')).offers[0];
+  assert.deepEqual(current.publication, publication);
+  assert.equal(current.publishedAt, existing.publishedAt);
+  assert.equal(current.discoveredAt, existing.discoveredAt);
+});
+
+test('a changed entitlement cannot inherit a GPT date for the old plan version', async t => {
+  const publication = { value: '2025-03', precision: 'month', certainty: 'approximate', basis: 'published', evidence: [{ url: 'https://example.com/news', quote: 'March 2025 announcement' }], reasoning: '公告日期已核对。', assessedAt: '2026-10-20T08:00:00.000Z', method: 'gpt-web-search', model: 'gpt-test' };
+  const fs = await fixture(t, { offers: [offer({ benefit: '原有旧套餐额度', publication })] });
+  const result = await ingest(options(fs.root, fakeCalls()));
+  assert.equal(result.updated, 1);
+  assert.equal((await fs.read('data/offers.json')).offers[0].publication, undefined);
 });
 
 test('review and rejected decisions remain persisted and are not silently retried as new candidates', async t => {

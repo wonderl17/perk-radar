@@ -225,3 +225,17 @@ test('an unreadable saved state cannot silently trigger new model work', async t
   assert.equal((await scheduler.firstRun).status, 'error'); assert.equal(calls, 0);
   assert.equal(clock.take().ms, 60000); await scheduler.stop();
 });
+
+test('date search failure is visible separately and a skipped date budget does not claim recovery', async t => {
+  const fs = await fixture(t); let now = NOW;
+  const first = await runDueScan({ root: fs.root, config: CONFIG, nowFn: () => now, ingestImpl: async () => ({ ...REPORT, publication: { status: 'partial', examined: 2, updated: 1, known: 1, unknown: 0, failed: 1, apiKey: 'not-public' } }) });
+  assert.equal(first.state.status, 'degraded'); assert.equal(first.state.lastResult.published, 1);
+  assert.equal(first.state.lastResult.publication.failed, 1);
+  assert.ok(!(await fs.text('work/scan-state.json')).includes('not-public'));
+  now = Date.parse(first.state.nextScanAt);
+  const skipped = await runDueScan({ root: fs.root, config: CONFIG, nowFn: () => now, ingestImpl: async () => ({ ...REPORT, publication: { status: 'skipped', failed: 0 } }) });
+  assert.equal(skipped.state.status, 'degraded'); assert.equal(skipped.state.lastResult.publication.failed, 1);
+  now = Date.parse(skipped.state.nextScanAt);
+  const recovered = await runDueScan({ root: fs.root, config: CONFIG, nowFn: () => now, ingestImpl: async () => ({ ...REPORT, publication: { status: 'completed', examined: 1, updated: 1, known: 0, unknown: 1, failed: 0 } }) });
+  assert.equal(recovered.state.status, 'idle');
+});

@@ -45,6 +45,35 @@ export function dateKey(value) {
 export function dateLabel(value, options = {}) {
   return new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: 'long', day: 'numeric', ...options }).format(new Date(value));
 }
+function publicationDateText(value, precision) {
+  if (typeof value !== 'string') return null;
+  if (precision === 'year' && /^[1-9]\d{3}$/.test(value)) return `${value}年`;
+  if (precision === 'month' && /^[1-9]\d{3}-(0[1-9]|1[0-2])$/.test(value)) return `${value.slice(0, 4)}年${Number(value.slice(5))}月`;
+  if (precision === 'day' && /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(value)) {
+    const parsed = new Date(`${value}T00:00:00Z`);
+    if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) return null;
+    return `${value.slice(0, 4)}年${Number(value.slice(5, 7))}月${Number(value.slice(8))}日`;
+  }
+  if (precision === 'minute' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) && Number.isFinite(Date.parse(value))) {
+    const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(value));
+    const fields = Object.fromEntries(parts.map(part => [part.type, part.value]));
+    return `${fields.year}年${Number(fields.month)}月${Number(fields.day)}日 ${fields.hour}:${fields.minute}（北京时间）`;
+  }
+  return null;
+}
+export function publicationLabel(offer) {
+  const publication = offer.publication;
+  if (publication) {
+    if (publication.certainty === 'unknown') return '消息发布时间：未知';
+    const date = publicationDateText(publication.value, publication.precision);
+    if (!date || !['exact', 'approximate'].includes(publication.certainty) || !['published', 'available_by'].includes(publication.basis)) return '消息发布时间：未知';
+    if (publication.basis === 'available_by') return `最晚已于${date}存在（发布时间估计）`;
+    const approximate = publication.certainty === 'approximate' || ['year', 'month'].includes(publication.precision);
+    return `消息发布：${approximate ? '约' : ''}${date}`;
+  }
+  if (offer.publishedAt && Number.isFinite(Date.parse(offer.publishedAt))) return `消息发布：${dateLabel(offer.publishedAt, { year: 'numeric' })}`;
+  return '消息发布时间：待查证';
+}
 export function groupByDay(offers) {
   const groups = [];
   for (const offer of offers) {

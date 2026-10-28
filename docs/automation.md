@@ -10,6 +10,8 @@
 
 搜索需独立 Python 环境及 `requirements-search.txt` 的 DDGS 依赖，安装方法见 `docs/discovery.md`，可用 `PERK_SEARCH_PYTHON` 指定解释器。它不修改 Hermes 环境、不读取模型密钥。原始查询/候选报告与状态只写忽略的 `work/`；准入信源中经校验的短查询与官方证据可公开。
 
+消息发布时间使用独立有界 GPT 搜索查证阶段，见 `docs/publication.md` 和 `data/publication.json`。正常 `scan:due` 每小时最多查2条，每条1个查询、最多3个实际页面；不改变新信源发现的4查询预算。查看 `work/publication-report.json` 区分查得日期、未知和执行失败；日期结果随正式 offers 持久保存，粗日期不补造精确时刻。`dates:backfill` 仅限明确人工要求，后台不以其绕过预算。
+
 模型默认通过本机 Hermes 原生配置读取，或使用完整的 `PERK_LLM_API_KEY`、`PERK_LLM_BASE_URL`、`PERK_LLM_MODEL` 运行时配置。可指定 `PERK_LLM_API_MODE` 和 `PERK_LLM_REASONING_EFFORT`。不复制或提交密钥；网页前端从来不调用模型。
 
 采集、结构化提取、原文证据校验和第二轮审核全部通过才写正式福利，保留模型、时间与证据。长正文、冲突、过期和缺依据条目不直接发布；不以模型自信代替原文依据。核验不表示库存或个人资格保证。

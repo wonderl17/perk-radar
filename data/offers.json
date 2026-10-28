@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T14:13:17.649Z",
+  "updatedAt": "2026-10-28T15:17:01.107Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -48,7 +48,18 @@
       "featured": true,
       "reviewRequired": true,
       "reviewRequestedAt": "2026-10-26T20:16:51.728Z",
-      "reviewNote": "福利及领取路径明确，且不与已有权益重复；但官方截止时间未注明时区，无法确定精确到期时间。此外，正文要求站点成功发布，FAQ称成功生成即可，任务完成条件需核实。; Model did not approve publication"
+      "reviewNote": "福利及领取路径明确，且不与已有权益重复；但官方截止时间未注明时区，无法确定精确到期时间。此外，正文要求站点成功发布，FAQ称成功生成即可，任务完成条件需核实。; Model did not approve publication",
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方页面描述了同一18元抵扣券福利，但未提供消息发布日期。文中2026年9月30日为活动开始及新用户注册资格起点，10月29日为活动结束及兑换截止时间，均不能证明消息何时发布；也无带日期的报道可证明该权益当时已存在。",
+        "assessedAt": "2026-10-28T15:12:36.357Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
     },
     {
       "id": "trae-cn-free-credits",
@@ -135,7 +146,18 @@
         "evidence": "当前官方定价FAQ免费方案列明 0 美元、每天 300 积分与并行/自动化限制。"
       },
       "status": "published",
-      "featured": true
+      "featured": true,
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "已检索相关资料，但日期与本条权益的关联未通过复核，暂不推定发布时间。",
+        "assessedAt": "2026-10-28T15:13:11.366Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
     },
     {
       "id": "lovable-free-build",
@@ -179,7 +201,23 @@
         "evidence": "官方credits文档免费方案表与FAQ均明确 5/day、30/calendar month、UTC次月重置。"
       },
       "status": "published",
-      "featured": false
+      "featured": false,
+      "publication": {
+        "value": "2026-10-21",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://axonbuild.com/blog/lovable-free-tier-limits",
+            "quote": "Every grant, cap and feature below comes from Lovable’s own plan, credit, pricing and out-of-credits pages as they read on October 21, 2026."
+          }
+        ],
+        "reasoning": "该独立文章明确说明所列额度依据2026年10月21日读取的官方页面，正文列出免费计划每日5积分、自然月最多30积分及重置规则，可证明该版本权益至迟当日已存在，但不能证明首发时间。文章虽标注7月30日发布，但内容后续更新，无法将当前额度版本追溯至原始发布日期；此处采用正文明确的核对日期，而非最后更新日期。",
+        "assessedAt": "2026-10-28T15:13:01.861Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
     },
     {
       "id": "aliyun-bailian-new-user",
@@ -271,7 +309,23 @@
       "featured": false,
       "reviewRequired": true,
       "reviewRequestedAt": "2026-10-26T14:12:53.190Z",
-      "reviewNote": "该页是学生权益合集，包含域名、云额度、开发工具及课程等多份独立福利，不能合并为一条发布。需先确定单项权益，并补充其资格审核、领取流程及收费限制的官方证据；其中 Azure 学生额度与已有条目可能重复，需单独核对。; Model did not approve publication"
+      "reviewNote": "该页是学生权益合集，包含域名、云额度、开发工具及课程等多份独立福利，不能合并为一条发布。需先确定单项权益，并补充其资格审核、领取流程及收费限制的官方证据；其中 Azure 学生额度与已有条目可能重复，需单独核对。; Model did not approve publication",
+      "publication": {
+        "value": "2026-10-06",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://www.geek.college/i/github-student-developer-pack",
+            "quote": "All figures above were read from GitHub's own pages on 6 October 2026. Partner terms are set by each vendor and can change independently of GitHub, so re-check the specific offer before you depend on a number."
+          }
+        ],
+        "reasoning": "官方礼包页确认当前权益，但没有发布日期。page-2明确描述免费 GitHub Pro，以及含 AI 积分、有限聊天和 Agent 用量且仅自动选择模型的 Copilot Student，与本条版本一致；文章声明相关信息于2026年10月6日读取自官方页面，可证明该版本至迟当日已存在。文章另有更新及核验记录，不能将其9月13日的原始发布日期直接当作当前权益版本的首发日。",
+        "assessedAt": "2026-10-28T15:13:57.588Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
     },
     {
       "id": "azure-students",
@@ -315,7 +369,23 @@
         "evidence": "官方页面学生方案明确100美元/12个月、不需信用卡、仅全日制大学生；资格页补充18岁要求。"
       },
       "status": "published",
-      "featured": false
+      "featured": false,
+      "publication": {
+        "value": "2026-08-21",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://bestaiforstudents.com/microsoft-azure-for-students-free-credits",
+            "quote": "Microsoft Azure for Students 2026: Get $100 Free Azure Credit (No Credit Card) By Guy Perry August 21, 2026 October 19, 2026"
+          }
+        ],
+        "reasoning": "官方页面确认了面向符合资格大学生的100美元额度、12个月有效期及无需信用卡，但没有发布日期。page-3的署名文章及datePublished均指向2026年8月21日，正文描述相同额度、期限和资格，可作为该福利当时已存在的旁证，不能证明官方首发时间。10月19日为后续核验或更新日期，不用作发布依据。",
+        "assessedAt": "2026-10-28T15:13:50.726Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
     },
     {
       "id": "microsoft-learn",
@@ -555,6 +625,17 @@
             "quote": "2026 年 10 月 31 日 24:00（UTC+8）"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方页面未提供消息发布日期或延期公告日期。2026年10月20日是活动开始时间，10月17日是模型发布日期，10月31日是延期后的活动结束时间，均不能证明本条“延长至10月底”福利版本的发布时间；也无带日期的报道证明该版本当时已存在。",
+        "assessedAt": "2026-10-28T15:11:52.772Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -701,6 +782,22 @@
             "quote": "Start Free"
           }
         ]
+      },
+      "publication": {
+        "value": "2026-09-23",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://provenbrief.com/story/bolt-new-pricing-plans-tokens-and-limits-explained",
+            "quote": "All figures from bolt.new/pricing, read 2026-09-23; US-listed monthly billing."
+          }
+        ],
+        "reasoning": "官方定价页列明当前免费版权益，但未提供发布日期。page-2明确说明其定价数据读取于2026-09-23，并描述免费版每月100万、每日30万Tokens，以及公开和私有项目、数据库、网站托管等相同权益，可证明该版本至迟当时已存在，不能证明首发。未采用文章更新日；page-3对托管权益的描述与当前版本不符，不将其较早发布日期套用于当前完整权益。",
+        "assessedAt": "2026-10-28T15:11:37.162Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -934,6 +1031,22 @@
             "quote": "You can sign up with either a Microsoft account or a GitHub account."
           }
         ]
+      },
+      "publication": {
+        "value": "2026-07-24",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://costbench.com/software/cloud-infrastructure/azure/free-plan",
+            "quote": "Microsoft Azure — Account purchase options $200 credit, 30-day period, 12-month and always-free service counts, card policy, and upgrade behavior. Checked 2026-07-24"
+          }
+        ],
+        "reasoning": "官方页面确认新客户可获200美元、30天内使用的同一权益，但未提供发布日期。CostBench明确记录于2026年7月24日核查官方来源，且所述额度、期限及转付费规则与当前权益一致，因此只能证明该权益至迟当日已存在，不能认定为官方首发日。",
+        "assessedAt": "2026-10-28T15:12:12.634Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1006,6 +1119,17 @@
             "quote": "Request a code from your partner"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "两份官方页面均描述当前1至6个月的Business权益，但未提供发布日期。第三方页面为优惠目录，其“Last verified Jul 2026”是核验时间，datePublished仅标示该目录文章的发布日期，缺乏可靠报道或可追溯来源证明当前含每月AI积分的具体版本当时已存在，故无法确定消息发布时间。",
+        "assessedAt": "2026-10-28T15:12:18.875Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1150,6 +1274,22 @@
             "quote": "No-cost (Spark plan) Get started"
           }
         ]
+      },
+      "publication": {
+        "value": "2026-10-20",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://www.macrostack.net/pricing/firebase",
+            "quote": "Read from Google 's own pricing and documentation on 2026-10-20 — 7 days ago . Vendors change prices without notice; confirm before you commit."
+          }
+        ],
+        "reasoning": "独立对比文章明确列出 Spark Hosting 的10GB存储、每日360MB传输及无需付款方式，并注明于2026-10-20查阅 Google 官方定价和文档，可作为该权益至迟当日已存在的证据。此日期是文章的资料核验日期，不能证明官方首发时间；官方页面虽确认相同权益，但未提供其发布日期。",
+        "assessedAt": "2026-10-28T15:10:53.825Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1213,6 +1353,17 @@
             "quote": "use the dedicated link in your JetBrains Account"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "page-1虽明确说明符合条件者可免费续期一年，但仅标注2026年8月13日的更新时间，不能作为该权益的发布日期。page-2没有同一续期权益的可追溯发布日期；其中2020年的描述涉及院校免费使用工具，并非本条续期计划。现有页面不足以确定发布时间。",
+        "assessedAt": "2026-10-28T15:10:41.664Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1298,6 +1449,22 @@
             "quote": "Select Get free education plan ."
           }
         ]
+      },
+      "publication": {
+        "value": "2026-09-25",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://blog.campuscommuno.com/2026/09/notion-plus-free-students-2026-education-plan.html",
+            "quote": "September 25, 2026 Notion Plus Free for Students 2026: Get Education Plan at $0"
+          }
+        ],
+        "reasoning": "官方帮助页及教育计划页面均未提供该版本的发布日期。page-2的独立介绍发表于2026年9月25日，正文明确描述免费单成员工作区、100位访客、30天页面历史，以及WHED高校资格、学校主邮箱和每年验证要求，与本条权益一致。该报道只能证明此版本最迟当日已经存在，不能证明官方首发日期；未使用其最后更新日期作为发布依据。",
+        "assessedAt": "2026-10-28T15:15:10.404Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1374,6 +1541,17 @@
             "quote": "请到管理员处等候分配，刷卡上机"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "page-1明确载有免费数字阅览、每次上机2小时及年龄限制，但未提供发布日期；page-2、page-3的日期均对应其他公告或新闻，不能证明本条权益版本的发布时间或此前已存在。",
+        "assessedAt": "2026-10-28T15:10:20.598Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1535,6 +1713,17 @@
             "quote": "2026年12月31日 23:59:59（UTC+8）"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方页面确认个人体验版每日签到可领100积分，但仅标注页面更新时间及活动起止时间，未提供该福利消息的发布日期。活动开始时间不能视为消息发布时间；其余页面也无同一福利的带日期发布报道，因此无法确定。",
+        "assessedAt": "2026-10-28T15:09:44.986Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1614,6 +1803,17 @@
             "quote": "No credit card needed."
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方权益页明确列出学生验证、完善资料后领取一年 Skill Builder 的福利，但未提供发布日期。另两篇虽托管于 AWS Builder Center，却是个人作者的社区文章，并声明观点不代表 AWS；其文章发布日期不能视为该福利的官方首发日，也不足以作为可靠独立报道证明该版本当时已存在。版权年份和首次收录时间均不能作为发布依据。",
+        "assessedAt": "2026-10-28T15:10:11.146Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1687,6 +1887,22 @@
             "quote": "Start for Free"
           }
         ]
+      },
+      "publication": {
+        "value": "2026-08-13",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://dailyaifixs.com/blog/dify-pricing-2026-the-200-credit-free-wall",
+            "quote": "Dify pricing 2026 starts free, but the Sandbox caps at 200 lifetime credits. See what Professional ($59/mo) and Team ($159/mo) really cost before you build. Published August 13, 2026"
+          }
+        ],
+        "reasoning": "官方定价页确认免费 Sandbox 含200消息积分、1名成员、5个应用及50MB存储，但未提供发布日期。DailyFix于2026年8月13日发布的独立介绍明确列出相同免费额度与资源限制，可证明该版本权益当时已存在，不能证明其首次发布日，因此采用 available_by。",
+        "assessedAt": "2026-10-28T15:09:50.268Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1758,6 +1974,17 @@
             "quote": "Explore Cisco Networking Academy"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "所提供的官方页面确认有免费在线自学课程，但未载明本条课程福利版本的发布日期，也无带日期的官方或可靠独立报道证明其何时已存在，无法确定消息发布时间。",
+        "assessedAt": "2026-10-28T15:09:27.818Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -1829,6 +2056,115 @@
             "quote": "Your allowance refreshes weekly"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方定价页描述了当前 Free 计划及 Cursor/Grok 共享、每周刷新的额度，但未提供该版本的发布日期。两篇第三方文章描述的是按月刷新、含 Tab 或 Composer 的 Hobby 旧版本，不能将其日期套用于当前权益；版权年份及首次收录时间也不能作为发布时间依据。",
+        "assessedAt": "2026-10-28T15:09:30.869Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "Hugging Face PRO：每月附带2美元计算额度",
+      "provider": "Hugging Face",
+      "summary": "付费 PRO 用户每月获2美元通用计算额度，可用于推理等计算服务；经 Hugging Face 路由的合资格请求自动抵扣。",
+      "benefit": "每月2美元通用计算额度",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "面向 Hugging Face PRO 订阅用户；官方本页未列出具体地区可用范围。",
+      "eligibility": [
+        "需为付费 PRO 订阅用户。",
+        "使用 Inference Providers 月度额度时，请求须经 Hugging Face 路由；自定义供应商密钥方式不适用。"
+      ],
+      "steps": [
+        "使用已有 PRO 账户，或升级至 PRO；本页未列出订阅价格。",
+        "使用 JavaScript 或 Python InferenceClient，或携带 Hugging Face User Access Token 发起 HTTP 请求，经 Hugging Face 路由调用。",
+        "月度额度自动优先抵扣合资格用量，可在账单页面查看支出。"
+      ],
+      "caveats": [
+        "这是付费订阅附带额度，不是免费账户赠金；免费用户没有月度额度。",
+        "额度也可用于 Inference Endpoints、Spaces 升级硬件及 Jobs 等计算服务，并非推理专属。",
+        "超出所含额度后，继续使用需购买额外额度，并按实际用量计费。",
+        "使用自定义供应商密钥时由供应商直接计费，不能抵扣该月度额度。"
+      ],
+      "tags": [
+        "Hugging Face",
+        "PRO",
+        "计算额度",
+        "模型推理",
+        "付费订阅权益"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-ab27080818d034550051",
+      "status": "published",
+      "discoveredAt": "2026-10-28T15:12:29.537Z",
+      "verifiedAt": "2026-10-28T15:13:39.348Z",
+      "featured": false,
+      "source": {
+        "name": "Hugging Face 官方文档",
+        "url": "https://huggingface.co/docs/inference-providers/pricing",
+        "evidence": "定价文档列明 PRO 用户每月获2美元通用计算额度，每月入账并自动优先抵扣；免费账户无月度额度，自定义供应商密钥不适用额度抵扣。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-28T15:13:39.348Z",
+        "evidenceHash": "988acb628002bd890c1eca02b343f7dd9434d41d100637de45f16619ec1d613b",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "PRO Users $2.00"
+          },
+          {
+            "field": "benefit",
+            "quote": "They are credited every month"
+          },
+          {
+            "field": "eligibility",
+            "quote": "PRO users"
+          },
+          {
+            "field": "steps",
+            "quote": "Simply use the JavaScript or Python InferenceClient"
+          },
+          {
+            "field": "steps",
+            "quote": "Your monthly credits automatically apply"
+          },
+          {
+            "field": "caveats",
+            "quote": "Free Users None"
+          },
+          {
+            "field": "caveats",
+            "quote": "by purchasing additional credits."
+          }
+        ]
+      },
+      "publication": {
+        "value": "2026-10-15",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://www.usagepricing.com/blueprint/activity/hugging-face-2026-10-15-free-inference-credits-removed",
+            "quote": "Fig. 2 PRO users keep $2.00 of monthly credits usable across Hugging Face compute services “PRO Users $2.00” Inference Providers pricing and billing — Hugging Face huggingface.co /docs/inference-providers/pricing Product docs · captured Oct 15, 2026"
+          }
+        ],
+        "reasoning": "官方文档确认当前PRO每月2美元通用计算额度，但未提供该版本的发布日期。UsagePricing的有日期报道及官方页面快照明确记录了同额度、同适用范围的权益，且说明免费用户已无月度额度，可证明该版本至迟于2026年10月15日存在，不能证明首发日。page-3的旧datePublished不能用于确定后来更新的权益版本发布时间。",
+        "assessedAt": "2026-10-28T15:16:50.671Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     }
   ]

@@ -422,5 +422,28 @@
       "identityQuote": "Cursor is your coding agent for building ambitious software.",
       "benefitQuote": "Free $0 /month Get started Get started with: Limited AI usage AI Features Limited agent requests Limited Chat requests"
     }
+  },
+  {
+    "id": "auto-source-ab27080818d034550051",
+    "name": "Hugging Face 官方文档",
+    "url": "https://huggingface.co/docs/inference-providers/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "huggingface.co",
+      "www.huggingface.co"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T15:12:29.532Z",
+      "query": "Hugging Face inference providers free credits pricing official",
+      "homepageUrl": "https://huggingface.co/",
+      "searchUrl": "https://huggingface.co/docs/inference-providers/pricing",
+      "evidenceHash": "988acb628002bd890c1eca02b343f7dd9434d41d100637de45f16619ec1d613b",
+      "homepageHash": "19d874c0530338b6254ee172c9634a43035601fb0c60354c472fa233e51a9199",
+      "identityQuote": "The platform where the machine learning community collaborates on models, datasets, and applications.",
+      "benefitQuote": "PRO Users $2.00 All Hugging Face compute services yes Team or Enterprise Organizations $2.00 per seat All Hugging Face compute services yes"
+    }
   }
 ]

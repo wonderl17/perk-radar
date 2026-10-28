@@ -102,6 +102,14 @@ test('RSS excludes expired/withdrawn offers and escapes source text', () => {
   assert(!feed.includes('perk-radar:withdrawn'));
 });
 
+test('RSS describes publication precision while retaining first discovery as pubDate', () => {
+  const assessed = offer({ publication: { value: '2025-03', precision: 'month', certainty: 'approximate', basis: 'available_by', evidence: [{ url: 'https://example.com/news', quote: 'Available in March 2025.' }], reasoning: '只能确认当时已存在。', assessedAt: NOW, method: 'gpt-web-search' } });
+  const feed = createFeed(document([assessed, offer({ id: 'unknown' })]), 'https://perks.example', Date.parse(NOW));
+  assert(feed.includes('最晚已于2025年3月存在（发布时间估计）'));
+  assert(feed.includes('消息发布时间：待查证'));
+  assert.deepEqual([...feed.matchAll(/<pubDate>([^<]+)<\/pubDate>/g)].map(match => match[1]), ['Sun, 25 Oct 2026 08:00:00 GMT', 'Sun, 25 Oct 2026 08:00:00 GMT']);
+});
+
 test('build packages reviewed data only and excludes candidates/source configuration', async t => {
   const root = await mkdtemp(join(tmpdir(), 'perk-radar-build-'));
   t.after(() => rm(root, { recursive: true, force: true }));

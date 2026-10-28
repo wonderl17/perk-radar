@@ -19,6 +19,7 @@
     "scan:due": "node scripts/scan.mjs",
     "scan:now": "node scripts/scan.mjs --now",
     "scan:status": "node scripts/scan.mjs --status",
+    "dates:backfill": "node scripts/publication.mjs",
     "sync:github": "node scripts/sync-github.mjs"
   }
 }

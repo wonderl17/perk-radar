@@ -43,7 +43,7 @@ function timeOf(nowFn) {
 }
 const iso = time => new Date(time).toISOString();
 function dateOrNull(value) { return typeof value === 'string' && Number.isFinite(Date.parse(value)) ? value : null; }
-function resultSummary(result) {
+function resultSummary(result, previous) {
   if (!result || typeof result !== 'object') return null;
   const summary = {};
   for (const key of RESULT_COUNTS) if (Number.isInteger(result[key]) && result[key] >= 0) summary[key] = result[key];
@@ -52,19 +52,28 @@ function resultSummary(result) {
   const sourceFailures = result.discovery?.failures ?? result.sourceFailures;
   if (Number.isInteger(sourceFailures) && sourceFailures >= 0) summary.sourceFailures = sourceFailures;
   const discovery = result.discovery?.autonomous ?? result.autonomousDiscovery;
-  if (discovery && typeof discovery === 'object') summary.autonomousDiscovery = Object.fromEntries(['added', 'held', 'failed', 'considered', 'searchResults'].filter(key => Number.isInteger(discovery[key]) && discovery[key] >= 0).map(key => [key, discovery[key]]));
+  if (discovery && typeof discovery === 'object') {
+    // A core retry can skip the independent search deadline. That is not a
+    // recovery of the previous search failure, and must not erase its status.
+    const retained = discovery.status === 'skipped' ? previous?.autonomousDiscovery : null;
+    const value = retained ? { ...retained, nextRunAt: discovery.nextRunAt ?? retained.nextRunAt } : discovery;
+    const detail = Object.fromEntries(['added', 'held', 'failed', 'considered', 'searchResults'].filter(key => Number.isInteger(value[key]) && value[key] >= 0).map(key => [key, value[key]]));
+    if (['completed', 'empty', 'partial', 'failed', 'skipped', 'disabled'].includes(value.status)) detail.status = value.status;
+    for (const key of ['startedAt', 'finishedAt', 'nextRunAt']) if (dateOrNull(value[key])) detail[key] = value[key];
+    summary.autonomousDiscovery = detail;
+  }
   return summary;
 }
 function cleanState(raw = {}) {
   return {
     schemaVersion: 1,
-    status: ['running', 'idle', 'error'].includes(raw.status) ? raw.status : 'idle',
+    status: ['running', 'idle', 'degraded', 'error'].includes(raw.status) ? raw.status : 'idle',
     startedAt: dateOrNull(raw.startedAt),
     lastAttemptAt: dateOrNull(raw.lastAttemptAt),
     lastSuccessAt: dateOrNull(raw.lastSuccessAt),
     nextScanAt: dateOrNull(raw.nextScanAt),
     lastResult: resultSummary(raw.lastResult),
-    lastError: raw.status === 'error' ? SCAN_ERROR : null,
+    lastError: raw.status === 'error' ? SCAN_ERROR : raw.status === 'degraded' ? 'Autonomous discovery is degraded; inspect the local discovery report.' : null,
   };
 }
 async function readState(root) {
@@ -131,12 +140,20 @@ export async function runDueScan({ root = ROOT, config, ingestImpl = ingest, now
       const report = await ingestImpl({ root, limit: config.maxItemsPerScan });
       if (!report || typeof report !== 'object') throw new Error('Missing scan report');
       const finished = timeOf(nowFn);
-      const failed = (Number(report.failed) || 0) > 0 || (Number(report.discovery?.failures) || 0) > 0 || (Number(report.discovery?.autonomous?.failed) || 0) > 0;
+      const coreFailed = (Number(report.failed) || 0) > 0 || (Number(report.discovery?.failures) || 0) > 0;
+      const lastResult = resultSummary(report, state.lastResult);
+      const discovery = lastResult.autonomousDiscovery;
+      const discoveryFailed = (Number(discovery?.failed) || 0) > 0 || ['partial', 'failed'].includes(discovery?.status);
+      let next = finished + (coreFailed ? config.retryIntervalMinutes : config.scanIntervalMinutes) * MINUTE;
+      // Search has its own budget claim. Retrying ingestion before that claim
+      // expires only repeats old evidence and can falsely report recovery.
+      const discoveryDue = Date.parse(discovery?.nextRunAt);
+      if (!coreFailed && Number.isFinite(discoveryDue) && discoveryDue > finished) next = Math.min(next, discoveryDue);
       state = {
-        ...state, status: failed ? 'error' : 'idle',
-        lastSuccessAt: failed ? state.lastSuccessAt : iso(finished),
-        nextScanAt: iso(finished + (failed ? config.retryIntervalMinutes : config.scanIntervalMinutes) * MINUTE),
-        lastResult: resultSummary(report), lastError: failed ? SCAN_ERROR : null,
+        ...state, status: coreFailed ? 'error' : discoveryFailed ? 'degraded' : 'idle',
+        lastSuccessAt: coreFailed || discoveryFailed ? state.lastSuccessAt : iso(finished),
+        nextScanAt: iso(next), lastResult,
+        lastError: coreFailed ? SCAN_ERROR : discoveryFailed ? 'Autonomous discovery is degraded; inspect the local discovery report.' : null,
       };
     } catch {
       const finished = timeOf(nowFn);
@@ -196,7 +213,7 @@ if (isMain(import.meta.url)) {
     else {
       const result = await runDueScan({ config });
       console.log(JSON.stringify(result));
-      if (result.state.status === 'error') process.exitCode = 1;
+      if (['error', 'degraded'].includes(result.state.status)) process.exitCode = 1;
     }
   } catch { console.error('Scheduled scanning could not run. Check project runtime configuration and local scan state.'); process.exitCode = 1; }
 }

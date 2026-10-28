@@ -87,6 +87,46 @@ test('the service and a simultaneous scheduled task share a cross-process lock a
   await assert.rejects(access(join(fs.root, 'work/scan-run.lock')), { code: 'ENOENT' });
 });
 
+test('partial discovery preserves useful results and waits for its real deadline instead of rerunning core evidence', async t => {
+  const fs = await fixture(t, { scanIntervalMinutes: 60, maxItemsPerScan: 6, retryIntervalMinutes: 15 });
+  const config = await loadScanConfig({ root: fs.root, env: {} });
+  const previousSuccess = new Date(NOW - 3600000).toISOString();
+  await fs.put('work/scan-state.json', { status: 'idle', lastSuccessAt: previousSuccess });
+  let now = NOW;
+  const discovery = { status: 'partial', startedAt: new Date(NOW).toISOString(), finishedAt: new Date(NOW + 60000).toISOString(), nextRunAt: new Date(NOW + 3600000).toISOString(), added: 2, held: 0, failed: 1, searchResults: 9 };
+  const first = await runDueScan({ root: fs.root, config, nowFn: () => now, ingestImpl: async () => {
+    now += 120000;
+    return { ...REPORT, discovery: { failures: 0, autonomous: discovery } };
+  } });
+  assert.equal(first.state.status, 'degraded');
+  assert.equal(first.state.lastResult.published, 1);
+  assert.equal(first.state.lastResult.autonomousDiscovery.added, 2);
+  assert.equal(first.state.nextScanAt, discovery.nextRunAt, 'align with the independent search budget deadline');
+  assert.equal(first.state.lastSuccessAt, previousSuccess);
+  let calls = 0;
+  const early = await runDueScan({ root: fs.root, config, nowFn: () => NOW + 17 * 60000, ingestImpl: async () => { calls++; return REPORT; } });
+  assert.equal(early.ran, false);
+  assert.equal(early.state.status, 'degraded');
+  assert.equal(calls, 0);
+  const recovered = await runDueScan({ root: fs.root, config, nowFn: () => NOW + 3600000, ingestImpl: async () => ({ ...REPORT, discovery: { failures: 0, autonomous: { status: 'empty', failed: 0, added: 0, nextRunAt: new Date(NOW + 7200000).toISOString() } } }) });
+  assert.equal(recovered.state.status, 'idle');
+  assert.equal(recovered.state.lastResult.autonomousDiscovery.status, 'empty');
+  assert.equal(recovered.state.lastSuccessAt, new Date(NOW + 3600000).toISOString());
+});
+
+test('a core retry that skips discovery cannot erase a failed search or announce its recovery', async t => {
+  const fs = await fixture(t);
+  const search = { status: 'failed', startedAt: new Date(NOW).toISOString(), finishedAt: new Date(NOW + 1000).toISOString(), nextRunAt: new Date(NOW + 3600000).toISOString(), failed: 2, added: 0 };
+  await fs.put('work/scan-state.json', { status: 'error', nextScanAt: new Date(NOW).toISOString(), lastResult: { ...REPORT, autonomousDiscovery: search } });
+  const retry = await runDueScan({ root: fs.root, config: CONFIG, nowFn: () => NOW + 60000, ingestImpl: async () => ({ ...REPORT, discovery: { failures: 0, autonomous: { status: 'skipped', failed: 0, added: 0, nextRunAt: search.nextRunAt } } }) });
+  assert.equal(retry.state.status, 'degraded');
+  assert.equal(retry.state.lastResult.autonomousDiscovery.status, 'failed');
+  assert.equal(retry.state.lastResult.autonomousDiscovery.failed, 2);
+  assert.equal(retry.state.lastResult.autonomousDiscovery.startedAt, search.startedAt);
+  const persisted = await fs.read('work/scan-state.json');
+  assert.equal(persisted.status, 'degraded');
+});
+
 test('an abandoned running state and confirmed dead PID can be recovered without deleting a live lock', async t => {
   const fs = await fixture(t);
   await fs.put('work/scan-state.json', { status: 'running', startedAt: '2026-10-25T12:00:00.000Z' });

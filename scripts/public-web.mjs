@@ -6,6 +6,7 @@ const PUBLIC_ERROR = 'Public source request failed.';
 const TIMEOUT_ERROR = 'Public source request timed out.';
 const MAX_BYTES = 4 * 1_048_576;
 const CONTENT_TYPE = /^(?:text\/(?:html|plain|xml)|application\/(?:xhtml\+xml|(?:[a-z0-9.+-]+\+)?xml|(?:[a-z0-9.+-]+\+)?json))(?:\s*;|$)/i;
+function publicError(code, message) { return Object.assign(new Error(message), { code }); }
 function sourcePolicyError(message) { return Object.assign(new Error(message), { code: 'SOURCE_POLICY' }); }
 
 function ipv4Number(address) {
@@ -56,23 +57,23 @@ function checkedUrl(value, allowedHosts) {
   return url;
 }
 function untilAbort(promise, signal) {
-  if (signal.aborted) return Promise.reject(new Error(TIMEOUT_ERROR));
+  if (signal.aborted) return Promise.reject(publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR));
   return new Promise((resolve, reject) => {
-    const aborted = () => { signal.removeEventListener('abort', aborted); reject(new Error(TIMEOUT_ERROR)); };
+    const aborted = () => { signal.removeEventListener('abort', aborted); reject(publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR)); };
     signal.addEventListener('abort', aborted, { once: true });
     Promise.resolve(promise).then(value => {
       signal.removeEventListener('abort', aborted);
-      if (signal.aborted) reject(new Error(TIMEOUT_ERROR)); else resolve(value);
+      if (signal.aborted) reject(publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR)); else resolve(value);
     }, () => {
       signal.removeEventListener('abort', aborted);
-      reject(new Error(signal.aborted ? TIMEOUT_ERROR : 'Public source DNS could not be verified.'));
+      reject(publicError(signal.aborted ? 'SOURCE_TIMEOUT' : 'SOURCE_DNS', signal.aborted ? TIMEOUT_ERROR : 'Public source DNS could not be verified.'));
     });
   });
 }
 async function resolvedAddresses(host, lookupImpl, signal) {
   let answers;
   try { answers = await untilAbort(lookupImpl(host, { all: true, verbatim: true }), signal); }
-  catch { throw new Error(signal.aborted ? TIMEOUT_ERROR : 'Public source DNS could not be verified.'); }
+  catch { throw publicError(signal.aborted ? 'SOURCE_TIMEOUT' : 'SOURCE_DNS', signal.aborted ? TIMEOUT_ERROR : 'Public source DNS could not be verified.'); }
   if (!Array.isArray(answers) || !answers.length || answers.length > 64
     || answers.some(answer => !answer || !publicAddress(answer.address) || isIP(answer.address) !== answer.family)) {
     throw sourcePolicyError('Public source DNS is not globally routable.');
@@ -86,14 +87,14 @@ function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
       if (settled) return;
       settled = true;
       signal.removeEventListener('abort', aborted);
-      if (error) reject(new Error(error)); else resolve(value);
+      if (error) reject(error); else resolve(value);
     };
-    const stop = message => {
-      finish(message);
+    const stop = (message, code = 'SOURCE_NETWORK') => {
+      finish(publicError(code, message));
       res?.destroy(); req?.destroy();
     };
-    const aborted = () => stop(TIMEOUT_ERROR);
-    if (signal.aborted) { reject(new Error(TIMEOUT_ERROR)); return; }
+    const aborted = () => stop(TIMEOUT_ERROR, 'SOURCE_TIMEOUT');
+    if (signal.aborted) { reject(publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR)); return; }
     signal.addEventListener('abort', aborted, { once: true });
     try {
       req = requestImpl(url, {
@@ -111,38 +112,38 @@ function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
         },
       }, response => {
         res = response;
-        if (settled || signal.aborted) { stop(TIMEOUT_ERROR); return; }
+        if (settled || signal.aborted) { stop(TIMEOUT_ERROR, 'SOURCE_TIMEOUT'); return; }
         response.on('error', () => stop(PUBLIC_ERROR));
         response.on('aborted', () => stop(PUBLIC_ERROR));
         const status = response.statusCode;
         if ([301, 302, 303, 307, 308].includes(status)) {
           const location = response.headers.location;
-          if (typeof location !== 'string' || !location) { stop(PUBLIC_ERROR); return; }
+          if (typeof location !== 'string' || !location) { stop(PUBLIC_ERROR, 'SOURCE_REDIRECT'); return; }
           finish(null, { redirect: location });
           response.destroy(); req?.destroy(); return;
         }
-        if (!Number.isInteger(status) || status < 200 || status >= 300) { stop(PUBLIC_ERROR); return; }
+        if (!Number.isInteger(status) || status < 200 || status >= 300) { stop(PUBLIC_ERROR, 'SOURCE_HTTP'); return; }
         const type = response.headers['content-type'];
         const encoding = response.headers['content-encoding'];
         const length = response.headers['content-length'];
         if (typeof type !== 'string' || !CONTENT_TYPE.test(type)
           || (encoding !== undefined && String(encoding).trim().toLowerCase() !== 'identity')
           || (length !== undefined && (!/^\d+$/.test(String(length)) || Number(length) > maxBytes))) {
-          stop('Public source response is unsupported or too large.'); return;
+          stop('Public source response is unsupported or too large.', 'SOURCE_RESPONSE'); return;
         }
         const chunks = []; let bytes = 0;
         response.on('data', chunk => {
           if (settled) return;
           const value = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
           bytes += value.length;
-          if (bytes > maxBytes) { stop('Public source response is too large.'); return; }
+          if (bytes > maxBytes) { stop('Public source response is too large.', 'SOURCE_RESPONSE'); return; }
           chunks.push(value);
         });
         response.on('end', () => finish(null, { text: Buffer.concat(chunks, bytes).toString('utf8'), url: url.href }));
       });
-      req.on('error', () => stop(signal.aborted ? TIMEOUT_ERROR : PUBLIC_ERROR));
+      req.on('error', () => stop(signal.aborted ? TIMEOUT_ERROR : PUBLIC_ERROR, signal.aborted ? 'SOURCE_TIMEOUT' : 'SOURCE_NETWORK'));
       if (signal.aborted) aborted(); else req.end();
-    } catch { stop(signal.aborted ? TIMEOUT_ERROR : PUBLIC_ERROR); }
+    } catch { stop(signal.aborted ? TIMEOUT_ERROR : PUBLIC_ERROR, signal.aborted ? 'SOURCE_TIMEOUT' : 'SOURCE_NETWORK'); }
   });
 }
 
@@ -153,11 +154,11 @@ export async function fetchPublicText(value, {
 } = {}) {
   if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 120000
     || !Number.isInteger(maxBytes) || maxBytes < 1 || maxBytes > MAX_BYTES
-    || typeof lookupImpl !== 'function' || typeof requestImpl !== 'function') throw new Error('Public source request limits are invalid.');
+    || typeof lookupImpl !== 'function' || typeof requestImpl !== 'function') throw publicError('SOURCE_CONFIG', 'Public source request limits are invalid.');
   if (allowedHosts === undefined) {
-    try { allowedHosts = [new URL(value).hostname.toLowerCase()]; } catch { throw new Error('Public source URL is not allowed.'); }
+    try { allowedHosts = [new URL(value).hostname.toLowerCase()]; } catch { throw sourcePolicyError('Public source URL is not allowed.'); }
   }
-  if (!Array.isArray(allowedHosts) || !allowedHosts.length || allowedHosts.length > 20 || allowedHosts.some(host => typeof host !== 'string')) throw new Error('Public source host policy is invalid.');
+  if (!Array.isArray(allowedHosts) || !allowedHosts.length || allowedHosts.length > 20 || allowedHosts.some(host => typeof host !== 'string')) throw publicError('SOURCE_CONFIG', 'Public source host policy is invalid.');
   allowedHosts = allowedHosts.map(host => host.toLowerCase());
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -165,12 +166,12 @@ export async function fetchPublicText(value, {
     let target = checkedUrl(value, allowedHosts);
     for (let redirects = 0; redirects < 6; redirects++) {
       const addresses = await resolvedAddresses(target.hostname, lookupImpl, controller.signal);
-      if (controller.signal.aborted) throw new Error(TIMEOUT_ERROR);
+      if (controller.signal.aborted) throw publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR);
       const result = await requestText(target, addresses, { requestImpl, maxBytes, signal: controller.signal });
       if (!result.redirect) return result;
       try { target = checkedUrl(new URL(result.redirect, target).href, allowedHosts); }
       catch { throw sourcePolicyError('Public source redirect is not allowed.'); }
     }
-    throw new Error('Public source redirect limit exceeded.');
+    throw publicError('SOURCE_REDIRECT', 'Public source redirect limit exceeded.');
   } finally { clearTimeout(timer); }
 }

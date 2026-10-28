@@ -182,6 +182,22 @@ test('connection, HTTP and body failures cannot echo secret response or exceptio
   }
 });
 
+test('transport errors expose only fixed diagnostic codes while preserving the same request boundaries', async () => {
+  const hasCode = code => error => error.code === code && !error.message.includes('private-token-123');
+  await assert.rejects(fetchPublicText(URL, { lookupImpl: async () => { throw new Error('private-token-123'); } }), hasCode('SOURCE_DNS'));
+  await assert.rejects(fetchPublicText(URL, { lookupImpl, requestImpl: () => { throw new Error('private-token-123'); } }), hasCode('SOURCE_NETWORK'));
+  const http = fakeRequests([{ status: 503, body: 'private-token-123' }]);
+  await assert.rejects(fetchPublicText(URL, { lookupImpl, requestImpl: http.requestImpl }), hasCode('SOURCE_HTTP'));
+  const unsupported = fakeRequests([{ body: 'private-token-123', headers: { 'content-type': 'application/octet-stream' } }]);
+  await assert.rejects(fetchPublicText(URL, { lookupImpl, requestImpl: unsupported.requestImpl }), hasCode('SOURCE_RESPONSE'));
+  const redirected = fakeRequests([{ status: 302, headers: { location: 'https://other.example.com/' } }]);
+  await assert.rejects(fetchPublicText(URL, { lookupImpl, requestImpl: redirected.requestImpl }), hasCode('SOURCE_POLICY'));
+  assert.equal(redirected.calls.length, 1);
+  const stalled = fakeRequests([]);
+  await assert.rejects(fetchPublicText(URL, { lookupImpl, requestImpl: stalled.requestImpl, timeoutMs: 1 }), hasCode('SOURCE_TIMEOUT'));
+  await assert.rejects(fetchPublicText(URL, { timeoutMs: 0 }), hasCode('SOURCE_CONFIG'));
+});
+
 test('invalid fetch limits and host policies are rejected before network access', async () => {
   for (const options of [{ timeoutMs: 0 }, { timeoutMs: 120001 }, { maxBytes: 0 }, { maxBytes: 4_194_305 }, { allowedHosts: [] }, { allowedHosts: ['official.example.com', 1] }]) {
     await assert.rejects(fetchPublicText(URL, { ...options, lookupImpl: () => { throw new Error('Must not resolve'); } }), /invalid/);

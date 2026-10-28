@@ -25,7 +25,7 @@ test('search bridge preserves the generated query and bounds results without pas
   assert.equal(call.env.PERK_LLM_API_KEY, undefined);
   assert.equal(call.env.OPENAI_API_KEY, undefined);
   assert.equal(call.env.PERK_SEARCH_PYTHON, undefined);
-  assert.deepEqual(result, { provider: 'ddgs', results: [
+  assert.deepEqual(result, { provider: 'ddgs', status: 'ok', attempts: [], results: [
     { title: 'First', url: 'https://example.com/offer', description: 'Public terms' },
     { title: 'Second', url: 'https://other.example/free', description: '' },
   ] });
@@ -57,8 +57,47 @@ test('an unresponsive search bridge is bounded and its late result cannot publis
 });
 
 test('a successful empty search remains distinct from a failed request and strings are bounded', async () => {
-  assert.deepEqual(await searchWeb({ query: 'new perks', bridgeImpl: async () => ({ provider: 'ddgs', results: [] }) }), { provider: 'ddgs', results: [] });
+  assert.deepEqual(await searchWeb({ query: 'new perks', bridgeImpl: async () => ({ provider: 'ddgs', status: 'empty', results: [] }) }), { provider: 'ddgs', status: 'empty', attempts: [], results: [] });
   const result = await searchWeb({ query: 'new perks', bridgeImpl: async () => ({ provider: 'ddgs', results: [{ title: 'a'.repeat(300), url: 'https://example.com', description: 'b'.repeat(1500) }] }) });
   assert.equal(result.results[0].title.length, 240);
   assert.equal(result.results[0].description.length, 1200);
+});
+
+test('typed provider failures retain only controlled codes and bounded attempt metadata', async () => {
+  const attempts = [{ backend: 'yahoo', status: 'blocked', resultCount: 0, httpStatus: 429, diagnostic: 'private URL and secret' }, { backend: 'private-url', status: 'unknown', resultCount: 0 }];
+  await assert.rejects(searchWeb({ query: 'free credits', bridgeImpl: async () => ({ provider: 'ddgs', status: 'unavailable', error: 'SEARCH_UNAVAILABLE', results: [], attempts }) }), error => {
+    assert.equal(error.code, 'SEARCH_UNAVAILABLE');
+    assert.deepEqual(error.attempts, [{ backend: 'yahoo', status: 'blocked', resultCount: 0, httpStatus: 429 }]);
+    assert.doesNotMatch(JSON.stringify(error), /private|secret|diagnostic/);
+    return true;
+  });
+  await assert.rejects(searchWeb({ query: 'credits', bridgeImpl: async () => { throw Object.assign(new Error('private'), { code: 'secret-value' }); } }), error => error.code === 'SEARCH_UNAVAILABLE' && !JSON.stringify(error).includes('secret'));
+  await assert.rejects(searchWeb({ query: 'credits', bridgeImpl: async () => 'malformed private JSON' }), error => error.code === 'SEARCH_INVALID_RESPONSE');
+  await assert.rejects(searchWeb({ query: 'credits', timeoutMs: 10, bridgeImpl: () => new Promise(() => {}) }), error => error.code === 'SEARCH_TIMEOUT');
+});
+
+test('successful fallback reports failed attempts without treating them as a failed logical query', async () => {
+  const attempts = [{ backend: 'yahoo', status: 'unparsed', resultCount: 0, httpStatus: 200 }, { backend: 'brave', status: 'ok', resultCount: 1, httpStatus: 200 }];
+  const result = await searchWeb({ query: 'site:example.com free credits', bridgeImpl: async () => ({ provider: 'ddgs', status: 'ok', results: [{ title: 'Free credits', url: 'https://example.com/credits' }], attempts }) });
+  assert.equal(result.status, 'ok');
+  assert.deepEqual(result.attempts, attempts);
+  assert.equal(result.results.length, 1);
+});
+
+test('explicit provider states cannot turn malformed or unsafe results into a healthy empty search', async () => {
+  for (const response of [
+    { status: 'ok', results: [] },
+    { status: 'empty', results: [{ title: 'Unexpected result', url: 'https://example.com' }] },
+    { status: 'ok', results: [{ title: 'Unsafe', url: 'http://example.com' }] },
+  ]) {
+    await assert.rejects(searchWeb({ query: 'free credits', bridgeImpl: async () => ({ provider: 'ddgs', ...response }) }), error => error.code === 'SEARCH_INVALID_RESPONSE');
+  }
+});
+
+test('healthy empty responses retain evidence of empty and blocked fallback attempts', async () => {
+  const attempts = [{ backend: 'yahoo', status: 'empty', resultCount: 0, httpStatus: 200 }, { backend: 'brave', status: 'blocked', resultCount: 0, httpStatus: 429 }];
+  const result = await searchWeb({ query: 'free credits', bridgeImpl: async () => ({ provider: 'ddgs', status: 'empty', results: [], attempts }) });
+  assert.equal(result.status, 'empty');
+  assert.deepEqual(result.results, []);
+  assert.deepEqual(result.attempts, attempts);
 });

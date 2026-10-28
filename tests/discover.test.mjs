@@ -153,6 +153,10 @@ test('candidate cooldown skips fetching and auditing an unchanged held result in
   assert.deepEqual(secondModel.calls.map(x => x.name), ['discovery_query_plan']);
   assert.equal(secondRun.searches.length, 2);
   assert.equal(secondRun.fetched.length, 0);
+  assert.equal(JSON.parse(secondModel.calls[0].prompt).coolingCandidates[0].code, 'SOURCE_AUDIT_REVIEW');
+  const thirdModel = fakeCalls();
+  await discoverSources(options(fs.root, { ...thirdModel, nowFn: () => '2026-10-27T16:02:00.000Z' }));
+  assert.equal(JSON.parse(thirdModel.calls[0].prompt).coolingCandidates[0].code, 'SOURCE_AUDIT_REVIEW', 'a filtered round must not erase the outstanding evidence hold');
   assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
 });
 
@@ -162,7 +166,9 @@ test('invented result IDs and model-invented URLs cannot authorize a fetch', asy
   const run = options(fs.root, model);
   const report = await discoverSources(run);
   assert.equal(report.added, 0);
-  assert.equal(report.held, 1);
+  assert.equal(report.failed, 1);
+  assert.equal(report.held, 0);
+  assert.equal(report.failures[0].code, 'MODEL_SELECTION_INVALID');
   assert.equal(run.fetched.length, 0);
   assert.equal(model.calls.length, 2);
   assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
@@ -172,7 +178,6 @@ test('missing literal identity or benefit evidence and audit refusals cannot app
   for (const patch of [
     { identityQuote: 'An invented provider identity' }, { benefitQuote: '99999 free credits' },
     { benefitQuote: '' }, { official: false }, { decision: 'review' }, { confidence: 0.96 },
-    { region: 'everywhere' },
   ]) await t.test(JSON.stringify(patch), async st => {
     const fs = await fixture(st);
     const model = fakeCalls({ sourceAudit: audit(patch) });
@@ -189,7 +194,9 @@ test('private source metadata rejected by the public registry validator is never
   const model = fakeCalls({ sourceAudit: audit({ sourceName: '/Users/private/credentials official' }) });
   const report = await discoverSources(options(fs.root, model));
   assert.equal(report.added, 0);
-  assert.equal(report.held, 1);
+  assert.equal(report.held, 0);
+  assert.equal(report.failed, 1);
+  assert.equal(report.results[0].code, 'SOURCE_METADATA_INVALID');
   assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
 });
 
@@ -296,6 +303,8 @@ test('registry capacity prevents model/search work and late capacity changes pre
   const model = fakeCalls({ onAudit: () => fs.put('data/sources.json', [ORIGINAL, manual]) });
   const report = await discoverSources(options(fs.root, model));
   assert.equal(report.added, 0);
+  assert.equal(report.atCapacity, true);
+  assert.equal(report.results[0].outcome, 'capacity');
   assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL, manual]);
 });
 
@@ -389,7 +398,8 @@ test('a followup model failure preserves vetted initial candidates and records a
   const run = options(fs.root, model);
   const report = await discoverSources(run);
   assert.equal(report.failed, 1);
-  assert.equal(report.status, 'completed');
+  assert.equal(report.status, 'partial');
+  assert.equal(report.partial, true);
   assert.equal(report.added, 1);
   assert.equal(run.searches.length, 2);
   assert.equal(report.queries.length, 2);
@@ -408,6 +418,201 @@ test('GPT may stop adaptive investigation with an empty plan and cannot directly
   assert.equal(report.queries.length, 2);
   assert.equal(run.fetched.length, 0);
   assert.deepEqual(model.calls.map(item => item.name), ['discovery_query_plan', 'discovery_followup_plan']);
+});
+
+test('query diagnostics distinguish empty results, filtered results and complete search failures', async t => {
+  for (const kind of ['empty', 'known', 'failed']) await t.test(kind, async st => {
+    const fs = await fixture(st);
+    const model = fakeCalls();
+    const run = options(fs.root, { ...model, hits: kind === 'known' ? [hit(ORIGINAL.url)] : [] });
+    if (kind === 'failed') run.searchImpl = async () => { throw Object.assign(new Error('private-provider-details'), { code: 'SEARCH_TIMEOUT' }); };
+    const report = await discoverSources(run);
+    assert.equal(report.nextRunAt, '2026-10-27T15:00:00.000Z');
+    assert.equal(report.status, kind === 'failed' ? 'failed' : 'empty');
+    assert.equal(report.failed, kind === 'failed' ? 2 : 0);
+    assert.deepEqual(report.queryResults.map(query => query.status), [kind === 'failed' ? 'failed' : kind === 'known' ? 'ok' : 'empty'].flatMap(status => [status, status]));
+    if (kind === 'known') {
+      assert.equal(report.rawSearchResults, 2);
+      assert.equal(report.excluded.known, 2);
+      assert.equal(report.noCandidatesReason, 'all-results-filtered');
+    } else if (kind === 'empty') assert.equal(report.noCandidatesReason, 'no-search-results');
+    else assert(report.failures.every(failure => failure.stage === 'search' && failure.code === 'SEARCH_TIMEOUT'));
+    assert(!JSON.stringify(await fs.read('work/discovery-state.json')).includes('private-provider-details'));
+    assert.equal(run.fetched.length, 0);
+  });
+});
+
+test('partial search failure retains safe provider attempts and gives accurate query outcomes to the followup planner', async t => {
+  const fs = await fixture(t, { settings: { maxQueriesPerScan: 4 } });
+  let followupContext;
+  const model = fakeCalls({ onFollowup: request => { followupContext = JSON.parse(request.prompt); } });
+  const run = options(fs.root, { ...model, searchImpl: async ({ query }) => {
+    if (query.includes('中国')) throw Object.assign(new Error('private-query-error'), {
+      code: 'SEARCH_UNAVAILABLE', attempts: [{ backend: 'yahoo', status: 'blocked', resultCount: 0, httpStatus: 429, raw: 'private-query-error' }, { backend: 'untrusted', status: 'timeout' }],
+    });
+    return { provider: 'ddgs', results: [hit()], attempts: [{ backend: 'brave', status: 'ok', resultCount: 1, httpStatus: 200, response: 'private-body' }] };
+  } });
+  const report = await discoverSources(run);
+  assert.equal(report.status, 'partial');
+  assert.equal(report.failed, 1);
+  assert.equal(report.added, 1);
+  assert.deepEqual(followupContext.queryResults.map(query => query.status), ['failed', 'ok']);
+  assert.deepEqual(report.queryResults[0].attempts, [{ backend: 'yahoo', status: 'blocked', resultCount: 0, httpStatus: 429 }]);
+  assert.deepEqual(report.queryResults[1].attempts, [{ backend: 'brave', status: 'ok', resultCount: 1, httpStatus: 200 }]);
+  assert(!JSON.stringify(report).includes('private-query-error'));
+  assert(!JSON.stringify(await fs.read('work/discovery-state.json')).includes('private-body'));
+});
+
+test('a single remaining query can refine real leads without increasing the search budget', async t => {
+  const fs = await fixture(t, { settings: { maxQueriesPerScan: 3 } });
+  const followupPlan = { queries: [{ query: 'NovaCloud official pricing free plan rules', region: 'global' }] };
+  const model = fakeCalls({ followupPlan });
+  const run = options(fs.root, { ...model, hits: ({ query }) => query === followupPlan.queries[0].query ? [hit()] : [] });
+  const report = await discoverSources(run);
+  assert.equal(report.added, 1);
+  assert.equal(report.failed, 0);
+  assert.equal(run.searches.length, 3);
+  assert.equal(JSON.parse(model.calls.find(call => call.name === 'discovery_followup_plan').prompt).maxQueries, 1);
+});
+
+test('fetch, model and registry failures are recorded as failures while policy and evidence holds remain reviews', async t => {
+  for (const kind of ['fetch', 'audit', 'malformed-audit', 'registry', 'policy', 'response']) await t.test(kind, async st => {
+    const fs = await fixture(st);
+    const model = fakeCalls({ sourceAudit: kind === 'malformed-audit' ? null : audit(), onAudit: async () => {
+      if (kind === 'audit') throw new Error('private-audit-error');
+      if (kind === 'registry') await writeFile(join(fs.root, 'work/candidates.json'), 'malformed private queue');
+    } });
+    const run = options(fs.root, { ...model, fetchPage: async url => {
+      if (['fetch', 'policy', 'response'].includes(kind)) throw Object.assign(new Error('private-fetch-error'), { code: kind === 'policy' ? 'SOURCE_POLICY' : kind === 'response' ? 'SOURCE_RESPONSE' : 'SOURCE_TIMEOUT' });
+      return { url, text: url === HOME ? HOMEPAGE : BENEFIT_PAGE };
+    } });
+    const report = await discoverSources(run);
+    const held = ['policy', 'response'].includes(kind);
+    assert.equal(report.failed, held ? 0 : 1);
+    assert.equal(report.held, held ? 1 : 0);
+    assert.equal(report.results[0].outcome, held ? 'review' : 'failed');
+    assert.equal(report.results[0].code, { fetch: 'SOURCE_TIMEOUT', audit: 'MODEL_REQUEST_FAILED', 'malformed-audit': 'MODEL_AUDIT_INVALID', registry: 'SOURCE_REGISTRY_WRITE_FAILED', policy: 'SOURCE_POLICY', response: 'SOURCE_RESPONSE' }[kind]);
+    assert.equal(report.results[0].retryable, !held);
+    assert.equal(report.added, 0);
+    assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
+    assert(!JSON.stringify(report).includes('private-'));
+  });
+});
+
+test('typed model planning errors retain safe codes and status numbers without exposing their original response', async t => {
+  for (const [code, httpStatus, retryable] of [['MODEL_CONFIG', undefined, false], ['MODEL_AUTH', 401, false], ['MODEL_UPSTREAM', 503, true]]) await t.test(code, async st => {
+    const fs = await fixture(st);
+    const run = options(fs.root, { callImpl: async () => { throw Object.assign(new Error('private response ' + CONFIG.apiKey), { code, httpStatus, retryable: !retryable, response: 'private provider body' }); } });
+    const report = await discoverSources(run);
+    assert.equal(report.status, 'failed');
+    assert.equal(report.failed, 1);
+    assert.equal(report.held, 0);
+    assert.equal(report.failures[0].stage, 'query-plan');
+    assert.equal(report.failures[0].code, code);
+    assert.equal(report.failures[0].httpStatus, httpStatus);
+    assert.equal(report.failures[0].retryable, retryable, 'retryability comes from the code allowlist');
+    assert.equal(run.searches.length, 0);
+    assert(!JSON.stringify(report).includes('private'));
+    assert(!JSON.stringify(await fs.read('work/discovery-state.json')).includes(CONFIG.apiKey));
+  });
+});
+
+test('all recognized model audit error codes remain failures and only controlled numeric HTTP statuses survive', async t => {
+  const cases = [
+    ['MODEL_CONFIG', undefined, false], ['MODEL_AUTH', 403, false], ['MODEL_RATE_LIMIT', 429, true], ['MODEL_UPSTREAM', 502, true],
+    ['MODEL_NETWORK', undefined, true], ['MODEL_TIMEOUT', undefined, true], ['MODEL_RESPONSE_INVALID', 200, true], ['MODEL_INCOMPLETE', 200, true],
+    ['MODEL_REFUSAL', 200, false], ['MODEL_OUTPUT_INVALID', 200, true], ['MODEL_HTTP', 400, false], ['untrusted-provider-code', 'private status', true],
+  ];
+  for (const [code, httpStatus, retryable] of cases) await t.test(code, async st => {
+    const fs = await fixture(st);
+    const model = fakeCalls({ onAudit: () => { throw Object.assign(new Error('private provider response'), { code, httpStatus, retryable: !retryable }); } });
+    const report = await discoverSources(options(fs.root, model));
+    const safeCode = code === 'untrusted-provider-code' ? 'MODEL_REQUEST_FAILED' : code;
+    assert.equal(report.failed, 1);
+    assert.equal(report.held, 0);
+    assert.equal(report.results[0].outcome, 'failed');
+    assert.equal(report.results[0].code, safeCode);
+    assert.equal(report.results[0].retryable, retryable);
+    assert.equal(report.results[0].httpStatus, typeof httpStatus === 'number' ? httpStatus : undefined);
+    assert.equal(report.failures[0].httpStatus, report.results[0].httpStatus);
+    const state = await fs.read('work/discovery-state.json');
+    assert.equal(state.history[0].failures[0].code, safeCode);
+    assert.equal(state.history[0].failures[0].httpStatus, report.results[0].httpStatus);
+    assert(!JSON.stringify(report).includes('private'));
+  });
+});
+
+test('retryable candidates wait one hour, preserve feedback for GPT and do not inherit the evidence hold cooldown', async t => {
+  const fs = await fixture(t, { settings: { intervalMinutes: 30 } });
+  const failed = options(fs.root, { ...fakeCalls(), fetchPage: async () => { throw Object.assign(new Error('private-fetch-error'), { code: 'SOURCE_TIMEOUT' }); } });
+  assert.equal((await discoverSources(failed)).failed, 1);
+  const secondModel = fakeCalls();
+  const second = await discoverSources(options(fs.root, { ...secondModel, nowFn: () => '2026-10-27T14:31:00.000Z' }));
+  assert.equal(second.status, 'empty');
+  assert.equal(second.excluded.cooldown, 2);
+  const previous = JSON.parse(secondModel.calls[0].prompt).previousDiscovery;
+  assert.equal(previous.candidates[0].code, 'SOURCE_TIMEOUT');
+  assert.equal(previous.candidates[0].stage, 'rules-fetch');
+  assert.equal(previous.queryResults[0].status, 'ok');
+  const third = await discoverSources(options(fs.root, { ...fakeCalls(), nowFn: () => '2026-10-27T15:02:00.000Z' }));
+  assert.equal(third.added, 1);
+  const state = await fs.read('work/discovery-state.json');
+  assert.equal(state.history.length, 3);
+  assert.equal(state.history[0].candidates[0].code, 'SOURCE_TIMEOUT');
+  assert(!JSON.stringify(state.history).includes('private-fetch-error'));
+  assert(!JSON.stringify(state.history).includes(RULES_TEXT));
+});
+
+test('a failed queue or registry write never strands a known source without a candidate and can recover next hour', async t => {
+  for (const target of ['work/candidates.json', 'data/sources.json']) await t.test(target, async st => {
+    const fs = await fixture(st);
+    const blockedTemp = join(fs.root, `${target}.${process.pid}.tmp`);
+    const model = fakeCalls({ onAudit: () => mkdir(blockedTemp) });
+    const failed = await discoverSources(options(fs.root, model));
+    assert.equal(failed.status, 'failed');
+    assert.equal(failed.results[0].code, 'SOURCE_REGISTRY_WRITE_FAILED');
+    assert.equal(failed.added, 0);
+    assert.deepEqual(await fs.read('data/sources.json'), [ORIGINAL]);
+    assert.equal((await fs.read('work/candidates.json')).candidates.length, target.startsWith('work/') ? 0 : 1);
+    await rm(blockedTemp, { recursive: true });
+    const recovered = await discoverSources(options(fs.root, { ...fakeCalls(), nowFn: () => '2026-10-27T15:01:00.000Z' }));
+    assert.equal(recovered.added, 1);
+    assert.equal(recovered.failed, 0);
+    assert.equal((await fs.read('work/candidates.json')).candidates.length, 1);
+  });
+});
+
+test('round history stays bounded and an unfinished due claim preserves prior diagnostics', async t => {
+  const fs = await fixture(t, { state: { round: 60, seen: [], history: Array.from({ length: 60 }, (_, round) => ({ round })), feedback: { status: 'partial', failures: [{ code: 'SEARCH_TIMEOUT' }] } } });
+  const model = fakeCalls();
+  const run = options(fs.root, { callImpl: async request => {
+    if (request.name === 'discovery_query_plan') {
+      const claimed = await fs.read('work/discovery-state.json');
+      assert.equal(claimed.history.length, 48);
+      assert.equal(claimed.feedback.failures[0].code, 'SEARCH_TIMEOUT');
+    }
+    return model.callImpl(request);
+  } });
+  await discoverSources(run);
+  const state = await fs.read('work/discovery-state.json');
+  assert.equal(state.history.length, 48);
+  assert.equal(state.history.at(-1).round, 61);
+  const before = await fs.text('work/discovery-state.json');
+  assert.equal((await discoverSources(run)).status, 'skipped');
+  assert.equal(await fs.text('work/discovery-state.json'), before);
+});
+
+test('standard encoded and unquoted links prove a relationship while data attributes and quoted prose do not', async t => {
+  for (const kind of ['entities', 'unquoted', 'data-attribute', 'quoted-prose']) await t.test(kind, async st => {
+    const fs = await fixture(st);
+    const rules = kind === 'entities' ? `${RULES}?a=1&b=2` : RULES;
+    const links = { entities: '<a href="/free-plan?a=1&amp;b=2">Plan rules</a>', unquoted: '<a href=/free-plan>Plan rules</a>', 'data-attribute': '<a data-href="/free-plan">Plan rules</a>', 'quoted-prose': '<a title=" href=\'/free-plan\'">Plan rules</a>' };
+    const report = await discoverSources(options(fs.root, { ...fakeCalls(), hits: [hit(rules)], fetchPage: async url => ({ url, text: html(url === HOME ? HOME_TEXT + links[kind] : RULES_TEXT) }) }));
+    const accepted = ['entities', 'unquoted'].includes(kind);
+    assert.equal(report.added, accepted ? 1 : 0);
+    assert.equal(report.held, accepted ? 0 : 1);
+    if (!accepted) assert.equal(report.results[0].code, 'SOURCE_RELATIONSHIP_MISSING');
+  });
 });
 
 test('disabled and invalid discovery configuration cannot silently perform network/model work', async t => {

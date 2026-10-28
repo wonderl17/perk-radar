@@ -33,6 +33,7 @@ if (isMain(import.meta.url)) {
     const runtime = await startService({ config, host, port, onState: state => {
       if (state.status === 'running') console.log('Scanning official sources with the Hermes GPT configuration…');
       else if (state.status === 'error') console.log('Scan failed; a bounded retry is scheduled. See npm run scan:status.');
+      else if (state.status === 'degraded') console.log(`Core scan completed; autonomous discovery needs attention. Next check: ${state.nextScanAt || 'pending'}`);
       else if (state.lastSuccessAt) console.log(`Scan ready. Next check: ${state.nextScanAt || 'pending'}`);
     } });
     console.log(`Local: http://${host}:${runtime.address.port}/`);

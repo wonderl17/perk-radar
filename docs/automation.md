@@ -1,10 +1,10 @@
 # 定期扫描与公开数据
 
-运行 `npm start` 同时启动 HTTP 服务和项目内定期扫描。默认每1小时检查一次，每轮最多处理6份官方证据，失败15分钟后重试。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
+运行 `npm start` 同时启动 HTTP 服务和项目内定期扫描。默认每1小时检查一次，每轮最多处理6份官方证据，核心执行失败15分钟后重试；自主发现部分异常标记degraded，按发现自身的下一次预算时间检查，跳过搜索不能清除上次真实发现的异常。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
 
 `work/scan-state.json` 保存执行状态、上次成功和下一次时间；`npm run scan:status` 只查询，`npm run scan:due` 仅在到期时扫描。共享锁避免与常驻服务重复执行。工作目录必须位于持久磁盘；复制仓库不包含该本机运行状态。
 
-自主发现默认开启：GPT 根据日期、已有信源与主题轮换规划 2–4 个中国/全球查询；每个查询最多 5 条真实结果，最多考虑 3 个候选，单轮最多新增 2 个通过检查的信源。默认信源注册表上限 200 条、配置上限 500，未准入候选默认冷却 24 小时。详见 `docs/discovery.md` 与 `data/discovery.json`，不保证覆盖全网或每轮都有新增。
+自主发现默认开启：GPT 根据日期、已有信源与主题轮换先规划两个中国/全球初始查询，再依据真实结果（含媒体/社区线索）用剩余预算追踪第一方规则，默认总量最多 4 个查询；每个查询最多 5 条真实结果，最多考虑 3 个候选，单轮最多新增 2 个通过检查的信源。默认信源注册表上限 200 条、配置上限 500，未准入候选默认冷却 24 小时。详见 `docs/discovery.md` 与 `data/discovery.json`，不保证覆盖全网或每轮都有新增。
 
 搜索需独立 Python 环境及 `requirements-search.txt` 的 DDGS 依赖，安装方法见 `docs/discovery.md`，可用 `PERK_SEARCH_PYTHON` 指定解释器。它不修改 Hermes 环境、不读取模型密钥。原始查询/候选报告与状态只写忽略的 `work/`；准入信源中经校验的短查询与官方证据可公开。
 

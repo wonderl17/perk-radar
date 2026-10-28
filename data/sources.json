@@ -261,5 +261,51 @@
       "identityQuote": "© 中国国家图书馆版权所有",
       "benefitQuote": "1、数字阅览服务为免费服务，每位读者每次在服务台刷卡登记后可上机2小时，2小时后自动下线（系统提示时请及时保存个人文件），如机位已满或需继续使用，请到管理员处等候分配，刷卡上机。"
     }
+  },
+  {
+    "id": "auto-source-c854e221183a725baf74",
+    "name": "华为云码道官方文档",
+    "url": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0003.html",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "support.huaweicloud.com",
+      "www.support.huaweicloud.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T01:22:11.536Z",
+      "query": "site:huaweicloud.com 学生开发者 免费资源包 领取 规则",
+      "homepageUrl": "https://support.huaweicloud.com/",
+      "searchUrl": "https://support.huaweicloud.com/offers-codeartsagent/codeartsagent_offers_0003.html",
+      "evidenceHash": "048ffec7b1a2edb6318bbeaa5d4811c2c8875725ab72991062619aa931c04e89",
+      "homepageHash": "7b5342a9e61b9b04d1486590fed988d517ce7ddd6ae1d54dbda3138967365da7",
+      "identityQuote": "华为云码道CodeArts代码智能体 深入理解项目上下文的智能编码平台",
+      "benefitQuote": "完成学生认证，即可一次性领取 4000积分 。 自 发放之日起90天内有效 ，逾期自动失效。"
+    }
+  },
+  {
+    "id": "auto-source-73e89ae159a418d2d2fd",
+    "name": "AWS开发者中心",
+    "url": "https://builder.aws.com/learn/students",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "builder.aws.com",
+      "www.builder.aws.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-28T01:22:30.612Z",
+      "query": "AWS Educate free courses labs no credit card official",
+      "homepageUrl": "https://builder.aws.com/",
+      "searchUrl": "https://builder.aws.com/learn/students",
+      "evidenceHash": "034d94bd06fa2a8bb80b39bfd7b3819f262552dcb51f2566cea262a689aa2874",
+      "homepageHash": "387566de216002d7067893ce82d022eaf5d478620b00b1d090c1bf379156a10a",
+      "identityQuote": "Join a community of builders, access AWS tools and services and connect with the teams behind the products.",
+      "benefitQuote": "Verified students get 1 year of full Skill Builder access for free"
+    }
   }
 ]

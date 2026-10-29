@@ -583,5 +583,51 @@
       "identityQuote": "MongoDB Atlas The multi-cloud, intelligent data platform for any use case",
       "benefitQuote": "Get free certification and $50 of Atlas Credit for the leading modern, general purpose database platform by signing up for the GitHub Student Developer Pack."
     }
+  },
+  {
+    "id": "auto-source-b236c84ddd412bbb3636",
+    "name": "Hoopla官方资讯与支持站",
+    "url": "https://theloop.hoopladigital.com/support/articles/basics/how-to-get-a-library-card-online-and-use-hoopla",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "theloop.hoopladigital.com",
+      "www.theloop.hoopladigital.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T13:23:20.318Z",
+      "query": "hoopla digital free library card borrowing eligibility official",
+      "homepageUrl": "https://theloop.hoopladigital.com/",
+      "searchUrl": "https://theloop.hoopladigital.com/support/articles/basics/how-to-get-a-library-card-online-and-use-hoopla",
+      "evidenceHash": "f36034ca73cf08846c9e16ab586422a73083c5ed8de843376f9da28be5593e12",
+      "homepageHash": "30c17dd3ada0e00463db8de3d5b1db0bc999cd27308181fa05d783e0c087aba6",
+      "identityQuote": "With Hoopla you can read, listen, and watch for free with your library card.",
+      "benefitQuote": "Did you know that you can borrow and read eBooks completely free? All you need is a library card and Hoopla."
+    }
+  },
+  {
+    "id": "auto-source-d015a821fb0dcc0e831a",
+    "name": "旧金山公共图书馆",
+    "url": "https://sfpl.libanswers.com/faq/129915",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "sfpl.libanswers.com",
+      "www.sfpl.libanswers.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T13:23:40.630Z",
+      "query": "hoopla digital free library card borrowing eligibility official",
+      "homepageUrl": "https://sfpl.libanswers.com/",
+      "searchUrl": "https://sfpl.libanswers.com/faq/129915",
+      "evidenceHash": "91327a29057f533603d90e9e9ebe8ca3f74976fef0de207a3f34dee5fa0ddbcb",
+      "homepageHash": "4dd8776af87ac3c4183a13d33fe30ffd62013f1c0f9a9142f6a037e715f1b0c1",
+      "identityQuote": "Copyright © 2002-2021 San Francisco Public Library. All rights reserved.",
+      "benefitQuote": "Library cardholders are allowed 30 Instant Borrows and 10 Flex Borrows per month. ( What are Flex and Instant Borrows? ) There are no late fees."
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T16:30:09.757Z",
+  "updatedAt": "2026-10-29T17:32:35.515Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2506,6 +2506,97 @@
         ],
         "reasoning": "官方页面明确标注文章发布日期为2026年9月8日，datePublished亦与之吻合。正文描述凭合作图书馆借书证及PIN注册免费账户，借阅电子书、有声书、影视、音乐和漫画，且无订阅费及逾期费，与本条权益一致。此日期为该具体消息的官方文章发布日期，不代表Hoopla服务或免费借阅模式首次推出的日期。",
         "assessedAt": "2026-10-29T15:26:13.304Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "洛杉矶公共图书馆：持卡免费听音乐，每周下载5首",
+      "provider": "洛杉矶公共图书馆 / Freegal Music",
+      "summary": "凭洛杉矶公共图书馆借书证及PIN登录Freegal，可免费无限串流音乐，每周最多下载5首无DRM歌曲。",
+      "benefit": "免费无限串流音乐，每周下载最多5首",
+      "category": "life",
+      "regions": [
+        "global"
+      ],
+      "availability": "面向持有洛杉矶公共图书馆借书证及PIN的用户；不代表全球所有地区用户均可申领借书证。",
+      "eligibility": [
+        "持有洛杉矶公共图书馆（LAPL）借书证。",
+        "具备借书证号码及PIN以完成登录。"
+      ],
+      "steps": [
+        "访问 lapl.freegalmusic.com，点击“Log In”。",
+        "使用借书证号码和PIN登录。",
+        "在线串流音乐，或每周下载最多5首歌曲；移动设备也可使用iOS或Android应用。"
+      ],
+      "caveats": [
+        "歌曲下载上限为每周5首，串流播放不限量。",
+        "页面未说明借书证的申领条件，不能据此保证个人办证资格。"
+      ],
+      "tags": [
+        "免费音乐",
+        "图书馆权益",
+        "Freegal",
+        "洛杉矶公共图书馆"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-35599408d1018ffda013",
+      "status": "published",
+      "discoveredAt": "2026-10-29T17:29:43.705Z",
+      "verifiedAt": "2026-10-29T17:31:55.580Z",
+      "featured": false,
+      "source": {
+        "name": "洛杉矶公共图书馆",
+        "url": "https://www.lapl.org/digital-library/freegal",
+        "evidence": "官网说明Freegal为免费数字音乐服务，需LAPL借书证及PIN登录；串流不限量，每周最多下载5首无DRM歌曲，并提供登录地址及步骤。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T17:31:55.580Z",
+        "evidenceHash": "4fca60bf034e284b4cac61696fc855b97bfe60f09994f13c24900c434d2c65e8",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Freegal Music is our free digital music service"
+          },
+          {
+            "field": "benefit",
+            "quote": "Streaming is unlimited"
+          },
+          {
+            "field": "benefit",
+            "quote": "download up to 5 DRM-free songs each week."
+          },
+          {
+            "field": "eligibility",
+            "quote": "LAPL Library Card required"
+          },
+          {
+            "field": "steps",
+            "quote": "Go to lapl.freegalmusic.com and click \"Log In\""
+          },
+          {
+            "field": "steps",
+            "quote": "Sign in with your library card number and PIN"
+          }
+        ]
+      },
+      "publication": {
+        "value": "2026-10-13",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://www.peepstune.com/library-card-vs-paid-music-subscription-which-is-better-for-discovering-music",
+            "quote": "Library Card vs. Paid Music Subscription: Which Is Better for Discovering Music? By PeepsTune Team 13 Oct 2026 16 min read"
+          }
+        ],
+        "reasoning": "官方页面确认无限串流及每周最多下载5首无DRM歌曲，但没有发布日期。2026年10月13日的PeepsTune文章明确描述了洛杉矶公共图书馆这一相同版本的Freegal权益，可证明该权益至迟当日已存在，不能据此确定官方首发日。",
+        "assessedAt": "2026-10-29T17:32:26.645Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
       }

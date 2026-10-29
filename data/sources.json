@@ -491,5 +491,28 @@
       "identityQuote": "Cloudflare Developer Docs Explore guides and tutorials to start building on Cloudflare's platform",
       "benefitQuote": "Our free allocation allows anyone to use a total of 10,000 Neurons per day at no charge ."
     }
+  },
+  {
+    "id": "auto-source-20e509a81bab9b0d6ae4",
+    "name": "Verdent AI 官方站",
+    "url": "https://www.verdent.ai/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "www.verdent.ai",
+      "verdent.ai"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T07:17:37.759Z",
+      "query": "site:verdent.ai pricing free trial credits",
+      "homepageUrl": "https://www.verdent.ai/",
+      "searchUrl": "https://www.verdent.ai/pricing",
+      "evidenceHash": "83653aeef3fd887933b87ca3e06816e7d0941e95323e239a4937ba72cb79e7d2",
+      "homepageHash": "0dd3b5aa4b1935792eef7bcbb979d4a62b4ca0b00d758ed56f3ed32f32154c30",
+      "identityQuote": "© 2026 Verdent AI, Inc. All rights reserved",
+      "benefitQuote": "Your free trial includes 100 credits, so you can explore Verdent without commitment."
+    }
   }
 ]

@@ -560,5 +560,28 @@
       "identityQuote": "飞桨PaddlePaddle > 教程 文档 模型库 产品全景 企业案例 星河社区 AI Studio > 项目 应用中心 热门 数据集 课程 热门 比赛",
       "benefitQuote": "1、每天运行项目免费获得8点GPU算力 2、免费CPU运行"
     }
+  },
+  {
+    "id": "auto-source-e51568e6d5a5d9ee87fa",
+    "name": "MongoDB官方学生福利",
+    "url": "https://www.mongodb.com/students",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "www.mongodb.com",
+      "mongodb.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T12:23:17.526Z",
+      "query": "MongoDB students Atlas free credits eligibility official",
+      "homepageUrl": "https://www.mongodb.com/",
+      "searchUrl": "https://www.mongodb.com/students",
+      "evidenceHash": "e8776b3ec36453314e444835d5d9f57880101cd668b84faa5fbf1c091b997cd2",
+      "homepageHash": "ee2df3595a6608b8051df153ea2d3be8132a4621f27d5bd3071ca2a3a373053a",
+      "identityQuote": "MongoDB Atlas The multi-cloud, intelligent data platform for any use case",
+      "benefitQuote": "Get free certification and $50 of Atlas Credit for the leading modern, general purpose database platform by signing up for the GitHub Student Developer Pack."
+    }
   }
 ]

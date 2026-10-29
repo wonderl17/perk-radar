@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T12:24:47.947Z",
+  "updatedAt": "2026-10-29T13:25:36.642Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -157,7 +157,10 @@
         "assessedAt": "2026-10-28T15:13:11.366Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-10-29T13:24:39.805Z",
+      "reviewNote": "官方明确列出免费计划及每日300积分，但仅提供查看定价的路径，未说明注册、开通免费计划或获取每日积分的具体操作，尚缺可执行领取步骤的证据。; Model did not approve publication"
     },
     {
       "id": "lovable-free-build",
@@ -2381,6 +2384,85 @@
           {
             "field": "caveats",
             "quote": "you'll need a valid credit card or a PayPal account"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Hoopla：凭合作图书馆借书证免费借阅数字内容",
+      "provider": "Hoopla",
+      "summary": "持提供 Hoopla 服务的图书馆有效借书证，可注册免费账户，借阅电子书、有声书、影视、音乐及漫画，无订阅费和逾期费。",
+      "benefit": "免费借阅电子书、有声书、影视及音乐",
+      "category": "life",
+      "regions": [
+        "global"
+      ],
+      "availability": "仅适用于提供 Hoopla 服务的合作图书馆持卡人；不代表所有国家、地区或图书馆均可使用。",
+      "eligibility": [
+        "持有提供 Hoopla 服务的合作图书馆有效借书证。",
+        "使用借书证号码和 PIN 验证账户。",
+        "新办借书证须满足所选图书馆的资格要求，可能需要居住证明。"
+      ],
+      "steps": [
+        "已有合作图书馆有效借书证者可直接注册；尚未持卡者，先访问当地图书馆网站，查找借书证或电子借书证申请入口。",
+        "按图书馆要求填写申请资料，提交所需证明，取得借书证号码和 PIN。",
+        "下载 Hoopla 应用或访问 HooplaDigital.com，创建免费账户，并输入借书证号码和 PIN 进行验证。",
+        "浏览内容目录，点击所选内容的“Borrow”开始借阅。"
+      ],
+      "caveats": [
+        "并非所有图书馆都与 Hoopla 合作，需先确认所持借书证支持该服务。",
+        "图书馆服务范围内居民、工作者或学生办证通常免费，但具体资格由图书馆决定；部分图书馆对非居民收取办证费。",
+        "页面未说明具体借阅数量或额度，不应理解为无限借阅。"
+      ],
+      "tags": [
+        "数字借阅",
+        "电子书",
+        "有声书",
+        "图书馆",
+        "影视"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-b236c84ddd412bbb3636",
+      "status": "published",
+      "discoveredAt": "2026-10-29T13:23:20.321Z",
+      "verifiedAt": "2026-10-29T13:25:24.842Z",
+      "featured": false,
+      "source": {
+        "name": "Hoopla官方资讯与支持站",
+        "url": "https://theloop.hoopladigital.com/support/articles/basics/how-to-get-a-library-card-online-and-use-hoopla",
+        "evidence": "官方说明合作图书馆持卡人可注册免费账户，使用借书证号码和 PIN 验证后借阅数字内容，无订阅费和逾期费；部分非居民办证可能收费。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T13:25:24.842Z",
+        "evidenceHash": "f36034ca73cf08846c9e16ab586422a73083c5ed8de843376f9da28be5593e12",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "No subscription fees"
+          },
+          {
+            "field": "benefit",
+            "quote": "thousands of free titles"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Once your library card is active"
+          },
+          {
+            "field": "eligibility",
+            "quote": "If your library doesn’t currently partner with Hoopla"
+          },
+          {
+            "field": "steps",
+            "quote": "Enter your library card number and PIN"
+          },
+          {
+            "field": "steps",
+            "quote": "Browse the catalog and tap “Borrow”"
           }
         ]
       }

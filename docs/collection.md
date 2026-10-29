@@ -77,7 +77,7 @@ RSS `/feed.xml` 按首次收录时间排序，指向官方活动页面；构建�
 
 项目内调度随 `npm start` 运行，启动即检查是否到期，默认每 1 小时扫描，每轮最多处理 6 份证据，执行失败 15 分钟后重试。`data/runtime.json` 配置间隔与数量，`work/scan-state.json` 保存上次成功与下一次扫描时间；重启不会提前重复调用模型。`npm run scan:due` 使用同一到期检查与跨进程锁，`npm run scan:status` 只查看状态。
 
-本项目提供 Node 内置扫描与自主发现，详情见 `docs/automation.md` 和 `docs/discovery.md`。如使用外部调度，统一运行 `scan:due` 共用状态，再同步正式福利与信源至 GitHub，并核对 Vercel 发布。公开仓库不附带创建者的私人聊天任务。
+本项目由 `npm start` 内置维护承接到期扫描、正式福利与信源同步和 Vercel 生产核对，详情见 `docs/maintenance.md`、`docs/automation.md` 和 `docs/discovery.md`。手工维护使用 `maintain:due`，发布重试不重复调用 GPT。公开仓库不附带创建者的私人聊天任务。
 
 `docs/examples/collect.workflow.yml` 提供每天北京时间 09:15 的原始采集工作流和手动触发入口。只有把项目上传到启用 Actions 的 GitHub 仓库后才会运行；当前尚未启用远端定时执行。这个工作流仅运行 `collect`，上传候选、变化和健康 artifact，并缓存候选历史与正文 baseline，不调用本机 Hermes、不执行 GPT 自动收录，也不自动发布。
 

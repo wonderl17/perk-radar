@@ -20,7 +20,7 @@ export function resolvePublicPath(pathname, root, dist = false) {
   if (decoded.split('/').some(segment => segment.startsWith('.'))) return null;
   return resolve(root, 'public', `.${decoded}`);
 }
-export function createPreviewServer({ root = ROOT, dist = false, getScanStatus } = {}) {
+export function createPreviewServer({ root = ROOT, dist = false, getScanStatus, getMaintenanceStatus } = {}) {
   return createServer(async (request, response) => {
     try {
       if (!['GET', 'HEAD'].includes(request.method)) { response.writeHead(405, { Allow: 'GET, HEAD' }); response.end(); return; }
@@ -29,7 +29,19 @@ export function createPreviewServer({ root = ROOT, dist = false, getScanStatus }
         const status = await getScanStatus();
         const scanner = Object.fromEntries(['status', 'startedAt', 'lastAttemptAt', 'lastSuccessAt', 'nextScanAt'].filter(key => typeof status?.[key] === 'string' || status?.[key] === null).map(key => [key, status[key]]));
         if (status?.lastResult) scanner.lastResult = Object.fromEntries(['examined', 'published', 'updated', 'flagged', 'held', 'rejected', 'failed'].filter(key => Number.isFinite(status.lastResult[key]) && status.lastResult[key] >= 0).map(key => [key, status.lastResult[key]]));
-        const body = JSON.stringify({ status: 'ok', scanner });
+        let maintenance;
+        if (getMaintenanceStatus) {
+          const value = await getMaintenanceStatus();
+          maintenance = Object.fromEntries(['status', 'phase', 'startedAt', 'lastAttemptAt', 'lastSuccessAt', 'nextMaintenanceAt'].filter(key => typeof value?.[key] === 'string' || value?.[key] === null).map(key => [key, value[key]]));
+          if (value?.lastSync) maintenance.lastSync = { updated: value.lastSync.updated === true };
+          if (value?.lastVerification) {
+            maintenance.lastVerification = {};
+            if (['success', 'pending', 'failed'].includes(value.lastVerification.status)) maintenance.lastVerification.status = value.lastVerification.status;
+            if (/^[a-f0-9]{40}$/i.test(value.lastVerification.commit || '')) maintenance.lastVerification.commit = value.lastVerification.commit;
+            if (/^[A-Z][A-Z0-9_]{0,63}$/.test(value.lastVerification.code || '')) maintenance.lastVerification.code = value.lastVerification.code;
+          }
+        }
+        const body = JSON.stringify({ status: 'ok', scanner, ...(maintenance ? { maintenance } : {}) });
         response.writeHead(200, { 'Content-Type': MIME['.json'], 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
         response.end(request.method === 'HEAD' ? undefined : body); return;
       }

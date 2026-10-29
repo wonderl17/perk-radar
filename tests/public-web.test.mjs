@@ -41,6 +41,7 @@ test('public evidence uses validated DNS addresses at the TLS connection and sen
     return answers;
   }, requestImpl: requests.requestImpl });
   assert.equal(result.text, '<main>Free credits</main>');
+  assert.equal(result.status, 200);
   assert.equal(result.url, URL + '?campaign=offer');
   assert.equal(lookups, 1);
   const options = requests.calls[0].options;
@@ -53,6 +54,18 @@ test('public evidence uses validated DNS addresses at the TLS connection and sen
   const single = await new Promise((resolve, reject) => options.lookup('official.example.com', {}, (error, address, family) => error ? reject(error) : resolve({ address, family })));
   assert.deepEqual(single, PUBLIC[0]);
   assert.equal(lookups, 1, 'connection lookup must not resolve the host for a second time');
+});
+
+test('production IPv4 preference still validates all DNS answers before pinning one family', async () => {
+  const requests = fakeRequests();
+  await fetchPublicText(URL, { preferIpv4: true, lookupImpl: async () => [{ address: '2001:4860:4860::8888', family: 6 }, ...PUBLIC], requestImpl: requests.requestImpl });
+  const options = requests.calls[0].options;
+  assert.equal(options.family, 4); assert.equal(options.autoSelectFamily, false);
+  const pinned = await new Promise((resolve, reject) => options.lookup('official.example.com', { all: true }, (e, x) => e ? reject(e) : resolve(x)));
+  assert.deepEqual(pinned, PUBLIC);
+  let requested = false;
+  await assert.rejects(fetchPublicText(URL, { preferIpv4: true, lookupImpl: async () => [...PUBLIC, { address: '::1', family: 6 }], requestImpl: () => { requested = true; } }), error => error.code === 'SOURCE_POLICY');
+  assert.equal(requested, false, 'IPv4 preference cannot hide a private IPv6 DNS answer');
 });
 
 test('unsafe URL forms never perform DNS or network requests', async () => {

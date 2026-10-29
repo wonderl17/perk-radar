@@ -80,7 +80,7 @@ async function resolvedAddresses(host, lookupImpl, signal) {
   }
   return answers.map(({ address, family }) => ({ address, family }));
 }
-function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
+function requestText(url, addresses, { requestImpl, maxBytes, signal, singleFamily = false }) {
   return new Promise((resolve, reject) => {
     let req, res, settled = false;
     const finish = (error, value) => {
@@ -99,6 +99,7 @@ function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
     try {
       req = requestImpl(url, {
         method: 'GET', agent: false, signal, servername: url.hostname,
+        ...(singleFamily ? { family: addresses[0].family, autoSelectFamily: false } : {}),
         // The connection receives only the addresses already verified above;
         // it cannot perform a second DNS lookup after the safety check.
         lookup(_hostname, options, callback) {
@@ -139,7 +140,7 @@ function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
           if (bytes > maxBytes) { stop('Public source response is too large.', 'SOURCE_RESPONSE'); return; }
           chunks.push(value);
         });
-        response.on('end', () => finish(null, { text: Buffer.concat(chunks, bytes).toString('utf8'), url: url.href }));
+        response.on('end', () => finish(null, { text: Buffer.concat(chunks, bytes).toString('utf8'), url: url.href, status }));
       });
       req.on('error', () => stop(signal.aborted ? TIMEOUT_ERROR : PUBLIC_ERROR, signal.aborted ? 'SOURCE_TIMEOUT' : 'SOURCE_NETWORK'));
       if (signal.aborted) aborted(); else req.end();
@@ -151,10 +152,11 @@ function requestText(url, addresses, { requestImpl, maxBytes, signal }) {
  * settings. Untrusted URLs and every redirect must pass URL and pinned DNS checks. */
 export async function fetchPublicText(value, {
   allowedHosts, timeoutMs = 12000, maxBytes = 1_048_576, lookupImpl = dnsLookup, requestImpl = httpsRequest,
+  preferIpv4 = false,
 } = {}) {
   if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 120000
     || !Number.isInteger(maxBytes) || maxBytes < 1 || maxBytes > MAX_BYTES
-    || typeof lookupImpl !== 'function' || typeof requestImpl !== 'function') throw publicError('SOURCE_CONFIG', 'Public source request limits are invalid.');
+    || typeof lookupImpl !== 'function' || typeof requestImpl !== 'function' || typeof preferIpv4 !== 'boolean') throw publicError('SOURCE_CONFIG', 'Public source request limits are invalid.');
   if (allowedHosts === undefined) {
     try { allowedHosts = [new URL(value).hostname.toLowerCase()]; } catch { throw sourcePolicyError('Public source URL is not allowed.'); }
   }
@@ -167,7 +169,10 @@ export async function fetchPublicText(value, {
     for (let redirects = 0; redirects < 6; redirects++) {
       const addresses = await resolvedAddresses(target.hostname, lookupImpl, controller.signal);
       if (controller.signal.aborted) throw publicError('SOURCE_TIMEOUT', TIMEOUT_ERROR);
-      const result = await requestText(target, addresses, { requestImpl, maxBytes, signal: controller.signal });
+      // Validate the complete DNS answer before selecting a connection family.
+      // Fixed production checks may prefer IPv4 on hosts without working IPv6.
+      const ipv4 = preferIpv4 ? addresses.filter(item => item.family === 4) : [];
+      const result = await requestText(target, ipv4.length ? ipv4 : addresses, { requestImpl, maxBytes, signal: controller.signal, singleFamily: preferIpv4 });
       if (!result.redirect) return result;
       try { target = checkedUrl(new URL(result.redirect, target).href, allowedHosts); }
       catch { throw sourcePolicyError('Public source redirect is not allowed.'); }

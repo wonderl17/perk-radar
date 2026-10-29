@@ -1,6 +1,10 @@
-# 定期扫描与公开数据
+# 项目维护与公开数据
 
-运行 `npm start` 同时启动 HTTP 服务和项目内定期扫描。默认每1小时检查一次，每轮最多处理6份官方证据，核心执行失败15分钟后重试；自主发现部分异常标记degraded，按发现自身的下一次预算时间检查，跳过搜索不能清除上次真实发现的异常。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
+运行 `npm start` 同时启动 HTTP 服务和项目维护调度，依次检查扫描到期、同步正式数据并核对 Vercel 生产结果。完整说明见 [maintenance.md](maintenance.md)。维护默认每60分钟检查，同步或核对失败5分钟后重试，部署中1分钟后只做下一次核对；单次检查不阻塞等待。
+
+后台完整维护用 `npm run maintain:due`；`npm run maintain:status` 只读取状态。发布重试不提前扫描或重复调用 GPT；无变化不提交，不重复部署。另一进程扫描中保留维护任务，约30秒后重检，完成再同步。跨进程维护锁与原扫描锁共同避免重复工作。`work/maintenance-state.json` 与 `work/maintenance-report.json` 持久保存维护状态及最近报告，`/api/health` 只返回服务、扫描和维护的安全摘要。
+
+扫描仍使用原有的 `scan:due` 到期逻辑。默认每1小时检查一次，每轮最多处理6份官方证据，核心执行失败15分钟后重试；自主发现部分异常标记degraded，按发现自身的下一次预算时间检查，跳过搜索不能清除上次真实发现的异常。配置见 `data/runtime.json`，可通过 `PERK_SCAN_INTERVAL_MINUTES`、`PERK_SCAN_LIMIT`、`PERK_SCAN_RETRY_MINUTES` 覆盖。修改后重启服务，已经保存的下一次时间保留，后续周期使用新配置。
 
 仅人工明确要求立即完整扫描时使用 `npm run scan:now`，仍复用扫描、入库和发现锁及每轮预算；它按真实执行时间重新安排下一轮，不抢占活跃任务。后台维护继续用 `scan:due`，不能以手动入口绕过正常间隔。
 
@@ -16,6 +20,8 @@
 
 采集、结构化提取、原文证据校验和第二轮审核全部通过才写正式福利，保留模型、时间与证据。长正文、冲突、过期和缺依据条目不直接发布；不以模型自信代替原文依据。核验不表示库存或个人资格保证。
 
-`npm run sync:github` 通过已登录 gh CLI 只同步正式 `data/offers.json` 与通过校验的 `data/sources.json`，无差异不提交，各文件更新带自身旧 SHA 防止覆盖并发更改；后一文件失败保留前一文件已完成的更新，不回滚。仓库与分支在 `data/github.json`，fork后先修改为自己的目标仓库。它不推送本机Git历史、不保存Token。在 Vercel 完成此仓库 `luke/main` 生产分支的绑定后，正式数据提交将自动触发网站部署，发布结果应独立核对。
+`npm run sync:github` 通过已登录 gh CLI 只同步正式 `data/offers.json` 与通过校验的 `data/sources.json`，无差异不提交，各文件更新带自身旧 SHA 防止覆盖并发更改；后一文件失败保留前一文件已完成的更新，不回滚。仓库与分支在 `data/github.json`，fork后先修改为自己的目标仓库。它不推送本机Git历史、不保存Token。在 Vercel 完成此仓库 `luke/main` 生产分支的绑定后，正式数据提交将自动触发网站部署。维护核对该分支最新提交对应的生产部署状态及生产首页、公开 JSON、RSS；GitHub 写入成功或旧部署可访问都不能单独视作发布完成。源码只从经过清理的公开 checkout 发布，先 fetch 并快进合并生产分支，保留既有数据提交，不上传私人历史、运行状态或凭据。
+
+项目维护不依赖 Codex 计划，不新增系统 cron、LaunchAgent 或 Vercel Cron，也不自动给他人发消息。退出 Codex 后，独立运行的 Node 服务仍可继续；电脑睡眠、关机或进程退出期间不能维护。迁移到常驻服务器可使用同一服务，本次不创建云资源。Vercel 只构建和托管静态站点，不运行扫描器。
 
 仓库本身不等于常驻服务。原始工作流仅作为 `docs/examples/collect.workflow.yml` 示例保存，未启用云端GPT或定时工作流。启用前应自行审阅权限、运行配置及公共缓存/artifact内容，不能公开待审队列。

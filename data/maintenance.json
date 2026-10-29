@@ -1,0 +1,6 @@
+{
+  "enabled": true,
+  "intervalMinutes": 60,
+  "retryIntervalMinutes": 5,
+  "deploymentPollMinutes": 1
+}

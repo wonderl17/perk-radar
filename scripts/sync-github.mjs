@@ -15,7 +15,7 @@ const USERNAME = /^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/;
 
 /** Let gh use its existing authenticated session. No token is read, printed or
  * placed in command arguments; the public file body is sent over stdin. */
-function runGhCli(args, input) {
+export function runGhCli(args, input) {
   return new Promise((resolveOutput, reject) => {
     const child = spawn('gh', args, { stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true });
     let stdout = '', stderr = '', outputBytes = 0, settled = false;
@@ -60,7 +60,7 @@ function validBranch(value) {
     && !/[\s\x00-\x1f\x7f~^:?*\[\\]/.test(value)
     && value.split('/').every(part => part && !part.startsWith('.') && !part.endsWith('.') && !part.endsWith('.lock'));
 }
-function validateRepository(config) {
+export function validateRepository(config) {
   const owner = '[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?';
   const repository = new RegExp(`^${owner}/[A-Za-z0-9._-]{1,100}$`);
   if (!config || typeof config.repository !== 'string' || !repository.test(config.repository) || ['.', '..'].includes(config.repository.split('/')[1]) || !validBranch(config.branch) || (config.account !== undefined && (typeof config.account !== 'string' || !USERNAME.test(config.account)))) {

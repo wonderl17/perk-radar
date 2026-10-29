@@ -11,6 +11,7 @@
 - 正式数据：[`data/offers.json`](data/offers.json)
 - 信源配置：[`data/sources.json`](data/sources.json)
 - 数据约定：[`docs/data-contract.md`](docs/data-contract.md)
+- 常驻维护：[`docs/maintenance.md`](docs/maintenance.md)
 - 定期扫描：[`docs/automation.md`](docs/automation.md)
 - 自主搜索与信源扩充：[`docs/discovery.md`](docs/discovery.md)
 - 消息发布时间查证：[`docs/publication.md`](docs/publication.md)
@@ -28,8 +29,10 @@ npm run dev
 # http://127.0.0.1:4173，只预览公开数据，不调用模型
 
 npm start
-# 页面服务 + 定期扫描，需要配置可用的Hermes或GPT运行时
+# 页面服务 + 到期扫描 + GitHub正式数据同步 + Vercel生产核对
 
+npm run maintain:status
+npm run maintain:due
 npm run scan:status
 npm run scan:due
 npm test
@@ -37,7 +40,7 @@ npm run check:data
 npm run build
 ```
 
-扫描默认每1小时一次，核心失败15分钟重试，自主发现异常保留独立状态与预算时间，每轮最多6份证据；配置在 `data/runtime.json`。执行状态保存在持久磁盘的 `work/scan-state.json`，重启不会提前重复扫描；服务停止或电脑关机期间不扫描。
+扫描默认每1小时一次，核心失败15分钟重试，自主发现异常保留独立状态与预算时间，每轮最多6份证据；配置在 `data/runtime.json`。维护配置在 `data/maintenance.json`，默认60分钟检查，发布失败5分钟重试、部署中1分钟后核对；发布重试不提前调用 GPT，无变化不提交、不重复部署。维护与扫描各自持久保存 `work/` 中的状态并共享跨进程锁，重启不会提前重复扫描。退出 Codex 后，独立运行的 Node 服务可继续；电脑睡眠、关机或服务停止期间不能维护。未新增 Codex计划、系统cron或LaunchAgent。
 
 ## GPT 自动收录
 
@@ -49,7 +52,7 @@ GPT 规划中英文查询 → DDGS 真实联网搜索并在同一预算内追踪
 
 ## 网站部署
 
-`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。在 Vercel 导入本仓库并绑定 `luke/main` 生产分支后，提交正式数据将自动部署。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不安装 Python 搜索依赖、不调用模型，也不需要模型密钥。
+`dist/` 为静态构建输出，`vercel.json` 已配置校验和构建命令。在 Vercel 导入本仓库并绑定 `luke/main` 生产分支后，提交正式数据将自动部署。项目维护会核对分支最新提交的 Vercel 生产部署及首页、公开 JSON、RSS，部署中只安排下次核对，不重复发布。源码更新只从经过清理的公开 checkout 提交，先 fetch 并快进合并远端生产分支，保留已有数据提交。RSS 优先使用显式 `SITE_URL`，其次使用 Vercel 的 `VERCEL_PROJECT_PRODUCTION_URL`，本地回退到 `data/site.json`。扫描继续使用独立的本机 Hermes 运行环境，Vercel 构建不安装 Python 搜索依赖、不调用模型，也不需要模型密钥。
 
 工作流仅保存在 [`docs/examples/collect.workflow.yml`](docs/examples/collect.workflow.yml) 作为未启用示例。它不是云端GPT服务；启用前自行审阅权限和输出，不要把待审队列或密钥放进公共artifact/cache。
 

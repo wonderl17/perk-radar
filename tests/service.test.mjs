@@ -41,3 +41,29 @@ test('a port conflict aborts startup before any paid model work', async t => {
   await assert.rejects(startService({ root, config, port: occupying.address().port, ingestImpl: async () => { calls++; return {}; } }), error => error.code === 'EADDRINUSE');
   assert.equal(calls, 0);
 });
+
+test('the project service owns scanning, GitHub sync and verified publishing without a Codex trigger', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'perk-service-maintenance-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const maintenanceConfig = { enabled: true, intervalMinutes: 60, retryIntervalMinutes: 5, deploymentPollMinutes: 1 };
+  const calls = [];
+  const options = { root, config, maintenanceConfig, port: 0,
+    ingestImpl: async () => { calls.push('scan'); return { examined: 1, published: 0, updated: 0, held: 1, failed: 0 }; },
+    syncImpl: async () => { calls.push('sync'); return { updated: false, apiKey: 'never-expose-this-sync-secret' }; },
+    verifyImpl: async () => { calls.push('verify'); return { status: 'success', commit: 'a'.repeat(40), apiKey: 'never-expose-this-verify-secret' }; },
+  };
+  const runtime = await startService(options); t.after(() => runtime.stop());
+  await runtime.maintenance.firstRun;
+  assert.deepEqual(calls, ['scan', 'sync', 'verify']);
+  const response = await fetch(`http://127.0.0.1:${runtime.address.port}/api/health`);
+  const text = await response.text(), health = JSON.parse(text);
+  assert.equal(health.scanner.status, 'idle');
+  assert.equal(health.maintenance.lastVerification.status, 'success');
+  assert.equal(health.maintenance.lastVerification.commit, 'a'.repeat(40));
+  assert.ok(health.maintenance.nextMaintenanceAt);
+  assert.ok(!text.includes('secret'));
+  await runtime.stop();
+  const restarted = await startService(options); t.after(() => restarted.stop());
+  await restarted.maintenance.firstRun;
+  assert.deepEqual(calls, ['scan', 'sync', 'verify'], 'restarting does not rerun fresh maintenance or pay GPT again');
+});

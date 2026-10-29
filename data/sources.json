@@ -675,5 +675,28 @@
       "identityQuote": "Welcome to the Los Angeles Public Library",
       "benefitQuote": "Streaming is unlimited and you can download up to 5 DRM-free songs each week."
     }
+  },
+  {
+    "id": "auto-source-6a5ec3406d1f79490c5d",
+    "name": "Cerebras 推理官方文档",
+    "url": "https://inference-docs.cerebras.ai/support/rate-limits",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "inference-docs.cerebras.ai",
+      "www.inference-docs.cerebras.ai"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T18:29:36.391Z",
+      "query": "Cerebras inference free tier pricing rate limits official",
+      "homepageUrl": "https://inference-docs.cerebras.ai/",
+      "searchUrl": "https://inference-docs.cerebras.ai/support/rate-limits",
+      "evidenceHash": "d0d60144f881276f41a6cdecbbcbb7932ecbfe8d4de83a259a658dd6f8686725",
+      "homepageHash": "da48c5accd0170990bfbc05432762c8f4f33149a0ca185c92e9985b0ab505810",
+      "identityQuote": "Build at the Speed of Cerebras Experience real-time AI responses across coding, reasoning, voice, and agentic workloads with the world’s fastest AI inference.",
+      "benefitQuote": "New accounts receive $5 in free credits after adding a verified payment method. These credits expire 30 days after they’re granted and can be used across all public models."
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T11:34:27.716Z",
+  "updatedAt": "2026-10-29T12:24:47.947Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2288,6 +2288,99 @@
           {
             "field": "steps",
             "quote": "Get started"
+          }
+        ]
+      }
+    },
+    {
+      "title": "MongoDB 学生福利：50美元 Atlas 额度与免费认证",
+      "provider": "MongoDB",
+      "summary": "加入 GitHub 学生开发者礼包并完成验证，可领50美元 Atlas 额度；完成指定学习路径可获免费认证考试券。兑换额度需绑定信用卡或 PayPal。",
+      "benefit": "50美元 Atlas 额度＋免费认证考试券",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "通过 GitHub Student Developer Pack 提供；官方未列明具体可用国家或地区，不代表所有地区均可领取。",
+      "eligibility": [
+        "就读于授予学位或文凭的教育项目。",
+        "持有可验证的学校邮箱或学生身份证明文件。",
+        "拥有 GitHub 个人账号且年满13岁。",
+        "加入 GitHub Student Developer Pack，并在 MongoDB 学生页面验证学生资格。",
+        "领取免费认证考试券须完成并通过 MongoDB University 对应认证学习路径的所有课程。"
+      ],
+      "steps": [
+        "申请并加入 GitHub Student Developer Pack。",
+        "在 mongodb.com/students 使用 GitHub 信息验证学生资格。",
+        "领取 Atlas 促销码，为 Atlas 账号关联有效信用卡或 PayPal，并将促销码兑换至选定的 Atlas 组织。",
+        "如需免费认证，完成并通过 MongoDB University 对应学习路径的所有课程，再领取免费认证考试券并参加考试。"
+      ],
+      "caveats": [
+        "Atlas 按使用量逐小时计费；50美元为使用抵扣额度，并非无限免费服务，付费集群可能产生额度以外的费用。",
+        "兑换 Atlas 额度必须关联有效信用卡或 PayPal 账号。",
+        "Atlas 促销码生成后须在90天内应用至账号，否则失效；这不是整个学生福利的结束日期。",
+        "促销码按组织兑换，每个促销码只能向一个选定组织兑换一次。",
+        "错过预约的认证考试，不会获得额外免费考试券；改期或取消须至少提前24小时方可免罚。",
+        "可为完成的不同认证学习路径领取相应考试券，但领取下一项认证权益前须完成首张考试券对应的学习路径。",
+        "GitHub 与 MongoDB University 邮箱无需一致；不一致时须在学生福利验证成功后按官方页面说明领取考试券。"
+      ],
+      "tags": [
+        "学生福利",
+        "GitHub学生开发者礼包",
+        "数据库",
+        "云额度",
+        "认证考试"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-e51568e6d5a5d9ee87fa",
+      "status": "published",
+      "discoveredAt": "2026-10-29T12:23:17.531Z",
+      "verifiedAt": "2026-10-29T12:24:35.442Z",
+      "featured": false,
+      "source": {
+        "name": "MongoDB官方学生福利",
+        "url": "https://www.mongodb.com/students",
+        "evidence": "MongoDB 学生页面明确列出50美元 Atlas 额度与免费认证，要求通过 GitHub 学生礼包验证。额度兑换需信用卡或 PayPal，促销码90天内未应用会失效；认证须完成指定学习路径课程。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T12:24:35.442Z",
+        "evidenceHash": "e8776b3ec36453314e444835d5d9f57880101cd668b84faa5fbf1c091b997cd2",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "$50 Atlas Credit"
+          },
+          {
+            "field": "benefit",
+            "quote": "Free MongoDB Certification ($150 value)"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Be enrolled in a degree- or diploma-granting program."
+          },
+          {
+            "field": "eligibility",
+            "quote": "Be at least 13 years old."
+          },
+          {
+            "field": "steps",
+            "quote": "Sign in with GitHub"
+          },
+          {
+            "field": "steps",
+            "quote": "entering their GitHub information at mongodb.com/students"
+          },
+          {
+            "field": "caveats",
+            "quote": "MongoDB Atlas is billed hourly based on usage."
+          },
+          {
+            "field": "caveats",
+            "quote": "you'll need a valid credit card or a PayPal account"
           }
         ]
       }

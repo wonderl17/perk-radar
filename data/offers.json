@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-28T15:17:01.107Z",
+  "updatedAt": "2026-10-29T03:17:56.554Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1552,7 +1552,10 @@
         "assessedAt": "2026-10-28T15:10:20.598Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-10-29T03:17:56.554Z",
+      "reviewNote": "页面同时包含图书借阅、免费数字阅览和免费无线网络等不同服务，需人工确认收录范围；本次仅提炼免费数字阅览，不合并其他权益。; Model did not approve publication"
     },
     {
       "title": "华为云码道：在校大学生认证可领4000积分",

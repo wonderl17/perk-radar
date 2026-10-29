@@ -514,5 +514,51 @@
       "identityQuote": "© 2026 Verdent AI, Inc. All rights reserved",
       "benefitQuote": "Your free trial includes 100 credits, so you can explore Verdent without commitment."
     }
+  },
+  {
+    "id": "auto-source-f524f478b0069fd933fc",
+    "name": "百度AI开放平台",
+    "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "ai.baidu.com",
+      "www.ai.baidu.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T08:17:33.755Z",
+      "query": "飞桨 AI Studio 免费 GPU 算力 使用规则 官方",
+      "homepageUrl": "https://ai.baidu.com/",
+      "searchUrl": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+      "evidenceHash": "2edbee1be57d628f7c4395b652571c4d275175c435da0e11fb6089e63a19f94f",
+      "homepageHash": "a94ef04d7935f8886351dd2c918edb03e7bec20f5bc106f36f3ad7f65198de16",
+      "identityQuote": "飞桨PaddlePaddle > 教程 文档 模型库 产品全景 企业案例 星河社区 AI Studio > 项目 应用中心 热门 数据集 课程 热门 比赛",
+      "benefitQuote": "每日运行项目即送8点算力，可使用高级GPU V100 16GB算力运行16小时"
+    }
+  },
+  {
+    "id": "auto-source-6e9c92e06b287f261c82",
+    "name": "百度AI开放平台",
+    "url": "https://ai.baidu.com/ai-doc/AISTUDIO/1kczvydw9",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "ai.baidu.com",
+      "www.ai.baidu.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T08:17:45.912Z",
+      "query": "site:ai.baidu.com/ai-doc/AISTUDIO 算力卡 运行项目 自动获取 每日",
+      "homepageUrl": "https://ai.baidu.com/",
+      "searchUrl": "https://ai.baidu.com/ai-doc/AISTUDIO/1kczvydw9",
+      "evidenceHash": "68baac8f3c50b0b42728ee0eec63421356423378cf7613b9930f282c8d1a9b9b",
+      "homepageHash": "a94ef04d7935f8886351dd2c918edb03e7bec20f5bc106f36f3ad7f65198de16",
+      "identityQuote": "飞桨PaddlePaddle > 教程 文档 模型库 产品全景 企业案例 星河社区 AI Studio > 项目 应用中心 热门 数据集 课程 热门 比赛",
+      "benefitQuote": "1、每天运行项目免费获得8点GPU算力 2、免费CPU运行"
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T18:31:10.398Z",
+  "updatedAt": "2026-10-29T18:47:01.302Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2670,6 +2670,17 @@
             "quote": "These credits expire 30 days after they’re granted"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "仅提供第三方福利收录页，未提供带日期的官方公告或可靠独立报道。页面的 Sep 30, 2026 明确为最后核查日期；datePublished 仅能说明该收录文章的发布日期，不能证明此版本福利的发布时间，故无法确定。",
+        "assessedAt": "2026-10-29T18:47:01.299Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     }
   ]

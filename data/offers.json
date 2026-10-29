@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T06:19:29.058Z",
+  "updatedAt": "2026-10-29T07:19:19.007Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -262,7 +262,10 @@
         "evidence": "官方新人免费额度页写明通常100万、90天、仅北京、无需实名可领取，以及已实名默认关闭用完即停。"
       },
       "status": "published",
-      "featured": false
+      "featured": false,
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-10-29T07:18:32.543Z",
+      "reviewNote": "页面同时包含新人 Token 额度与独立的 OAuth 每日调用额度，属于不同权益体系；且列出今日大批下架免费额度的模型，需核实当前参与模型与实际额度后再发布，不能将“通常100万Token”视为所有模型均可领取。; Model did not approve publication"
     },
     {
       "id": "github-student-pack",
@@ -1468,96 +1471,6 @@
       }
     },
     {
-      "title": "国家图书馆：馆内免费数字阅览，每次2小时",
-      "provider": "中国国家图书馆",
-      "summary": "读者在服务台刷卡登记后，可免费上机进行数字阅览，每次2小时；继续使用须等候管理员分配，15周岁及以下读者在少年儿童馆使用。",
-      "benefit": "免费数字阅览，每次上机2小时",
-      "category": "learning",
-      "regions": [
-        "cn"
-      ],
-      "availability": "国家图书馆馆内提供，须现场刷卡登记；机位已满时需等候分配。",
-      "eligibility": [
-        "到馆使用数字阅览服务、可在服务台刷卡登记的读者。",
-        "15周岁及以下读者须在少年儿童馆获取数字资源用机上网服务。"
-      ],
-      "steps": [
-        "到馆后在服务台刷卡登记，使用数字阅览机位。",
-        "每次可上机2小时；如机位已满或需继续使用，到管理员处等候分配，再刷卡上机。"
-      ],
-      "caveats": [
-        "每次使用2小时后自动下线，请按系统提示及时保存个人文件。",
-        "机位需由管理员分配，不保证随到随用。",
-        "不得以超过正常阅读速度连续、系统、集中、批量下载、浏览或检索数字资源。",
-        "不得利用下载文献进行商业化使用；不得运行游戏或访问娱乐视频网站。"
-      ],
-      "tags": [
-        "国家图书馆",
-        "数字阅览",
-        "馆内服务",
-        "免费学习"
-      ],
-      "publishedAt": null,
-      "expiresAt": null,
-      "offerType": "ongoing",
-      "id": "auto-2125d149ed219065e5df",
-      "status": "published",
-      "discoveredAt": "2026-10-27T21:30:46.584Z",
-      "verifiedAt": "2026-10-27T21:32:26.523Z",
-      "featured": false,
-      "source": {
-        "name": "中国国家图书馆",
-        "url": "https://www.nlc.cn/web/dzzn/ds_bjyxz/index.shtml",
-        "evidence": "借阅须知明确数字阅览免费，读者在服务台刷卡登记后每次可上机2小时；满位或继续使用需等候分配，15周岁及以下读者在少年儿童馆使用。"
-      },
-      "verification": {
-        "method": "gpt",
-        "model": "gpt-6.1-sol",
-        "verifiedAt": "2026-10-27T21:32:26.523Z",
-        "evidenceHash": "af225c89f430973b6a3e2e58ba8986650d931e20c72a6d028ecf6e64326ac758",
-        "evidenceQuotes": [
-          {
-            "field": "benefit",
-            "quote": "数字阅览服务为免费服务"
-          },
-          {
-            "field": "benefit",
-            "quote": "可上机2小时"
-          },
-          {
-            "field": "eligibility",
-            "quote": "每位读者"
-          },
-          {
-            "field": "eligibility",
-            "quote": "15周岁及以下读者在少年儿童馆"
-          },
-          {
-            "field": "steps",
-            "quote": "每次在服务台刷卡登记后"
-          },
-          {
-            "field": "steps",
-            "quote": "请到管理员处等候分配，刷卡上机"
-          }
-        ]
-      },
-      "publication": {
-        "value": null,
-        "precision": null,
-        "certainty": "unknown",
-        "basis": null,
-        "evidence": [],
-        "reasoning": "page-1明确载有免费数字阅览、每次上机2小时及年龄限制，但未提供发布日期；page-2、page-3的日期均对应其他公告或新闻，不能证明本条权益版本的发布时间或此前已存在。",
-        "assessedAt": "2026-10-28T15:10:20.598Z",
-        "method": "gpt-web-search",
-        "model": "gpt-6.1-sol"
-      },
-      "reviewRequired": true,
-      "reviewRequestedAt": "2026-10-29T03:17:56.554Z",
-      "reviewNote": "页面同时包含图书借阅、免费数字阅览和免费无线网络等不同服务，需人工确认收录范围；本次仅提炼免费数字阅览，不合并其他权益。; Model did not approve publication"
-    },
-    {
       "title": "华为云码道：在校大学生认证可领4000积分",
       "provider": "华为云码道CodeArts代码智能体",
       "summary": "中国站在校大学生升级至积分计费模式后，完成学生认证并通过审核，可一次性领取4000积分，发放后90天内有效。",
@@ -2179,6 +2092,74 @@
         "assessedAt": "2026-10-28T15:16:50.671Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "国家图书馆：到馆刷卡免费数字阅览，每次2小时",
+      "provider": "中国国家图书馆",
+      "summary": "到馆读者在服务台刷卡登记后，可免费上机阅览数字资源，每次2小时。机位满或需继续使用时须等候分配，15周岁及以下读者在少年儿童馆使用。",
+      "benefit": "免费数字阅览，每次上机2小时",
+      "category": "learning",
+      "regions": [
+        "cn"
+      ],
+      "availability": "国家图书馆到馆服务；需刷卡登记，机位按现场情况分配。",
+      "eligibility": [
+        "到馆使用数字阅览服务的读者，需在服务台刷卡登记。",
+        "15周岁及以下读者须在少年儿童馆获取数字资源用机上网服务。"
+      ],
+      "steps": [
+        "到馆后，在数字阅览服务台刷卡登记并上机。",
+        "每次可使用2小时；机位已满或需要继续使用时，到管理员处等候分配，再刷卡上机。"
+      ],
+      "caveats": [
+        "每次上机2小时后自动下线，请按系统提示及时保存个人文件。",
+        "机位已满时需等候分配，不保证即时可用。",
+        "不得以超过正常阅读速度连续、系统、集中、批量下载、浏览或检索数字资源。",
+        "下载文献不得用于商业用途。"
+      ],
+      "tags": [
+        "国家图书馆",
+        "数字阅览",
+        "免费上机",
+        "到馆服务"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-2125d149ed219065e5df",
+      "status": "published",
+      "discoveredAt": "2026-10-27T21:30:46.584Z",
+      "verifiedAt": "2026-10-29T07:19:01.365Z",
+      "featured": false,
+      "source": {
+        "name": "中国国家图书馆",
+        "url": "https://www.nlc.cn/web/dzzn/ds_bjyxz/index.shtml",
+        "evidence": "官方借阅须知明确数字阅览免费，读者每次在服务台刷卡登记后可上机2小时；继续使用需等候分配，15周岁及以下读者在少年儿童馆使用。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T07:19:01.365Z",
+        "evidenceHash": "af225c89f430973b6a3e2e58ba8986650d931e20c72a6d028ecf6e64326ac758",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "数字阅览服务为免费服务"
+          },
+          {
+            "field": "benefit",
+            "quote": "可上机2小时"
+          },
+          {
+            "field": "eligibility",
+            "quote": "每位读者每次在服务台刷卡登记后"
+          },
+          {
+            "field": "steps",
+            "quote": "请到管理员处等候分配，刷卡上机"
+          }
+        ]
       }
     }
   ]

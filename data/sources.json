@@ -445,5 +445,28 @@
       "identityQuote": "The platform where the machine learning community collaborates on models, datasets, and applications.",
       "benefitQuote": "PRO Users $2.00 All Hugging Face compute services yes Team or Enterprise Organizations $2.00 per seat All Hugging Face compute services yes"
     }
+  },
+  {
+    "id": "auto-source-b3a759bfff35948e8111",
+    "name": "旧金山公共图书馆常见问题",
+    "url": "https://sfpl.libanswers.com/faq/398956",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "sfpl.libanswers.com",
+      "www.sfpl.libanswers.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T01:17:40.498Z",
+      "query": "site.help.kanopy.com tickets monthly allowance free viewing library",
+      "homepageUrl": "https://sfpl.libanswers.com/",
+      "searchUrl": "https://sfpl.libanswers.com/faq/398956",
+      "evidenceHash": "c22f2216eb47356973e714349e9813343ebbde0ea72b0696fd3adf466b7675da",
+      "homepageHash": "95ce22e5a3c6fa65e13945b19a52a1bff77344695b18a702ef89feeec38534f6",
+      "identityQuote": "Copyright © 2002-2021 San Francisco Public Library. All rights reserved.",
+      "benefitQuote": "Each month, you receive a set number of tickets (30). Your tickets reset on the first day of the month, and unused tickets don't roll over to the next month."
+    }
   }
 ]

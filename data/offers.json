@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T07:19:19.007Z",
+  "updatedAt": "2026-10-29T08:21:09.764Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2158,6 +2158,154 @@
           {
             "field": "steps",
             "quote": "请到管理员处等候分配，刷卡上机"
+          }
+        ]
+      }
+    },
+    {
+      "title": "百度AI Studio：每日运行项目送8点GPU算力",
+      "provider": "百度AI Studio",
+      "summary": "每日创建或fork并运行Notebook项目，启动环境可获8点算力，可用于V100 16GB运行16小时；使用GPU会消耗算力卡。",
+      "benefit": "每日8点算力，可用V100 16GB共16小时",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "每日运行Notebook项目、启动环境时获取；官方未明确结束日期。",
+      "eligibility": [
+        "使用AI Studio并创建或fork、运行Notebook项目的用户"
+      ],
+      "steps": [
+        "在AI Studio创建或fork一个Notebook项目。",
+        "运行项目并点击“启动环境”，获取当日赠送算力。",
+        "在“个人中心→算力卡管理”查看发放记录。"
+      ],
+      "caveats": [
+        "每点算力可使用V100 16GB共2小时，或V100 32GB共1小时。",
+        "选择GPU并点击“确定”后开始消耗算力卡，按分钟计费，不满1分钟的部分不计费。",
+        "关闭浏览器后资源仍会继续运行10分钟并消耗算力；可在“我的项目”列表直接中止，重置环境需1至2分钟。",
+        "页面未明确算力卡有效期或GPU资源库存，不保证个人实际可用资源。"
+      ],
+      "tags": [
+        "GPU算力",
+        "Notebook",
+        "每日领取",
+        "V100"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-f524f478b0069fd933fc",
+      "status": "published",
+      "discoveredAt": "2026-10-29T08:17:33.759Z",
+      "verifiedAt": "2026-10-29T08:18:42.724Z",
+      "featured": false,
+      "source": {
+        "name": "百度AI开放平台",
+        "url": "https://ai.baidu.com/ai-doc/AISTUDIO/nk39v9kec",
+        "evidence": "官方算力卡文档说明，每日运行Notebook项目送8点算力，启动环境时获取，可在个人中心查看；GPU运行按算力卡计费。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T08:18:42.724Z",
+        "evidenceHash": "2edbee1be57d628f7c4395b652571c4d275175c435da0e11fb6089e63a19f94f",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "每日运行项目即送8点算力"
+          },
+          {
+            "field": "eligibility",
+            "quote": "创建或fork并运行一个Notebook项目"
+          },
+          {
+            "field": "steps",
+            "quote": "点击”启动环境”时"
+          }
+        ]
+      },
+      "publication": {
+        "value": "2022-04-24",
+        "precision": "day",
+        "certainty": "approximate",
+        "basis": "available_by",
+        "evidence": [
+          {
+            "url": "https://www.paddlepaddle.org.cn/support/news?action=detail&id=2898",
+            "quote": "AI Studio重磅上线Tesla A100，手里的3090突然不香了 发布日期：2022-04-24T09:50:49.000+0000 浏览量：4007次"
+          }
+        ],
+        "reasoning": "飞桨网站该报道明确发布于2022年4月24日，正文说明可通过运行项目“每日可获取8点算力，最长运行16小时”，与本条福利的获取方式、额度和运行时长一致，可证明该权益至迟当日已存在。报道主题为A100上线，并未说明每日8点福利于当日首发，故采用available_by。page-1仅标注2024-03-20为更新时间，不能作为发布日期。",
+        "assessedAt": "2026-10-29T08:20:55.711Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "百度AI Studio：工作日签到领1积分，周末领3积分",
+      "provider": "百度AI Studio",
+      "summary": "先使用项目、数据集或课程等功能解锁签到，再每日登录并点击签到领取积分。积分可用于兑换礼品，兑换受身份等级和礼品规则限制。",
+      "benefit": "签到工作日1积分，周末3积分",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "官方列为已开放的积分获取方式，每日可签到一次，未明确结束日期。",
+      "eligibility": [
+        "AI Studio用户，需先使用平台项目、数据集或课程等功能，才能解锁签到领积分。"
+      ],
+      "steps": [
+        "使用AI Studio的项目、数据集或课程等功能，解锁签到。",
+        "每日首次登录后，在AI Studio首页顶部个人卡片右侧点击签到。",
+        "周一至周五每次获得1积分，周六、周日每次获得3积分。"
+      ],
+      "caveats": [
+        "每日仅可签到一次。",
+        "积分不是GPU算力，不能将本福利与每日算力奖励混同。",
+        "公共礼品一般要求白银及以上身份等级；实物礼品每月可兑换一次，虚拟礼品兑换次数不受此限制。",
+        "专区礼品另有身份、兑换次数或白名单要求；具体礼品所需积分及库存未在本页明确，不保证可兑换特定礼品。",
+        "禁止作弊刷分，违规可能被清零积分并禁止继续获取积分。"
+      ],
+      "tags": [
+        "签到积分",
+        "AI Studio",
+        "礼品兑换"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-0376f5d89da015713b7c",
+      "status": "published",
+      "discoveredAt": "2026-10-29T08:17:45.920Z",
+      "verifiedAt": "2026-10-29T08:20:14.754Z",
+      "featured": false,
+      "source": {
+        "name": "百度AI开放平台",
+        "url": "https://ai.baidu.com/ai-doc/AISTUDIO/jk4mcntxf",
+        "evidence": "官方积分细则将签到列为已开放方式，规定工作日1积分、周末3积分，每日一次；需先使用平台功能解锁，积分兑换另受等级和礼品规则限制。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T08:20:14.754Z",
+        "evidenceHash": "cfd383e0bd908d1ffeb7ff7021124c1f1ec28332e676197223c16afcb83a608c",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "周一到周五积分+1，周六周日积分+3"
+          },
+          {
+            "field": "eligibility",
+            "quote": "需要先使用平台项目、数据集或课程等功能"
+          },
+          {
+            "field": "steps",
+            "quote": "在AI Studio首页顶部个人卡片右侧点击签到"
+          },
+          {
+            "field": "caveats",
+            "quote": "一般为AI Studio身份等级白银及以上即可兑换"
           }
         ]
       }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T15:26:23.889Z",
+  "updatedAt": "2026-10-29T16:30:09.757Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2293,6 +2293,17 @@
             "quote": "Get started"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方定价页描述了免费限量 Agent 与 Chat、Cursor 与 Grok 共享且按周刷新的用量池，但未提供该版本的发布日期。另两篇有日期的文章描述的是按月计额的 Hobby 旧版计划，不能用于证明当前权益的发布时间或最迟存在时间；版权年份和首次收录时间也不能作为发布依据。",
+        "assessedAt": "2026-10-29T16:30:09.753Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {

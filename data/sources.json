@@ -721,5 +721,28 @@
       "identityQuote": "Built and operated by AWS, Kiro benefits from the same security, reliability, and privacy standards and controls trusted by millions of customers.",
       "benefitQuote": "New users can start with the perpetual Kiro Free tier, which includes 50 credits."
     }
+  },
+  {
+    "id": "auto-source-5d8d883790861908e4a8",
+    "name": "Standard Ebooks 官方电子书库",
+    "url": "https://standardebooks.org/ebooks",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "standardebooks.org",
+      "www.standardebooks.org"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T21:29:40.490Z",
+      "query": "Standard Ebooks free ebook downloads copyright official",
+      "homepageUrl": "https://standardebooks.org/",
+      "searchUrl": "https://standardebooks.org/ebooks",
+      "evidenceHash": "5b4843d13e8aaa5566353cfb1523cdc7dcf8fba129789a96f7ed245e4b196ecf",
+      "homepageHash": "4981efbb5c9c5d0121d7675deb00abe4b6aff391351bd734f4b24b12a272dbac",
+      "identityQuote": "Standard Ebooks is a volunteer-driven project that produces new editions of public domain ebooks",
+      "benefitQuote": "We rely on your support to help us keep producing beautiful, free, and unrestricted editions of literature for the digital age."
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T17:32:35.515Z",
+  "updatedAt": "2026-10-29T18:31:10.398Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2599,6 +2599,77 @@
         "assessedAt": "2026-10-29T17:32:26.645Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "Cerebras 新账户：验证付款方式获5美元试用额度",
+      "provider": "Cerebras",
+      "summary": "新账户添加并验证付款方式后获5美元推理额度，领取后30天有效。额度用尽或到期即停止访问，主动购买额外额度前不收费。",
+      "benefit": "5美元推理试用额度，30天有效",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "面向可注册并完成付款方式验证的新账户；官方未明确具体支持地区，不代表所有地区均可领取。",
+      "eligibility": [
+        "Cerebras 新账户。",
+        "须添加经过验证的付款方式；跳过此步骤时，Playground 和 API 不会启用。"
+      ],
+      "steps": [
+        "注册 Cerebras 新账户。",
+        "添加并验证付款方式，获得5美元免费额度。",
+        "在额度发放后30天内，通过 API 或 Playground 使用试用范围内的模型。"
+      ],
+      "caveats": [
+        "须提供经过验证的付款方式；官方表示，主动选择购买额外额度前不会收费。",
+        "额度自发放起30天到期，并非每天或每月自动补充的永久免费额度。",
+        "额度用尽或到期后，API 和 Playground 访问停止；继续使用须购买付费额度。",
+        "可用于全部公开模型；具体试用范围为 Shared Inference Model Catalog，Dedicated Inference 专属模型不包含在内。",
+        "受组织级、模型级请求数和 Token 速率限制，实际限制以 Cloud Console 显示为准。"
+      ],
+      "tags": [
+        "Cerebras",
+        "推理API",
+        "新用户",
+        "需验证付款方式",
+        "免费试用"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-6a5ec3406d1f79490c5d",
+      "status": "published",
+      "discoveredAt": "2026-10-29T18:29:36.394Z",
+      "verifiedAt": "2026-10-29T18:31:02.158Z",
+      "featured": false,
+      "source": {
+        "name": "Cerebras 推理官方文档",
+        "url": "https://inference-docs.cerebras.ai/support/rate-limits",
+        "evidence": "官方FAQ说明，新账户添加已验证付款方式后获5美元额度，发放后30天过期；主动购买额外额度前不收费，额度耗尽或过期即停止访问。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T18:31:02.158Z",
+        "evidenceHash": "d0d60144f881276f41a6cdecbbcbb7932ecbfe8d4de83a259a658dd6f8686725",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "New accounts receive $5 in free credits"
+          },
+          {
+            "field": "eligibility",
+            "quote": "New accounts"
+          },
+          {
+            "field": "steps",
+            "quote": "after adding a verified payment method"
+          },
+          {
+            "field": "caveats",
+            "quote": "These credits expire 30 days after they’re granted"
+          }
+        ]
       }
     }
   ]

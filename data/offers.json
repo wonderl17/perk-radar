@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T03:17:56.554Z",
+  "updatedAt": "2026-10-29T06:19:29.058Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1640,6 +1640,17 @@
             "quote": "结束时间：2026年12月31日 00:00:00（UTC+8）"
           }
         ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "所提供的官方页面确认了学生认证一次性领取4000积分的权益，但仅列出页面更新时间及各端活动起止时间，没有该版本消息的明确发布日期，也没有带日期的发布报道可证明其当时已存在。不能将活动开始日或页面更新时间作为消息发布时间。",
+        "assessedAt": "2026-10-29T06:19:29.054Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {

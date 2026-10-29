@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T09:18:55.710Z",
+  "updatedAt": "2026-10-29T11:34:27.716Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1761,88 +1761,6 @@
       }
     },
     {
-      "title": "Cursor 个人免费版：有限 Agent 与 Chat 使用额度",
-      "provider": "Cursor",
-      "summary": "个人 Free 计划每月0美元，包含有限的 Agent 和 Chat 请求额度；页面未公布具体请求数量，使用额度每周刷新。",
-      "benefit": "免费使用有限 Agent 与 Chat 额度",
-      "category": "ai",
-      "regions": [
-        "global"
-      ],
-      "availability": "国际站个人免费计划；页面未列明具体支持地区，不代表所有地区均可使用。",
-      "eligibility": [
-        "选择 Individual 下的 Free 个人计划；页面未列出其他资格条件。"
-      ],
-      "steps": [
-        "打开 Cursor 官方定价页 https://cursor.com/pricing。",
-        "在 Individual 的 Free（$0/month）计划下点击“Get started”，按页面提示开始使用。"
-      ],
-      "caveats": [
-        "Agent 和 Chat 请求均有限额，页面未提供具体免费请求数量。",
-        "AI 使用额度由 Cursor 和 Grok 共享，每周刷新，不是无限使用。",
-        "额度用尽后可等待刷新；购买额外额度需要付费，不属于免费权益。",
-        "第三方模型用量不包含在页面所列月费中，需要另行付费，不能视为免费计划权益。"
-      ],
-      "tags": [
-        "Cursor",
-        "个人免费版",
-        "AI编程",
-        "有限额度"
-      ],
-      "publishedAt": null,
-      "expiresAt": null,
-      "offerType": "ongoing",
-      "id": "auto-30a2f70dbd33191a0c95",
-      "status": "published",
-      "discoveredAt": "2026-10-28T12:11:59.522Z",
-      "verifiedAt": "2026-10-28T14:13:06.766Z",
-      "featured": false,
-      "source": {
-        "name": "Cursor 官方",
-        "url": "https://cursor.com/pricing",
-        "evidence": "定价页在 Individual 下列出 Free 每月0美元，包含有限 Agent 与 Chat 请求，并提供 Get started 入口；问答说明使用额度每周刷新。"
-      },
-      "verification": {
-        "method": "gpt",
-        "model": "gpt-6.1-sol",
-        "verifiedAt": "2026-10-28T14:13:06.766Z",
-        "evidenceHash": "674261623f20e204648cf760dcccaacbda9d9ecd7eae52818879aa3f1c676687",
-        "evidenceQuotes": [
-          {
-            "field": "benefit",
-            "quote": "Free $0 /month"
-          },
-          {
-            "field": "benefit",
-            "quote": "Limited agent requests Limited Chat requests"
-          },
-          {
-            "field": "eligibility",
-            "quote": "Individual"
-          },
-          {
-            "field": "steps",
-            "quote": "Get started"
-          },
-          {
-            "field": "caveats",
-            "quote": "Your allowance refreshes weekly"
-          }
-        ]
-      },
-      "publication": {
-        "value": null,
-        "precision": null,
-        "certainty": "unknown",
-        "basis": null,
-        "evidence": [],
-        "reasoning": "官方定价页描述了当前 Free 计划及 Cursor/Grok 共享、每周刷新的额度，但未提供该版本的发布日期。两篇第三方文章描述的是按月刷新、含 Tab 或 Composer 的 Hobby 旧版本，不能将其日期套用于当前权益；版权年份及首次收录时间也不能作为发布时间依据。",
-        "assessedAt": "2026-10-28T15:09:30.869Z",
-        "method": "gpt-web-search",
-        "model": "gpt-6.1-sol"
-      }
-    },
-    {
       "title": "Hugging Face PRO：每月附带2美元计算额度",
       "provider": "Hugging Face",
       "summary": "付费 PRO 用户每月获2美元通用计算额度，可用于推理等计算服务；经 Hugging Face 路由的合资格请求自动抵扣。",
@@ -2303,6 +2221,73 @@
           {
             "field": "steps",
             "quote": "upon their first sign-in to Qoder Client"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cursor 个人免费计划：有限量 Agent 与 Chat 使用",
+      "provider": "Cursor",
+      "summary": "个人免费计划为每月0美元，提供有限量的 Agent 与 Chat 请求。官方未公布具体免费请求数量，用量池按周刷新。",
+      "benefit": "免费限量 Agent 与 Chat 请求",
+      "category": "ai",
+      "regions": [
+        "global"
+      ],
+      "availability": "官方定价页提供个人免费计划；未列明具体可用国家或地区，不代表所有地区均可使用。",
+      "eligibility": [
+        "选择 Individual 下的 Free 个人免费计划；页面未列出其他资格要求。"
+      ],
+      "steps": [
+        "访问 Cursor 官方定价页 https://cursor.com/pricing。",
+        "在 Individual 的 Free 档位点击 Get started，按页面提示开始使用。"
+      ],
+      "caveats": [
+        "免费计划的 Agent 与 Chat 请求均有限量，页面未公布具体数量。",
+        "页面说明 AI 用量池由 Cursor 与 Grok 共享，按周刷新；不同产品的用量消耗不同。",
+        "额度耗尽后可等待刷新；如选择额外购买用量，将产生费用。",
+        "页面未明确免费计划是否需要绑定信用卡。"
+      ],
+      "tags": [
+        "Cursor",
+        "免费计划",
+        "AI编程",
+        "限量使用"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-30a2f70dbd33191a0c95",
+      "status": "published",
+      "discoveredAt": "2026-10-28T12:11:59.522Z",
+      "verifiedAt": "2026-10-29T11:34:16.085Z",
+      "featured": false,
+      "source": {
+        "name": "Cursor 官方",
+        "url": "https://cursor.com/pricing",
+        "evidence": "定价页在 Individual 下列出每月0美元的 Free 计划、有限量 Agent 与 Chat 请求及 Get started 入口，并说明用量池按周刷新。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-29T11:34:16.085Z",
+        "evidenceHash": "658f001de9c2ee66ceedf5b659431ddff9f94331b65b1f8682af8511f35c2122",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "Free $0 /month"
+          },
+          {
+            "field": "benefit",
+            "quote": "Limited agent requests Limited Chat requests"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Individual"
+          },
+          {
+            "field": "steps",
+            "quote": "Get started"
           }
         ]
       }

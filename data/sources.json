@@ -629,5 +629,51 @@
       "identityQuote": "Copyright © 2002-2021 San Francisco Public Library. All rights reserved.",
       "benefitQuote": "Library cardholders are allowed 30 Instant Borrows and 10 Flex Borrows per month. ( What are Flex and Instant Borrows? ) There are no late fees."
     }
+  },
+  {
+    "id": "auto-source-24d14438c97fe218784b",
+    "name": "洛杉矶县图书馆",
+    "url": "https://lacountylibrary.org/music",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "lacountylibrary.org",
+      "www.lacountylibrary.org"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T17:29:32.997Z",
+      "query": "Freegal Music free library card eligibility official FAQ",
+      "homepageUrl": "https://lacountylibrary.org/",
+      "searchUrl": "https://lacountylibrary.org/music",
+      "evidenceHash": "624ec83af1da65522026e03b8f5af71c08ddf5c10e8aa9c44108acd767834135",
+      "homepageHash": "799dde269fe6b92f99756b0b4afebde12ee4a2baad31040b281e7d4d16b59648",
+      "identityQuote": "LA County Library Celebrates Reopening of Newly Renovated Lynwood Library",
+      "benefitQuote": "In addition, download 5 songs per week for you to keep and share (songs are DRM-free)."
+    }
+  },
+  {
+    "id": "auto-source-35599408d1018ffda013",
+    "name": "洛杉矶公共图书馆",
+    "url": "https://www.lapl.org/digital-library/freegal",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "www.lapl.org",
+      "lapl.org"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T17:29:43.700Z",
+      "query": "Freegal Music free library card eligibility official FAQ",
+      "homepageUrl": "https://www.lapl.org/",
+      "searchUrl": "https://www.lapl.org/digital-library/freegal",
+      "evidenceHash": "4fca60bf034e284b4cac61696fc855b97bfe60f09994f13c24900c434d2c65e8",
+      "homepageHash": "20a8621b3cd2d3cf595bddd95421bfc89ea4b5c21c142e8943febdbb83bd57ef",
+      "identityQuote": "Welcome to the Los Angeles Public Library",
+      "benefitQuote": "Streaming is unlimited and you can download up to 5 DRM-free songs each week."
+    }
   }
 ]

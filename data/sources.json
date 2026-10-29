@@ -698,5 +698,28 @@
       "identityQuote": "Build at the Speed of Cerebras Experience real-time AI responses across coding, reasoning, voice, and agentic workloads with the world’s fastest AI inference.",
       "benefitQuote": "New accounts receive $5 in free credits after adding a verified payment method. These credits expire 30 days after they’re granted and can be used across all public models."
     }
+  },
+  {
+    "id": "auto-source-bb331f29dbb62978a499",
+    "name": "Kiro官方站",
+    "url": "https://kiro.dev/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "kiro.dev",
+      "www.kiro.dev"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T19:29:27.097Z",
+      "query": "Kiro free plan credits pricing official",
+      "homepageUrl": "https://kiro.dev/",
+      "searchUrl": "https://kiro.dev/pricing",
+      "evidenceHash": "3ba72420da1e3c308bed5b44825085581432fc38d0882a293bfec526bdd2fbed",
+      "homepageHash": "25a2b4c46698124944ee49cdcfb0ff044cc9811ab870434230ec723a6563d4d3",
+      "identityQuote": "Built and operated by AWS, Kiro benefits from the same security, reliability, and privacy standards and controls trusted by millions of customers.",
+      "benefitQuote": "New users can start with the perpetual Kiro Free tier, which includes 50 credits."
+    }
   }
 ]

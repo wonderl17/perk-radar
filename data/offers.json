@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T13:25:36.642Z",
+  "updatedAt": "2026-10-29T15:26:23.889Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2386,6 +2386,22 @@
             "quote": "you'll need a valid credit card or a PayPal account"
           }
         ]
+      },
+      "publication": {
+        "value": "2020-03-03",
+        "precision": "day",
+        "certainty": "exact",
+        "basis": "published",
+        "evidence": [
+          {
+            "url": "https://www.mongodb.com/company/blog/news/mongodb-joins-the-github-student-developer-pack",
+            "quote": "MongoDB Joins the GitHub Student Developer Pack March 3, 2020 | Updated: March 23, 2022"
+          }
+        ],
+        "reasoning": "官方公告明确标注发布日期为2020年3月3日，正文宣布加入 GitHub Student Developer Pack，并明确提供50美元 Atlas 额度及免费认证（价值150美元），与本条福利一致。2022年3月23日为更新日期，不作为发布依据；元数据 datePublished 亦佐证该发布日期。",
+        "assessedAt": "2026-10-29T15:26:14.034Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     },
     {
@@ -2465,6 +2481,22 @@
             "quote": "Browse the catalog and tap “Borrow”"
           }
         ]
+      },
+      "publication": {
+        "value": "2026-09-08",
+        "precision": "day",
+        "certainty": "exact",
+        "basis": "published",
+        "evidence": [
+          {
+            "url": "https://theloop.hoopladigital.com/support/articles/basics/how-to-get-a-library-card-online-and-use-hoopla",
+            "quote": "How to Get a Library Card Online and Use Hoopla Sep. 08, 2026 • 4 minutes Did you know that you can borrow and read eBooks completely free? All you need is a library card and Hoopla."
+          }
+        ],
+        "reasoning": "官方页面明确标注文章发布日期为2026年9月8日，datePublished亦与之吻合。正文描述凭合作图书馆借书证及PIN注册免费账户，借阅电子书、有声书、影视、音乐和漫画，且无订阅费及逾期费，与本条权益一致。此日期为该具体消息的官方文章发布日期，不代表Hoopla服务或免费借阅模式首次推出的日期。",
+        "assessedAt": "2026-10-29T15:26:13.304Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     }
   ]

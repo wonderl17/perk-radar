@@ -468,5 +468,28 @@
       "identityQuote": "Copyright © 2002-2021 San Francisco Public Library. All rights reserved.",
       "benefitQuote": "Each month, you receive a set number of tickets (30). Your tickets reset on the first day of the month, and unused tickets don't roll over to the next month."
     }
+  },
+  {
+    "id": "auto-source-a0fc3f99bb503085f81e",
+    "name": "Cloudflare 开发者文档",
+    "url": "https://developers.cloudflare.com/workers-ai/platform/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "developers.cloudflare.com",
+      "www.developers.cloudflare.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-29T02:17:30.298Z",
+      "query": "Cloudflare Workers AI free plan pricing limits official",
+      "homepageUrl": "https://developers.cloudflare.com/",
+      "searchUrl": "https://developers.cloudflare.com/workers-ai/platform/pricing",
+      "evidenceHash": "9ea0a96e25679f588b81dc0c273f8b0e19bf718c80c0cf39aae10c0b25e1d48e",
+      "homepageHash": "ca6bc3e74f11e7c6f30a564ad664aca61ef142e5f3f1f04887bdc6a766e7c4ee",
+      "identityQuote": "Cloudflare Developer Docs Explore guides and tutorials to start building on Cloudflare's platform",
+      "benefitQuote": "Our free allocation allows anyone to use a total of 10,000 Neurons per day at no charge ."
+    }
   }
 ]

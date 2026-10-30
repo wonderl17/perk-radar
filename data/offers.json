@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T05:50:53.992Z",
+  "updatedAt": "2026-10-30T06:07:23.078Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2841,6 +2841,22 @@
             "quote": "观众凭本人预约证件原件和预约成功信息"
           }
         ]
+      },
+      "publication": {
+        "value": "2025-07-25",
+        "precision": "day",
+        "certainty": "exact",
+        "basis": "published",
+        "evidence": [
+          {
+            "url": "https://www.chnmuseum.cn/gbgg/202507/t20250725_272247.shtml",
+            "quote": "首页 > 通告公告 观众预约须知 观众预约须知 2025-07-25 中国国家博物馆 为提升服务质量、保护文物安全，本馆实行预约参观制度。"
+          }
+        ],
+        "reasoning": "官方《观众预约须知》明确标注发布日期为2025-07-25，正文所载实名认证后免费预约、提前7日预约、每日17:00放票及预约次数限制等均与本条权益版本一致。2025年8月1日是该须知实施日，不作为消息发布日期。",
+        "assessedAt": "2026-10-30T06:07:13.631Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
       }
     }
   ]

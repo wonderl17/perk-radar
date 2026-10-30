@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T02:41:12.378Z",
+  "updatedAt": "2026-10-30T03:13:08.739Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2078,79 +2078,6 @@
       }
     },
     {
-      "title": "Qoder CN：个人用户每日手动领取100通用积分",
-      "provider": "Qoder CN",
-      "summary": "新老个人用户可在桌面端每日主动领取100通用积分，免费及试用用户可参与；每笔有效期30天，可跨天保留并用于同账号的Qoder CN全系产品。",
-      "benefit": "每日领取100通用积分，每笔有效30天",
-      "category": "ai",
-      "regions": [
-        "cn"
-      ],
-      "availability": "已开放，结束时间另行公告；每日北京时间（UTC+8）10:00开启新一轮，至次日10:00前可领取。",
-      "eligibility": [
-        "Qoder CN新老个人用户，包括免费、试用、个人付费订阅及会员卡用户。",
-        "企业订阅用户（团队版、企业标准版、企业专属版）不适用。"
-      ],
-      "steps": [
-        "打开Qoder CN桌面端，注册或登录个人账号。",
-        "在领取窗口内，点击客户端左下角的“用量面板 → 礼物图标”，进入活动入口。",
-        "主动领取本轮100通用Credits，奖励存入账号资源包。",
-        "使用同一账号，在Qoder CN全系支持产品中使用奖励。"
-      ],
-      "caveats": [
-        "仅限Qoder CN桌面端领取，每个账号每轮限领一次，不会登录后自动发放。",
-        "错过领取窗口不可补领，未领取额度不累计至下一轮。",
-        "每笔奖励自领取之日起30天有效，到期未使用部分自动失效；后续领取不会延长此前奖励有效期。",
-        "奖励仅供个人使用，不改变订阅等级或会员卡权益，各项功能仍按当前账号权益开放。",
-        "优先消耗最早到期的Credits；到期时间相同时，先消耗套餐内Credits，再消耗资源包Credits。",
-        "本福利属于Qoder CN，不与Qoder国际版混用。"
-      ],
-      "tags": [
-        "Qoder CN",
-        "每日领取",
-        "免费积分",
-        "个人用户",
-        "桌面端"
-      ],
-      "publishedAt": null,
-      "expiresAt": null,
-      "offerType": "ongoing",
-      "id": "qoder-cn-daily-100",
-      "status": "published",
-      "discoveredAt": "2026-10-26T10:15:14Z",
-      "verifiedAt": "2026-10-29T09:18:07.565Z",
-      "featured": false,
-      "source": {
-        "name": "Qoder CN 官方规则",
-        "url": "https://docs.qoder.cn/events/100credits",
-        "evidence": "官方说明个人用户每天可在桌面端主动领取100通用Credits，免费及试用用户可参与，企业订阅不适用；每笔有效30天，活动结束时间另行公告。"
-      },
-      "verification": {
-        "method": "gpt",
-        "model": "gpt-6.1-sol",
-        "verifiedAt": "2026-10-29T09:18:07.565Z",
-        "evidenceHash": "12d0796ffc4da8b9ce85ceef17d9c12e5ee6d7124178f4c9f7361a03d59baca2",
-        "evidenceQuotes": [
-          {
-            "field": "benefit",
-            "quote": "每次 100 通用 Credits"
-          },
-          {
-            "field": "eligibility",
-            "quote": "免费用户和试用期用户均可参与。"
-          },
-          {
-            "field": "steps",
-            "quote": "用量面板 → 礼物图标"
-          },
-          {
-            "field": "steps",
-            "quote": "主动领取本轮 100 通用 Credits"
-          }
-        ]
-      }
-    },
-    {
       "title": "Qoder 国际版：新用户免费试用 Pro 14天，含300积分",
       "provider": "Qoder",
       "summary": "新用户首次登录最新版 Qoder 客户端，可免费试用 Pro 14天并获300积分；不支持虚拟机，每人限一个试用账号。",
@@ -2770,6 +2697,78 @@
         "assessedAt": "2026-10-30T02:41:12.372Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "Qoder CN：个人用户每日手动领取100通用积分",
+      "provider": "Qoder CN",
+      "summary": "新老个人用户可在桌面端每日手动领取100通用积分，免费及试用用户也可参加；每笔有效30天，可用于同账号的Qoder CN全系产品。",
+      "benefit": "每日领取100通用积分，每笔有效30天",
+      "category": "ai",
+      "regions": [
+        "cn"
+      ],
+      "availability": "每日北京时间（UTC+8）10:00开放新一轮领取，至次日10:00前；活动结束时间另行公告。",
+      "eligibility": [
+        "Qoder CN新老个人用户，包括免费、试用、个人付费订阅及会员卡用户。",
+        "企业订阅用户（团队版、企业标准版、企业专属版）不适用。"
+      ],
+      "steps": [
+        "打开Qoder CN桌面端，注册或登录个人账号。",
+        "在领取窗口内，点击客户端左下角“用量面板”→“礼物图标”，进入活动入口。",
+        "主动领取本轮100通用Credits，奖励存入账号资源包。",
+        "使用同一账号，在Qoder CN全系产品中使用奖励。"
+      ],
+      "caveats": [
+        "仅限Qoder CN桌面端领取，登录不会自动获得奖励。",
+        "每个账号每轮限领一次；错过不可补领，未领取额度不累计。",
+        "每笔奖励自领取之日起30天有效，到期未使用部分自动失效；后续领取不会延长旧奖励有效期。",
+        "领取奖励不改变订阅等级或会员卡权益，各项功能仍按当前账号权益开放。",
+        "积分优先扣减最早到期部分；到期时间相同时先扣套餐内积分，再扣资源包积分。"
+      ],
+      "tags": [
+        "Qoder CN",
+        "每日领取",
+        "免费积分",
+        "个人用户",
+        "中国版"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "qoder-cn-daily-100",
+      "status": "published",
+      "discoveredAt": "2026-10-26T10:15:14Z",
+      "verifiedAt": "2026-10-30T03:12:58.683Z",
+      "featured": false,
+      "source": {
+        "name": "Qoder CN 官方规则",
+        "url": "https://docs.qoder.cn/events/100credits",
+        "evidence": "官方每日领取规则规定，个人用户含免费及试用用户可在桌面端主动领取每轮100通用Credits，每日北京时间10:00刷新，每笔有效30天，结束时间另行公告。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-30T03:12:58.683Z",
+        "evidenceHash": "830051c5922d917fc41832231f22965e90b6ec5a105d209527ed76e4a70bd49a",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "每次 100 通用 Credits"
+          },
+          {
+            "field": "eligibility",
+            "quote": "免费用户和试用期用户均可参与。"
+          },
+          {
+            "field": "steps",
+            "quote": "用量面板 → 礼物图标"
+          },
+          {
+            "field": "steps",
+            "quote": "主动领取本轮 100 通用 Credits"
+          }
+        ]
       }
     }
   ]

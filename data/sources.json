@@ -744,5 +744,28 @@
       "identityQuote": "Standard Ebooks is a volunteer-driven project that produces new editions of public domain ebooks",
       "benefitQuote": "We rely on your support to help us keep producing beautiful, free, and unrestricted editions of literature for the digital age."
     }
+  },
+  {
+    "id": "auto-source-f6933155ffe7164f38d1",
+    "name": "Neon官方站",
+    "url": "https://neon.com/pricing",
+    "kind": "page",
+    "region": "global",
+    "allowedHosts": [
+      "neon.com",
+      "www.neon.com"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-30T02:37:09.026Z",
+      "query": "Neon pricing free plan compute limits official",
+      "homepageUrl": "https://neon.com/",
+      "searchUrl": "https://neon.com/pricing",
+      "evidenceHash": "2e2c7e613e4497a734ce06cb17f3979001a0019c9614c88848697b13e8749552",
+      "homepageHash": "7d80bfb82febe2938cf321305decc0623c8e40e58c84df8d8d662071bd271f9f",
+      "identityQuote": "First founded by Postgres hackers with decades of expertise, Neon is now part of the Databricks Platform.",
+      "benefitQuote": "Free $0 Build and learn free with no time limits and no credit card required. Try Neon Lakebase Postgres 100 projects 100 CU-hrs monthly per project 1 GB of storage per project"
+    }
   }
 ]

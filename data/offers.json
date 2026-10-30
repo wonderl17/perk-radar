@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29T18:47:01.302Z",
+  "updatedAt": "2026-10-30T02:41:12.378Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2679,6 +2679,95 @@
         "evidence": [],
         "reasoning": "仅提供第三方福利收录页，未提供带日期的官方公告或可靠独立报道。页面的 Sep 30, 2026 明确为最后核查日期；datePublished 仅能说明该收录文章的发布日期，不能证明此版本福利的发布时间，故无法确定。",
         "assessedAt": "2026-10-29T18:47:01.299Z",
+        "method": "gpt-web-search",
+        "model": "gpt-6.1-sol"
+      }
+    },
+    {
+      "title": "Neon 免费数据库：每项目每月100 CU小时及1GB存储",
+      "provider": "Neon",
+      "summary": "Neon Free 可创建最多100个项目，每项目每月含100 CU小时数据库计算额度及1GB存储；无使用期限，无需信用卡。",
+      "benefit": "每项目每月100 CU小时＋1GB数据库存储",
+      "category": "developer",
+      "regions": [
+        "global"
+      ],
+      "availability": "国际站长期 Free 计划；页面未明确可用国家或地区清单。",
+      "eligibility": [
+        "使用 Neon Free 计划进行构建、学习、开发或原型验证的用户。",
+        "无需信用卡；免费数据库额度不适用于升级后的付费计划。"
+      ],
+      "steps": [
+        "访问 Neon 官方定价页，在 Free 计划下点击“Get started”。",
+        "使用 Free 计划创建项目，在各项目额度内使用数据库。"
+      ],
+      "caveats": [
+        "最多100个项目，每项目每月100 CU小时；CU小时是计算资源用量，并非固定100小时运行时长。",
+        "每项目数据库存储上限1GB，计算规格最高2 CU（8GB RAM）；闲置5分钟后计算自动缩至零。",
+        "免费计划可能因达到使用限额而暂停数据库，不适合需要持续可用保障的生产负载。",
+        "CU小时仅覆盖 Postgres 数据库计算；对象存储、Functions 等有独立额度，不能混用。",
+        "升级付费计划后，数据库计算与存储从零开始按用量计费，不再享有 Free 计划数据库额度。"
+      ],
+      "tags": [
+        "Postgres",
+        "数据库",
+        "免费计划",
+        "无需信用卡",
+        "开发测试"
+      ],
+      "publishedAt": null,
+      "expiresAt": null,
+      "offerType": "ongoing",
+      "id": "auto-f6933155ffe7164f38d1",
+      "status": "published",
+      "discoveredAt": "2026-10-30T02:37:09.033Z",
+      "verifiedAt": "2026-10-30T02:40:32.703Z",
+      "featured": false,
+      "source": {
+        "name": "Neon官方站",
+        "url": "https://neon.com/pricing",
+        "evidence": "官方定价页列明 Free 为每月0美元、无时间限制且无需信用卡，支持最多100个项目，每项目每月100 CU小时及1GB数据库存储，并提供 Get started 入口。"
+      },
+      "verification": {
+        "method": "gpt",
+        "model": "gpt-6.1-sol",
+        "verifiedAt": "2026-10-30T02:40:32.703Z",
+        "evidenceHash": "2e2c7e613e4497a734ce06cb17f3979001a0019c9614c88848697b13e8749552",
+        "evidenceQuotes": [
+          {
+            "field": "benefit",
+            "quote": "100 CU-hrs monthly per project"
+          },
+          {
+            "field": "benefit",
+            "quote": "1 GB of storage per project"
+          },
+          {
+            "field": "eligibility",
+            "quote": "Build and learn free with no time limits"
+          },
+          {
+            "field": "eligibility",
+            "quote": "no credit card required"
+          },
+          {
+            "field": "steps",
+            "quote": "Free $0 /month Get started"
+          },
+          {
+            "field": "steps",
+            "quote": "You can create up to 100 projects"
+          }
+        ]
+      },
+      "publication": {
+        "value": null,
+        "precision": null,
+        "certainty": "unknown",
+        "basis": null,
+        "evidence": [],
+        "reasoning": "官方定价页和计划文档确认了每项目每月100 CU小时、1GB存储及最多100个项目，但未提供该版本的发布日期。daily.dev页面虽标有2026年10月2日，且描述同一权益，但属于转帖摘要，所链接的官方原文未在本次pages中，不能据此确认发布时间或可靠的已存在日期。",
+        "assessedAt": "2026-10-30T02:41:12.372Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
       }

@@ -767,5 +767,28 @@
       "identityQuote": "First founded by Postgres hackers with decades of expertise, Neon is now part of the Databricks Platform.",
       "benefitQuote": "Free $0 Build and learn free with no time limits and no credit card required. Try Neon Lakebase Postgres 100 projects 100 CU-hrs monthly per project 1 GB of storage per project"
     }
+  },
+  {
+    "id": "auto-source-985ddb93a21a04d358eb",
+    "name": "中国国家博物馆",
+    "url": "https://www.chnmuseum.cn/gbgg/202507/t20250725_272247.shtml",
+    "kind": "page",
+    "region": "cn",
+    "allowedHosts": [
+      "www.chnmuseum.cn",
+      "chnmuseum.cn"
+    ],
+    "discovery": {
+      "method": "gpt-web-search",
+      "model": "gpt-6.1-sol",
+      "discoveredAt": "2026-10-30T05:48:46.463Z",
+      "query": "中国国家博物馆 免费参观 预约 须知 官方",
+      "homepageUrl": "https://www.chnmuseum.cn/",
+      "searchUrl": "https://www.chnmuseum.cn/gbgg/202507/t20250725_272247.shtml",
+      "evidenceHash": "f783693af40e634d6640aa7f04e72a81b073840e9a7295b73feb1bf98b401ca4",
+      "homepageHash": "5910d294bf47a6f7599e1056f7aefdc736df5ff46df1355b74f88607a8fa249c",
+      "identityQuote": "中国国家博物馆版权所有 京ICP备05008885号",
+      "benefitQuote": "观众须使用有效身份证件完成预约账号实名认证后进行免费预约｡"
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-30T06:07:23.078Z",
+  "updatedAt": "2026-11-02T10:39:24.454Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -103,7 +103,10 @@
         "evidence": "套餐与计费文档的免费用户积分表列明三类赠送数额与有效期。"
       },
       "status": "published",
-      "featured": true
+      "featured": true,
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-02T10:39:24.435Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "id": "manus-free-daily",
@@ -220,7 +223,10 @@
         "assessedAt": "2026-10-28T15:13:01.861Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-02T10:39:24.454Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "id": "aliyun-bailian-new-user",
@@ -391,7 +397,10 @@
         "assessedAt": "2026-10-28T15:13:50.726Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-02T10:39:24.448Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "id": "microsoft-learn",

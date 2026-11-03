@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-03T14:19:27.332Z",
+  "updatedAt": "2026-11-03T18:08:31.269Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1073,7 +1073,10 @@
             "quote": "Enjoy your program benefits at no cost"
           }
         ]
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-03T18:08:31.269Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "title": "Firebase Spark：Hosting 免费享10GB存储",

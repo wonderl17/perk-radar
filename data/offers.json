@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-03T18:08:31.269Z",
+  "updatedAt": "2026-11-04T01:29:53.026Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -1434,7 +1434,10 @@
         "assessedAt": "2026-10-29T06:19:29.054Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-04T01:29:53.013Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "title": "华为云码道：个人体验版每日签到领100积分",
@@ -1521,7 +1524,10 @@
         "assessedAt": "2026-10-28T15:09:44.986Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-04T01:29:53.026Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "title": "AWS：学生验证并完善资料，免费领一年 Skill Builder",

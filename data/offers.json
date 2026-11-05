@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-05T07:27:13.426Z",
+  "updatedAt": "2026-11-05T08:27:53.683Z",
   "offers": [
     {
       "id": "qoder-cn-coffee-2026",
@@ -2037,7 +2037,10 @@
         "assessedAt": "2026-10-29T08:20:55.711Z",
         "method": "gpt-web-search",
         "model": "gpt-6.1-sol"
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-05T08:27:53.683Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "title": "百度AI Studio：工作日签到领1积分，周末领3积分",
@@ -2105,7 +2108,10 @@
             "quote": "一般为AI Studio身份等级白银及以上即可兑换"
           }
         ]
-      }
+      },
+      "reviewRequired": true,
+      "reviewRequestedAt": "2026-11-05T08:27:53.672Z",
+      "reviewNote": "Public source DNS is not globally routable."
     },
     {
       "title": "Qoder 国际版：新用户免费试用 Pro 14天，含300积分",
